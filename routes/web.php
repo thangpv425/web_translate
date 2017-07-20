@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Authentication.login');
 });
 
 /**
@@ -24,7 +24,7 @@ Route::post('register', 'RegisterController@postRegister')->name('register');
 /**
  * Route login
  */
-Route::get('login', 'LoginController@login');
+Route::get('login', 'LoginController@login')->name('loginForm');
 
 Route::post('login', 'LoginController@postLogin')->name('login');
 
@@ -38,10 +38,8 @@ Route::get('logout', 'LoginController@logout')->name('logout');
  * Route admin
  */
 Route::prefix('admin')->middleware('admin')->group(function(){
-	// add Route here
-	Route::get('hello', function(){
-		echo "Hello Admin";
-	});
+	Route::get('keywordList','userController@keywordList');
+// >>>>>>> 24c57facb1f929c47cfc0a69b4f46125d857bde9
 });
 
 /**

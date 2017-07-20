@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CheckRegistrationRequest;
 use Sentinel;
 
 class RegisterController extends Controller
@@ -11,12 +12,12 @@ class RegisterController extends Controller
     	return view('Authentication.register');
     }
 
-    public function postRegister(Request $request)
+    public function postRegister(CheckRegistrationRequest $request)
     {
-    		$user = Sentinel::register($request->all(), true);
-			$role = Sentinel::findRoleBySlug('user');
-	    	$role->users()->attach($user);
-	    	dd($user);
-	    	// Sentinel::create($request->all());
+		$user = Sentinel::register($request->all(), true);
+		$role = Sentinel::findRoleBySlug('user');
+    	$role->users()->attach($user);
+    	dd($user);
+    	// Sentinel::create($request->all());
     }
 }

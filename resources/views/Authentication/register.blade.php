@@ -12,9 +12,17 @@
 						<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-								<input type="email" name="email" class="form-control" placeholder="example@example.com">
+								<input type="email" name="email" class="form-control" placeholder="example@example.com" value="{{ old('email') }}">
 							</div>
 						</div>
+
+						@if ($errors->first('email'))
+							<div class="alert alert-danger">
+								<ul>
+									<li>{{ $errors->first('email') }}</li>
+								</ul>
+							</div>
+						@endif
 
 						<div class="form-group">
 							<div class="input-group">
@@ -22,6 +30,8 @@
 								<input type="text" name="first_name" class="form-control" placeholder="First Name">
 							</div>
 						</div>
+
+
 
 						<div class="form-group">
 							<div class="input-group">
@@ -37,12 +47,28 @@
 							</div>
 						</div>
 
+						@if ($errors->first('password'))
+							<div class="alert alert-danger">
+								<ul>
+									<li>{{ $errors->first('password') }}</li>
+								</ul>
+							</div>
+						@endif
+
 						<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-								<input type="password" name="password" class="form-control" placeholder="Password Confirmation">
+								<input type="password" name="password_confirmation" class="form-control" placeholder="Password Confirmation">
 							</div>
 						</div>
+
+						@if ($errors->first('password_confirmation'))
+							<div class="alert alert-danger">
+								<ul>
+									<li>{{ $errors->first('password_confirmation') }}</li>
+								</ul>
+							</div>
+						@endif
 
 						<div class="form-group">
 							<input type="submit" value="Register" class="btn btn-sucess pull-right">
