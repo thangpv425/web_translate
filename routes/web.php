@@ -14,3 +14,33 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+/**
+ * Route register
+ */
+Route::get('register', 'RegisterController@register');
+Route::post('register', 'RegisterController@postRegister')->name('register');
+
+/**
+ * Route login
+ */
+Route::get('login', 'LoginController@login');
+
+Route::post('login', 'LoginController@postLogin')->name('login');
+
+
+/**
+ * Route logout
+ */
+Route::get('logout', 'LoginController@logout')->name('logout');
+
+/**
+ * Route admin
+ */
+Route::prefix('admin')->middleware('admin')->group(function(){
+	// add Route here
+});
+
+/**
+ * Route user
+ */
