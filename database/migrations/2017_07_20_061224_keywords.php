@@ -19,6 +19,8 @@ class Keywords extends Migration
             $table->string('value');
             $table->boolean('status');
             $table->timestamps();
+
+            $table->unique('value');
         });
 
         Schema::create('wt_meaning', function($table){
