@@ -38,7 +38,7 @@ Route::get('logout', 'LoginController@logout')->name('logout');
  * Route admin
  */
 Route::prefix('admin')->middleware('admin')->group(function(){
-	// add Route here
+	Route::get('keywordList','userController@keywordList');
 });
 
 /**
