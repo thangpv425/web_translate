@@ -16,7 +16,42 @@ class userController extends Controller
             'keyword'=>$keyword
                 ]);
     }
-    public function keywordAdd(){
+    public function get_keywordAdd(){
         return view('admin.keyWordAdd');
+    }
+    public function post_keywordAdd(Request $request){
+        
+        $this->validate($request,[
+            'txtKeyWord' => 'required|string|unique:wt_keyword,value'
+        ],[
+            'txtKeyWord.unique'=>'This keyword existed',
+            'txtKeyWord.required'=>'keyword Require!',
+            'txtKeyWord.string'=>'Must be string'
+        ]);
+        $keyword = new keyword();
+        $keyword->value = $request->txtKeyWord;
+        $keyword->status= 1;
+        $keyword->save();
+        $id=$keyword->id;
+        
+        $meaning = new meaning();
+        $meaning->keyword_id = $id;
+        $meaning->value = $request->txtMeaning;
+        $meaning->index = 1;
+        $meaning->status = 1;
+        
+        $meaning->language = $request->language;
+        $meaning->save();
+        
+        return redirect('admin/keywordList');
+    }
+    public function get_keywordEdit($keyword_id) {
+        echo $keyword_id;
+        $keyword = keyword::where('keyword_id',$keyword_id);
+        return view('admin.keywordEdit',['keyword'=>$keyword]);
+    }
+    
+    public function post_keywordEdit($keyword_id) {
+        
     }
 }

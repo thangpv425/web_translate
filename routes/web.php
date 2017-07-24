@@ -40,7 +40,11 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 
 Route::prefix('admin')->middleware('admin')->group(function(){
 	Route::get('keywordList','userController@keywordList');
-    Route::get('keywordAdd', 'userController@keywordAdd');
+    Route::get('keywordAdd', 'userController@get_keywordAdd');
+    Route::post('keywordAdd', 'userController@post_keywordAdd');
+    
+    Route::get('keywordEdit/{keyword_id}', 'userController@get_keywordEdit');
+    Route::post('keywordEdit/{keyword_id}', 'userController@post_keywordEdit');
 
 	// Route::get('approve')
 });
