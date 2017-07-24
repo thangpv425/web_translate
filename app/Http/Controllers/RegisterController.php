@@ -12,6 +12,12 @@ class RegisterController extends Controller
     	return view('Authentication.register');
     }
 
+
+    /**
+     * [postRegister description]
+     * @param  CheckRegistrationRequest $request [description]
+     * @return [type]                            [description]
+     */
     public function postRegister(CheckRegistrationRequest $request)
     {
 		$user = Sentinel::register($request->all(), true);
