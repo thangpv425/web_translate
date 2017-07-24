@@ -37,11 +37,18 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 /**
  * Route admin
  */
+
 Route::prefix('admin')->middleware('admin')->group(function(){
 	Route::get('keywordList','userController@keywordList');
+    Route::get('keywordAdd', 'userController@keywordAdd');
+    //Route::resource('keywordAdd', 'userController@keywordAdd');
 // >>>>>>> 24c57facb1f929c47cfc0a69b4f46125d857bde9
 });
-
+/*
+Route::prefix('admin')->group(function(){
+	Route::get('keywordList','userController@keyWordList');
+});
+*/
 /**
  * Route user
  */

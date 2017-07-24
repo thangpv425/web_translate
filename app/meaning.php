@@ -8,6 +8,6 @@ class meaning extends Model
 {
     protected $table= 'wt_meaning';
     public function keyword(){
-    	return $this.belongsTo('App\keyword','keyword_id','meaning_id');
+    	return $this->belongsTo('App\keyword','keyword_id','keyword_id');
     }
 }
