@@ -47,6 +47,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
 
 	Route::get('queue/meaning', 'AdminController@meaningTempList');
 });
+
 Route::group(['middleware'=>'loginned'],function(){
 	Route::get('translate','TranslateController@showPage');
 	Route::post('search','TranslateController@search');
