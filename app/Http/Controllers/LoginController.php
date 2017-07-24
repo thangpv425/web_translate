@@ -8,11 +8,21 @@ use Sentinel;
 
 class LoginController extends Controller
 {
+    /**
+     * create login form
+     * @param  Request $Request [description]
+     * @return [type]           [description]
+     */
     public function login(Request $Request)	
     {	
     	return view('Authentication.login');
     }
 
+    /**
+     * validate request and authenticate user
+     * @param  CheckLoginRequest $request [description]
+     * @return redirect                     [description]
+     */
     public function postLogin(CheckLoginRequest $request)	
     {
         try {
@@ -30,6 +40,11 @@ class LoginController extends Controller
 
     }
 
+    /**
+     * logout current user
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function logout(Request $request)
     {
     	Sentinel::logout();
