@@ -38,13 +38,19 @@ Route::get('logout', 'LoginController@logout')->name('logout');
  * Route admin
  */
 Route::prefix('admin')->middleware('admin')->group(function(){
-	Route::get('keywordList','userController@keywordList');
 
+	Route::get('keywordList','KeywordListController@keywordList');
+	Route::get('delete_word/{id}','KeywordListController@deleteWord');
 	Route::get('queue/keyword', 'AdminController@keywordTempList'); // return view
 
 	Route::get('approve/keyword/{id}/{opCode}', 'AdminController@keywordApprove')->name('approveOnKeyword')->where(['id' => '[0-9]+','opCode' => '[0-9]+']);
 
 	Route::get('queue/meaning', 'AdminController@meaningTempList');
+});
+Route::group(['middleware'=>'loginned'],function(){
+	Route::get('translate','TranslateController@showPage');
+	Route::post('search','TranslateController@search');
+	
 });
 
 /**
