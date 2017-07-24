@@ -7,6 +7,7 @@ use App\KeywordTemp;
 use App\MeaningTemp;
 use App\Users;
 use App\keyword;
+use App\meaning;
 
 class AdminController extends Controller
 {

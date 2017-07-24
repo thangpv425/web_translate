@@ -40,6 +40,10 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 Route::prefix('admin')->middleware('admin')->group(function(){
 
 	Route::get('keywordList','KeywordListController@keywordList');
+    
+    Route::get('keywordAdd','KeywordListController@get_keywordAdd');
+    Route::post('keywordAdd', 'KeywordListController@post_keywordAdd');
+    
 	Route::get('delete_word/{id}','KeywordListController@deleteWord');
 	Route::get('queue/keyword', 'AdminController@keywordTempList'); // return view
 
