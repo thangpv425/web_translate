@@ -20,10 +20,11 @@ class Temp extends Migration
              * 0 - 1 - 2 : Add - Edit - Delete
              */
             $table->smallInteger('opCode');
-            $table->interger('user_id')->unsigned(); // current user
+            $table->integer('user_id')->unsigned(); // current user
             $table->integer('old_keyword_id')->unsigned()->nullable(); // use when edit or delete
-            $table->string('new_keyword');
+            $table->string('new_keyword')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('old_keyword_id')->references('keyword_id')->on('wt_keyword');
         });
 
         Schema::create('wt_meaning_temp', function($table){
@@ -33,12 +34,13 @@ class Temp extends Migration
              * 0 - 1 - 2 : Add - Edit - Delete
              */
             $table->smallInteger('opCode');
-            $table->interger('keyword_id')->unsigned()->nullable(); // use when add new meaning
-            $table->interger('user_id')->unsigned();
+            $table->integer('keyword_id')->unsigned()->nullable(); // use when add new meaning
+            $table->integer('user_id')->unsigned();
             $table->integer('old_meaning_id')->unsigned()->nullable(); // use when edit or delete
-            $table->string('new_meaning');
+            $table->string('new_meaning')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('old_meaning_id')->references('meaning_id')->on('wt_meaning');
         });
     }
 

@@ -24,15 +24,16 @@ class KeywordMeaningSeeder extends Seeder
         	]);
 
         DB::table('wt_meaning')->insert([
-        	['keyword_id'=>'3', 'value'=>'xin chao', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
-        	['keyword_id'=>'4', 'value'=>'chao', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
-        	['keyword_id'=>'5', 'value'=>'khoe', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
-        	['keyword_id'=>'6', 'value'=>'ten', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
-        	['keyword_id'=>'7', 'value'=>'dap chai', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
-        	['keyword_id'=>'8', 'value'=>'thanh pho', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
-        	['keyword_id'=>'9', 'value'=>'dat nuoc', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
-        	['keyword_id'=>'10', 'value'=>'d**', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
-        	['keyword_id'=>'9', 'value'=>'mot nghia khac cua country', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
+        	['keyword_id'=>'1', 'value'=>'xin chao', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
+        	['keyword_id'=>'2', 'value'=>'chao', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
+        	['keyword_id'=>'3', 'value'=>'khoe', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
+        	['keyword_id'=>'4', 'value'=>'ten', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
+        	['keyword_id'=>'5', 'value'=>'dap chai', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
+        	['keyword_id'=>'6', 'value'=>'dap chai', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
+        	['keyword_id'=>'7', 'value'=>'ben ngoai', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
+        	['keyword_id'=>'8', 'value'=>'dat nuoc', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
+        	['keyword_id'=>'9', 'value'=>'d**', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
+        	['keyword_id'=>'8', 'value'=>'mot nghia khac cua country', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
         	
         	]);
     }
