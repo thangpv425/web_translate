@@ -14,6 +14,16 @@ class MeaningTemp extends Model
     	return $this->belongsTo('App\Users');
     }
 
+    public function keyword()
+    {
+        return $this->belongsTo('App\keyword', 'keyword_id', 'keyword_id');
+    }
+
+    public function oldMeaning()
+    {
+        return $this->hasOne('App\meaning', 'meaning_id', 'old_meaning_id');
+    }
+
     public function addingList()
     {
     	return $this->where('opCode', 0)->get();
