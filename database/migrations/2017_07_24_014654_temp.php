@@ -13,16 +13,34 @@ class Temp extends Migration
      */
     public function up()
     {
-        Schema::create('wt_temp', function($table){
-            $table->increments('temp_id'); 
+        Schema::create('wt_keyword_temp', function($table){
+            $table->increments('keyword_temp_id'); 
             /**
              * opCode:
-             * 0 - 1 - 2 : Add - Edit - Delete on keyword table
-             * 3 - 4 - 5 : A - E - D on meaning table
+             * 0 - 1 - 2 : Add - Edit - Delete
              */
             $table->smallInteger('opCode');
-            $table->integer('old_id')->unsigned(); // use when edit or delete
-            $table->string('new_value');
+            $table->integer('user_id')->unsigned(); // current user
+            $table->integer('old_keyword_id')->unsigned()->nullable(); // use when edit or delete
+            $table->string('new_keyword')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('old_keyword_id')->references('keyword_id')->on('wt_keyword');
+        });
+
+        Schema::create('wt_meaning_temp', function($table){
+            $table->increments('meaning_temp_id'); 
+            /**
+             * opCode:
+             * 0 - 1 - 2 : Add - Edit - Delete
+             */
+            $table->smallInteger('opCode');
+            $table->integer('keyword_id')->unsigned()->nullable(); // use when add new meaning
+            $table->integer('user_id')->unsigned();
+            $table->integer('old_meaning_id')->unsigned()->nullable(); // use when edit or delete
+            $table->string('new_meaning')->nullable();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('old_meaning_id')->references('meaning_id')->on('wt_meaning');
         });
     }
 
@@ -33,6 +51,7 @@ class Temp extends Migration
      */
     public function down()
     {
-        Schema::drop('wt_temp');
+        Schema::drop('wt_keyword_temp');
+        Schema::drop('wt_meaning_temp');
     }
 }

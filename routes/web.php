@@ -47,4 +47,14 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::post('keywordEdit/{keyword_id}', 'userController@post_keywordEdit');
 
 	// Route::get('approve')
+
+	Route::get('queue/keyword', 'AdminController@keywordTempList'); // return view
+
+	Route::get('approve/keyword/{id}/{opCode}', 'AdminController@keywordApprove')->name('approveOnKeyword')->where(['id' => '[0-9]+','opCode' => '[0-9]+']);
+
+	Route::get('queue/meaning', 'AdminController@meaningTempList');
 });
+
+/**
+ * Route user
+ */

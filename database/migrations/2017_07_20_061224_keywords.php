@@ -17,7 +17,7 @@ class Keywords extends Migration
         Schema::create('wt_keyword', function($table){
             $table->increments('keyword_id');
             $table->string('value');
-            $table->boolean('status');
+            $table->smallInteger('status');
             $table->timestamps();
 
             $table->unique('value');
