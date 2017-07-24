@@ -18,7 +18,7 @@ class LoginController extends Controller
         try {
             if (Sentinel::authenticate($request->all())) {
                 # code...
-                return redirect('home');
+                return redirect('admin/keywordList');
             } else {
                 $err = "Wrong email or password!";
             }
