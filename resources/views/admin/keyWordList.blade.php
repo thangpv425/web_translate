@@ -48,8 +48,9 @@
                                 <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
                             </tr>
                             @endif
-                        @endforeach   
-                        </tbody>
+                        @endforeach  
+                        <a href="admin/keywordAdd" class="btn btn-default" role="button">+ Add new key word</a>
+                        
                     </table>
                     
                 </div>

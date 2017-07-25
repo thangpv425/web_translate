@@ -4,8 +4,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Category
-                            <small>List</small>
+                        <h1 class="page-header">Approval
+                            <small>Meaning List</small>
                         </h1>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -15,8 +15,9 @@
                                 <th>ID</th>
                                 <th>OpCode</th>
                                 <th>User</th>
-                                <th>Old Keyword</th>
-                                <th>New Keyword</th>
+                                <th>Keyword</th>
+                                <th>Old Meaning</th>
+                                <th>New Meaning</th>
                                 <th>Approve</th>
                                 <th>Decline</th>
                             </tr>
@@ -24,7 +25,7 @@
                         <tbody>
                         @foreach($data as $row)
                             <tr class="odd gradeX" align="center">
-                                <td>{{$row->keyword_temp_id}}</td>
+                                <td>{{$row->meaning_temp_id}}</td>
                                 <td>
                                 	@if ($row->opCode == 0)
                                 		Add
@@ -35,21 +36,16 @@
                                 	@endif
                                 </td>
                                 <td>{{ $row->user->email }}</td>
-                                <td>
-                                	@if ($row->opCode == 0)
-                                		 
-                                	@else
-	                                	{{ $row->keyword['value'] }}
-                                	@endif
-                                </td>
-                                <td>{{ $row->new_keyword }}</td>
+                                <td>{{ $row->keyword['value'] }}</td>
+                                <td>{{ $row->oldMeaning['value'] }}</td>
+                                <td>{{ $row->new_meaning }}</td>
                                 <td class="center">
                                 	<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                	<a href="{{ route('approveOnKeyword', ['id' => $row->keyword_temp_id, 'opCode'=>$row->opCode]) }}"> Approve </a>
+                                	<a href="{{ route('approveOnMeaning', ['id' => $row->meaning_temp_id, 'opCode'=>$row->opCode]) }}"> Approve </a>
                                 </td>
 	                                <td class="center">
 	                                <i class="fa fa-thumbs-o-down"></i> 
-	                                <a href="{{ route('declineOnKeyword', ['id' => $row->keyword_temp_id, 'opCode' => $row->opCode]) }}"> Decline </a>
+	                                <a href="{{ route('declineOnMeaning', ['id' => $row->meaning_temp_id, 'opCode' => $row->opCode]) }}"> Decline </a>
                                 </td>
                             </tr>
                         @endforeach   
