@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class meaning extends Model
+class Meaning extends Model
 {
     protected $table= 'wt_meaning';
     public $primaryKey = 'meaning_id';

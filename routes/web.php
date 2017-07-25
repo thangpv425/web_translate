@@ -67,7 +67,13 @@ Route::group(['middleware'=>'loginned'],function(){
 	
 	Route::get('translate','TranslateController@showPage');
 	
-	Route::post('search','TranslateController@search');	
+	Route::post('search','TranslateController@search');
+
+    Route::get('user/view/{id}','UserController@view');
+
+    Route::get('user/edit/{id}','UserController@edit');
+
+    Route::post('user/edit/{id}','UserController@update');
 });
 
 /**
