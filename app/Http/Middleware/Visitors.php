@@ -19,7 +19,7 @@ class Visitors
         if (Sentinel::guest()) {
             return $next($request);
         } else {
-            return redirect('/user');
+            return redirect('translate');
         }
         
     }

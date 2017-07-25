@@ -30,7 +30,11 @@ class Keywords extends Migration
             $table->smallInteger('index')->unsigned();
             $table->boolean('status');
             $table->smallInteger('language')->unsigned();
-            $table->foreign('keyword_id')->references('keyword_id')->on('wt_keyword');
+            $table
+                ->foreign('keyword_id')
+                ->references('keyword_id')
+                ->on('wt_keyword')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

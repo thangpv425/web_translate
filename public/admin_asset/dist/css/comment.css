@@ -1,0 +1,16 @@
+/*
+* @Author: 01101100
+* @Date:   2017-07-25 11:17:11
+* @Last Modified by:   01101100
+* @Last Modified time: 2017-07-25 11:21:17
+*/
+span.drop-comment {border-bottom: thin dotted; background: #ffeedd;}
+span.drop-comment:hover {text-decoration: none; background: #ffffff; z-index: 6; }
+span.drop-comment span {position: absolute; left: -9999px;
+  margin: 20px 0 0 0px; padding: 3px 3px 3px 3px;
+  border-style:solid; border-color:black; border-width:1px; z-index: 6;}
+span.drop-comment:hover span {left: 2%; background: #ffffff;} 
+span.drop-comment span {position: absolute; left: -9999px;
+  margin: 4px 0 0 0px; padding: 3px 3px 3px 3px; 
+  border-style:solid; border-color:black; border-width:1px;}
+span.drop-comment:hover span {margin: 20px 0 0 170px; background: #ffffff; z-index:6;} 

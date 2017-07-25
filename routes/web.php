@@ -13,19 +13,19 @@
 
 Route::get('/', function () {
     return view('Authentication.login');
-});
+})->middleware('visitor');
 
 /**
  * Route register
  */
-Route::get('register', 'RegisterController@register');
+Route::get('register', 'RegisterController@register')->middleware('visitor');
 
 Route::post('register', 'RegisterController@postRegister')->name('register');
 
 /**
  * Route login
  */
-Route::get('login', 'LoginController@login')->name('loginForm');
+Route::get('login', 'LoginController@login')->name('loginForm')->middleware('visitor');
 
 Route::post('login', 'LoginController@postLogin')->name('login');
 
