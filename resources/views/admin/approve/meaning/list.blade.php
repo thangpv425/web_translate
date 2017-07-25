@@ -11,7 +11,7 @@
                     <!-- /.col-lg-12 -->
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
-                            <tr align="center">
+                            <tr class="odd gradeX" align="center">
                                 <th>ID</th>
                                 <th>OpCode</th>
                                 <th>User</th>
@@ -27,13 +27,15 @@
                             <tr class="odd gradeX" align="center">
                                 <td>{{$row->meaning_temp_id}}</td>
                                 <td>
-                                	@if ($row->opCode == 0)
-                                		Add
-                                	@elseif ($row->opCode == 1)
-                                		Edit
-                                	@else
-                                		Delete
-                                	@endif
+                                    <span class="drop-comment" title="{{ $row->comment }}">
+                                        @if ($row->opCode == 0)
+                                        Add
+                                        @elseif ($row->opCode == 1)
+                                            Edit
+                                        @else
+                                            Delete
+                                        @endif
+                                    </span>
                                 </td>
                                 <td>{{ $row->user->email }}</td>
                                 <td>{{ $row->keyword['value'] }}</td>

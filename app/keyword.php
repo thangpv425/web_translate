@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class keyword extends Model
+class Keyword extends Model
 {
     protected $table = 'wt_keyword';
     public $primaryKey = 'keyword_id';

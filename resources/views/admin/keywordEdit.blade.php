@@ -32,7 +32,7 @@
                     <input class="form-control" name="txtMeaning" value="{{$meaning->value}}" />
                     <input type="radio" name="language" value='0' @if($meaning->language==0) checked @endif /> Vietnamese<br>
                     <input type="radio" name="language" value='1' @if($meaning->language==1) checked @endif /> English<br>
-                    
+             
                     <div class="form-group" id= "add_meaning">
                     </div>
                     <button type="submit" class="btn btn-default">Edit</button>
@@ -46,3 +46,13 @@
 </div>
 <!-- /#page-wrapper -->
 @endsection
+
+@section('script')
+<script>
+function add_fields() {
+    document.getElementById('add_meaning').innerHTML += '<br><label>Translate</label> \n\
+<input class="form-control" name="txtMeaning" placeholder="Example: chơi" />\n\
+<input type="radio" name="language" value=\'0\'/> Vietnamese<br>\n\
+<input type="radio" name="language" value=\'1\'/> English<br>';
+}
+</script>

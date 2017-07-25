@@ -107,7 +107,12 @@ class AdminController extends Controller
     	if ($data != null) {
         	switch ($opCode) {
 	    		case '0':
-	    			// TODO
+	    			$meaning = new meaning;
+	    			$meaning->value = $data['new_meaning'];
+	    			$meaning->language = $data['language'];
+	    			$meaning->index = $data['index'];
+	    			$meaning->save();
+	    			$data->delete();
 	    			break;
 	    		case '1': // Edit
 	    			$meaning = meaning::find($data['old_meaning_id']);
@@ -129,7 +134,10 @@ class AdminController extends Controller
 
     public function meaningDecline(Request $request)
     {
-    	// TODO
-    	echo "decline";
+    	$data = MeaningTemp::find($request->id);
+    	if($data != null){
+    		$data->delete();
+    	}
+    	return redirect()->route('meaningTempList');
     }
 }

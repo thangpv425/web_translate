@@ -20,3 +20,6 @@ Vue.component('example', require('./components/Example.vue'));
 const app = new Vue({
     el: '#app'
 });
+function add_field(){
+document.getElementById('add_meaning').innerHTML+= '<br><label>Translate</label><input class="form-control" name="txtMeaning" placeholder="Example: chơi" />';
+}

@@ -7,7 +7,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Keyword Add
+                <h1 class="page-header">Keyword
+                    <small>Add</small>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -34,10 +35,11 @@
                     
                     <div class="form-group" id= "add_meaning">
                     </div>
-
+                        
                     <button type="submit" class="btn btn-default">Keyword Add</button>
                     <button type="reset" class="btn btn-default">Reset</button>
-                <form>
+                    
+                </form>
             </div>
         </div>
         <!-- /.row -->

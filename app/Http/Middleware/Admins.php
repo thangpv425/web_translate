@@ -21,7 +21,7 @@ class Admins
         if (Sentinel::check() && Sentinel::inRole('admin')) {
             return $next($request);    
         } else {
-            return redirect('/user');
+            return redirect('/user/view/'.Sentinel::check()->id);
         }
         
     }

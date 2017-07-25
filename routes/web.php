@@ -13,19 +13,19 @@
 
 Route::get('/', function () {
     return view('Authentication.login');
-});
+})->middleware('visitor');
 
 /**
  * Route register
  */
-Route::get('register', 'RegisterController@register');
+Route::get('register', 'RegisterController@register')->middleware('visitor');
 
 Route::post('register', 'RegisterController@postRegister')->name('register');
 
 /**
  * Route login
  */
-Route::get('login', 'LoginController@login')->name('loginForm');
+Route::get('login', 'LoginController@login')->name('loginForm')->middleware('visitor');
 
 Route::post('login', 'LoginController@postLogin')->name('login');
 
@@ -37,6 +37,7 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 /**
  * Route admin
  */
+
 Route::prefix('admin')->middleware('admin')->group(function(){
 
 	Route::get('keywordList','KeywordListController@keywordList');
@@ -46,8 +47,8 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::post('keywordAdd', 'AdminActionController@post_keywordAdd');
     Route::get('keywordEdit/{id}', 'AdminActionController@get_keywordEdit');
     Route::post('keywordEdit', 'AdminActionController@post_keywordEdit')->name('keywordEditRoute');
-    
-	Route::get('delete_word/{id}','KeywordListController@deleteWord');
+
+    Route::get('delete_word/{id}','KeywordListController@deleteWord');
 	
 	// keyword table
 	Route::get('queue/keyword', 'AdminController@keywordTempList')->name('keywordTempList'); // return view
@@ -68,7 +69,13 @@ Route::group(['middleware'=>'loginned'],function(){
 	
 	Route::get('translate','TranslateController@showPage');
 	
-	Route::post('search','TranslateController@search');	
+	Route::post('search','TranslateController@search');
+
+    Route::get('user/view/{id}','UserController@view');
+
+    Route::get('user/edit/{id}','UserController@edit');
+
+    Route::post('user/edit/{id}','UserController@update');
 });
 
 /**

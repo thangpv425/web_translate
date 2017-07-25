@@ -1,6 +1,6 @@
 @extends('layout.index')
 @section('content')
-	<div id="page-wrapper">
+    <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
@@ -30,7 +30,7 @@
                                 <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/keywordEdit/{{$tl->keyword_id}}">Edit</a></td>
                             </tr>
                             @endif
-                        @endforeach  
+                        @endforeach
                         <a href="admin/keywordAdd" class="btn btn-default" role="button">+ Add new key word</a>
                         
                     </table>
