@@ -42,8 +42,10 @@ Route::prefix('admin')->middleware('admin')->group(function(){
 	Route::get('keywordList','KeywordListController@keywordList');
 
     
-    Route::get('keywordAdd','KeywordListController@get_keywordAdd');
-    Route::post('keywordAdd', 'KeywordListController@post_keywordAdd');
+    Route::get('keywordAdd','AdminActionController@get_keywordAdd');
+    Route::post('keywordAdd', 'AdminActionController@post_keywordAdd');
+    Route::get('keywordEdit/{id}', 'AdminActionController@get_keywordEdit');
+    Route::post('keywordEdit', 'AdminActionController@post_keywordEdit')->name('keywordEditRoute');
     
 	Route::get('delete_word/{id}','KeywordListController@deleteWord');
 	
@@ -72,3 +74,15 @@ Route::group(['middleware'=>'loginned'],function(){
 /**
  * Route user
  */
+Route::prefix('user')->middleware('user')->group(function(){
+
+	Route::get('keywordList','KeywordListController@keywordList');
+    
+    Route::get('keywordAdd','UserActionController@get_keywordAdd');
+    Route::post('keywordAdd', 'UserActionController@post_keywordAdd');
+    Route::get('keywordEdit/{id}', 'UserActionController@get_keywordEdit');
+    Route::post('keywordEdit', 'UserActionController@post_keywordEdit');
+    
+	Route::get('delete_word/{id}','UserActionController@deleteWord');
+	
+});

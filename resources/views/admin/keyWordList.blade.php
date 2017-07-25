@@ -27,7 +27,7 @@
                                 <td>{{$tl->value}}</td>
                                 
                                 <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/delete_word/{{$tl->meaning_id}}"> Delete</a></td>
-                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
+                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/keywordEdit/{{$tl->keyword_id}}">Edit</a></td>
                             </tr>
                             @endif
                         @endforeach  
