@@ -81,7 +81,7 @@ Route::group(['middleware'=>'loginned'],function(){
 	
 	Route::post('search','TranslateController@search');
 
-    Route::get('user/view/{id}','UserController@view');
+    Route::get('user/view/{id}','UserController@view')->name('viewUserInfo');
 
     Route::get('user/edit/{id}','UserController@edit');
 

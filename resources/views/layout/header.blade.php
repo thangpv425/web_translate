@@ -6,7 +6,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Web Translate</a>
+                
+                <a class="navbar-brand" href=""><i class="fa fa-search fa-fw" aria-hidden="true"></i>Web Translate</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -18,7 +19,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         @if($user=Sentinel::getUser())
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i>{{$user->first_name.' '.$user->last_name}}</a>
+                            <li><a href="user/view/{{ $user->id }}"><i class="fa fa-user fa-fw"></i>{{$user->first_name.' '.$user->last_name}}</a>
                             </li>
                         
                         @endif

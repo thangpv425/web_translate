@@ -42,12 +42,12 @@
                                 <td>{{ $row->oldMeaning['value'] }}</td>
                                 <td>{{ $row->new_meaning }}</td>
                                 <td class="center">
-                                	<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                	<a href="{{ route('approveOnMeaning', ['id' => $row->meaning_temp_id, 'opCode'=>$row->opCode]) }}"> Approve </a>
+                                	
+                                	<a href="{{ route('approveOnMeaning', ['id' => $row->meaning_temp_id, 'opCode'=>$row->opCode]) }}"><i class="fa fa-thumbs-o-up fa-fw" aria-hidden="true"></i> Approve </a>
                                 </td>
 	                                <td class="center">
-	                                <i class="fa fa-thumbs-o-down"></i> 
-	                                <a href="{{ route('declineOnMeaning', ['id' => $row->meaning_temp_id, 'opCode' => $row->opCode]) }}"> Decline </a>
+	                                 
+	                                <a href="{{ route('declineOnMeaning', ['id' => $row->meaning_temp_id, 'opCode' => $row->opCode]) }}"><i class="fa fa-thumbs-o-down fa-fw"></i> Decline </a>
                                 </td>
                             </tr>
                         @endforeach   
