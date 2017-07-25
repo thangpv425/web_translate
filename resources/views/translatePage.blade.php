@@ -49,7 +49,8 @@
                                 @endif
                                 @if(isset($result))
                                     @php
-                                        if(count($result)==0)
+
+                                        if($result=='nullVal')
                                             echo '<font color=\'red\'>* this keyword does not exist</font>';
                                         else
                                             foreach ($result as $result)
