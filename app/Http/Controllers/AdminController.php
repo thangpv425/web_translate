@@ -140,4 +140,5 @@ class AdminController extends Controller
     	}
     	return redirect()->route('meaningTempList');
     }
+
 }

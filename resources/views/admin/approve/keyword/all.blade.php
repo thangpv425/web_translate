@@ -26,6 +26,7 @@
                             <tr class="odd gradeX" align="center">
                                 <td>{{$row->keyword_temp_id}}</td>
                                 <td>
+                                    <span class="drop-comment" title="{{ $row->comment }}">
                                 	@if ($row->opCode == 0)
                                 		Add
                                 	@elseif ($row->opCode == 1)
@@ -33,6 +34,7 @@
                                 	@else
                                 		Delete
                                 	@endif
+                                    </span>
                                 </td>
                                 <td>{{ $row->user->email }}</td>
                                 <td>
