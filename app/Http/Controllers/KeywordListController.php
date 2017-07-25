@@ -24,5 +24,6 @@ class KeywordListController extends Controller
     	$keyword= meaning::all();
     	return view('admin.keyWordList',['keyword'=>$keyword]);
     }
+    
 }
 

@@ -1,12 +1,13 @@
-@extends('layoutUser.index')
+@extends('layout.index')
 @section('content')
 
 <div id="page-wrapper">
     <div class="container-fluid">
         <br><br>
         <form action="search" method="POST" role="form">
+
             <div class="row">
-                <div class="col-sm-6" >
+                <div class="col-sm-6" >    
 
                     {{ csrf_field() }}
                     <legend>Enter keyword</legend>

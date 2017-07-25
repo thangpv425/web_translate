@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
 
-class CheckRegistrationRequest extends FormRequest
+class CheckKeywordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +24,8 @@ class CheckRegistrationRequest extends FormRequest
     {
         return [
             'email'=>'required|email|unique:users',
-            'password'=>'required|min:6|max:32|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
-            'password_confirmation' => 'required|min:6|max:32|same:password|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+            'password'=>'required|min:6',
+            'password_confirmation' => 'required|min:6|same:password',
             'first_name' => 'nullable|string',
             'last_name' => 'nullable|string',
             //
