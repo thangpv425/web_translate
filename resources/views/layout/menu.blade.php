@@ -13,13 +13,13 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-home fa-fw"></i> Home page</a>
+                            <a href=""><i class="fa fa-home fa-fw"></i> Home page</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-list-ul fa-fw"></i> Word List</a>
+                            <a href=""><i class="fa fa-list-ul fa-fw"></i> Word List</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-id-badge fa-fw"></i> User management</a>
+                            <a href=""><i class="fa fa-male fa-fw"></i> User management</a>
                         </li>
                         
                     </ul>

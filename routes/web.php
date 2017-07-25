@@ -37,6 +37,7 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 /**
  * Route admin
  */
+
 Route::prefix('admin')->middleware('admin')->group(function(){
 
 	Route::get('keywordList','KeywordListController@keywordList');
@@ -44,7 +45,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     
     Route::get('keywordAdd','KeywordListController@get_keywordAdd');
     Route::post('keywordAdd', 'KeywordListController@post_keywordAdd');
-    
+
 	Route::get('delete_word/{id}','KeywordListController@deleteWord');
 	
 	// keyword table
@@ -66,7 +67,13 @@ Route::group(['middleware'=>'loginned'],function(){
 	
 	Route::get('translate','TranslateController@showPage');
 	
-	Route::post('search','TranslateController@search');	
+	Route::post('search','TranslateController@search');
+
+    Route::get('user/view/{id}','UserController@view');
+
+    Route::get('user/edit/{id}','UserController@edit');
+
+    Route::post('user/edit/{id}','UserController@update');
 });
 
 /**

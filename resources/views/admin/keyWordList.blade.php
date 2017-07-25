@@ -1,10 +1,10 @@
 @extends('layout.index')
 @section('content')
-	<div id="page-wrapper">
+    <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Word List
+                        <h1 class="page-header">Word list
                             
                         </h1>
                     </div>
@@ -12,12 +12,12 @@
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <tr class="odd gradeX" align="center">
                             
-                            <td><b>ID</b></b></td>
-                            <td><b>Keyword</b></td>
-                            <td><b>Meaning</b></td>
-                            <td><b>Delete</b></td>
-                            <td><b>Edit</b></td>
-                        </tr>
+                                <td><b>Id</b></b></td>
+                                <td><b>keyword</b></td>
+                                <td><b>Value</b></td>
+                                <td><b>Delete</b></td>
+                                <td><b>Edit</b></td>
+                            </tr>
                             
                         @foreach($keyword as $tl)
                             @if($tl->status == 1)
@@ -30,9 +30,8 @@
                                 <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
                             </tr>
                             @endif
-                        @endforeach  
-                        <a href="admin/keywordAdd" class="btn btn-default" role="button">+ Add new key word</a>
-                        
+                        @endforeach   
+                        </tbody>
                     </table>
                     
                 </div>
