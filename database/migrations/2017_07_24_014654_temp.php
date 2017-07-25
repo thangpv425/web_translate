@@ -23,8 +23,10 @@ class Temp extends Migration
             $table->integer('user_id')->unsigned(); // current user
             $table->integer('old_keyword_id')->unsigned()->nullable(); // use when edit or delete
             $table->string('new_keyword')->nullable();
+            
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('old_keyword_id')->references('keyword_id')->on('wt_keyword');
+            $table->timestamps();
         });
 
         Schema::create('wt_meaning_temp', function($table){
@@ -39,8 +41,21 @@ class Temp extends Migration
             $table->integer('old_meaning_id')->unsigned()->nullable(); // use when edit or delete
             $table->string('new_meaning')->nullable();
 
+            $table
+                ->foreign('keyword_id')
+                ->references('keyword_id')
+                ->on('wt_keyword')
+                ->onDelete('cascade');
+
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('old_meaning_id')->references('meaning_id')->on('wt_meaning');
+
+            $table
+            ->foreign('old_meaning_id')
+            ->references('meaning_id')
+            ->on('wt_meaning')
+            ->onDelete('cascade');
+            
+            $table->timestamps();
         });
     }
 
