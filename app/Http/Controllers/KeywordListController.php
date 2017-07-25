@@ -54,6 +54,12 @@ class KeywordListController extends Controller
         
         return redirect('admin/keywordList');
     }
+    
+    public function get_keywordEdit($keyword_id) {
+        echo $keyword_id;
+        $keyword = keyword::where('keyword_id',$keyword_id);
+        return view('admin.keywordEdit',['keyword'=>$keyword]);
+    }
 
 }
 
