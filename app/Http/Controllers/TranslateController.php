@@ -25,7 +25,7 @@ class TranslateController extends Controller
 
         if($r!=null)
             
-    	$result= $r->meaning->where('language',$request->idLanguage);
+    	$result= $r->meaning->where('language',$request->idLanguage)->where('status',1);
      //echo count($result);
     //echo $result;
     /*foreach($result as $r)
