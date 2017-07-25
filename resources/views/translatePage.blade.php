@@ -7,7 +7,7 @@
             <legend>Search</legend>
 
             <div class="form-group">
-                <label for="">enter keyword</label>
+                <label for="">Enter keyword</label>
                 <input type="text" class="form-control" name='keyword' placeholder="Input field">
 
             </div>

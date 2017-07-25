@@ -25,8 +25,8 @@ class CheckRegistrationRequest extends FormRequest
     {
         return [
             'email'=>'required|email|unique:users',
-            'password'=>'required|min:6',
-            'password_confirmation' => 'required|min:6|same:password',
+            'password'=>'required|min:6|max:32|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+            'password_confirmation' => 'required|min:6|max:32|same:password|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'first_name' => 'nullable|string',
             'last_name' => 'nullable|string',
             //
