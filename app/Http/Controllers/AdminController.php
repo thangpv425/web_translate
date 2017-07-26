@@ -37,24 +37,28 @@ class AdminController extends Controller
     	if($data != null){
     		switch ($opCode) {
 	    		case '0': // Add
-	    			$keyword = new keyword;
-	    			$keyword->value = $data['new_keyword'];
+	    			$keyword = keyword::find($data->old_keyword_id);
 	    			$keyword->status = 1;
+                    $keyword->save();
+                    $data->delete();
 	    			break;
 	    		case '1': // Edit
 	    			$keyword = keyword::find($data['old_keyword_id']);
 	    			$keyword->value = $data['new_keyword'];
+                    $keyword->save();
+                    $data->delete();
 	    			break;
 	    		case '2': // Delete
 	    			$keyword = keyword::find($data['old_keyword_id']);
 	    			$keyword->status = 0;
+                    $keyword->save();
+                    $data->delete();
 	    			break;	
 	    		default:
 
 	    			break;
     		}
-    		$keyword->save();
-    		$data->delete();
+    		
     	}
     	return redirect()->route('keywordTempList');
     }
@@ -112,6 +116,8 @@ class AdminController extends Controller
 	    			$meaning->value = $data['new_meaning'];
 	    			$meaning->language = $data['language'];
 	    			$meaning->index = $data['index'];
+                    $meaning->keyword_id = $data['keyword_id'];
+                    $meaning->status = 1;
 	    			$meaning->save();
 	    			$data->delete();
 	    			break;

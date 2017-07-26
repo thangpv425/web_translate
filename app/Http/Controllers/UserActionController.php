@@ -45,9 +45,9 @@ class UserActionController extends Controller
     }
     
     public function get_keywordEdit($id) {
-//        $keyword = keyword::where('keyword_id',$id)->first();
-//        $meaning = meaning::where('keyword_id',$id)->get()->first();
-//        return view('admin.keywordEdit',['keyword'=>$keyword,'meaning'=>$meaning]);
+       $keyword = keyword::where('keyword_id',$id)->first();
+       $meaning = meaning::where('keyword_id',$id)->get()->first();
+       return view('admin.keywordEdit',['keyword'=>$keyword,'meaning'=>$meaning]);
     }
     
     public function post_keywordEdit(Request $request) {
