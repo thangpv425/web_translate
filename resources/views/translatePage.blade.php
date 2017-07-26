@@ -11,18 +11,18 @@
 
                     {{ csrf_field() }}
                     <legend>Enter keyword</legend>
-                    <select class="form-control" name='idSource' style='width:300px;'>
+                    <select class="form-control" name='idSource' style='width:50%;'>
                         <option value="o"> Japanese</option>}
                     </select><br>
                     <div class="form-group">              
-                        <textarea name="keyword" cols='73' rows = '5' placeholder="Input field"></textarea>
+                        <textarea  name="keyword" style='width:90%;resize: none;' rows='8' placeholder="Input field"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Search</button>                    
                 </div>
                 <div class="col-sm-6" >
                     <fieldset >     
                         <legend>Result</legend>
-                        <select class="form-control" name='idLanguage' style='width:300px;'>
+                        <select class="form-control" name='idLanguage' style='width:50%;'>
                             @if(isset($selected))
                                 
                                 @if($selected==0)
@@ -45,7 +45,7 @@
                         @endphp
                         @if(isset($keyword))
                                     @php
-                                    $meaning= $meaning.'&#10;+ '.$keyword.' :&#10;';
+                                    $meaning= $meaning.'&#10;+ '.$keyword->value.' :&#10;';
                                     @endphp
                                 @endif
                                 @if(isset($result))
@@ -59,9 +59,18 @@
                                     @endphp
 
                                 @endif             
-                        <textarea name="res" cols='73' rows = '5' placeholder="Input field" readonly>{{$meaning}}</textarea>
+                        <textarea name="res" style='width:90%;resize: none;'  rows = '8' placeholder="Input field" readonly>{{$meaning}}</textarea>
                     </div>
-                        
+                    <a href="user/keywordAdd" class="btn btn-primary">Add word</a>  
+                    @if(isset($result) && $result!='nullVal')
+                        @if(Sentinel::inRole('admin'))
+                            <a href="admin/keywordEdit/{{$keyword->keyword_id}}" class="btn btn-primary">Edit</a>  
+                            <a href="admin/delete_word/{{$keyword->keyword_id}}" class="btn btn-primary">Delete</a>  
+                        @else
+                            <a href="user/keywordEdit/{{$keyword->keyword_id}}" class="btn btn-primary">Edit</a>  
+                            <a href="user/delete_word/{{$keyword->keyword_id}}" class="btn btn-primary">Delete</a>  
+                        @endif
+                    @endif 
 
                     </fieldset>                    
                 </div>
