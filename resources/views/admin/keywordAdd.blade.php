@@ -30,7 +30,7 @@
                     </div>
                         <label>Translate</label>
                         <input class="form-control" name="txtMeaning" placeholder="Example: chơi" />
-                        <input type="radio" name="language" value='0' /> Vietnamese<br>
+                        <input type="radio" name="language" value='0' checked="true" /> Vietnamese<br>
                         <input type="radio" name="language" value='1' /> English<br>
                     
                     <div class="form-group" id= "add_meaning">
