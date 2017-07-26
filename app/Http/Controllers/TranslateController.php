@@ -32,8 +32,9 @@ class TranslateController extends Controller
         echo $r.'<br>';*/
     //.'<br>'.$result->value;
     //echo $result[0]->1->value;
-    
-        else $result='* this keyword does not exist';
+        else
+        $result='nullVal';
+        //echo count($result);
     	//echo $result;
     	//echo $result[0]->value.'<br>'.$result[0]->value;
     	return view('translatePage',['keyword'=>$request->keyword,'result'=>$result,'selected'=>$selected]);
