@@ -15,8 +15,7 @@
                         <option value="o"> Japanese</option>}
                     </select><br>
                     <div class="form-group">              
-                        <textarea name="keyword" cols='73' rows = '5' placeholder="Input field">
-                        </textarea>
+                        <textarea name="keyword" cols='73' rows = '5' placeholder="Input field"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Search</button>                    
                 </div>
@@ -40,28 +39,29 @@
                                 <option value="1" selected="selected"> English</option>
                             @endif
                         </select><br>
-                        <div class="panel panel-default">
-                            <div class="panel-body" style="background-color:lavender;height:120px">
-                                @if(isset($keyword))
+                        <div class="form-group"> 
+                        @php
+                            $meaning='';
+                        @endphp
+                        @if(isset($keyword))
                                     @php
-                                    echo '<h4>'.$keyword.':</h4>';
+                                    $meaning= $meaning.'&#10;+ '.$keyword.' :&#10;';
                                     @endphp
                                 @endif
                                 @if(isset($result))
                                     @php
-
                                         if($result=='nullVal')
-                                            echo '<font color=\'red\'>* this keyword does not exist</font>';
+                                            $meaning= $meaning. '* this keyword does not exist';
                                         else
                                             foreach ($result as $result)
-                                                echo '- '.$result->value.'<br>';
+                                                $meaning= $meaning. ' - '.$result->value.'&#10;';
                                                                          
                                     @endphp
 
-                                @endif
-
-                            </div>
-                        </div>
+                                @endif             
+                        <textarea name="res" cols='73' rows = '5' placeholder="Input field" readonly>{{$meaning}}</textarea>
+                    </div>
+                        
 
                     </fieldset>                    
                 </div>
