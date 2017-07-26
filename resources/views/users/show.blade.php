@@ -34,8 +34,8 @@
                             <td>{{$user->last_name}}</td>
                             <td>{{$user->email}}</td>
                             <td class="" style="width: 10%;">
-                                <i class="fa fa-pencil fa-fw"></i><a href="user/edit/{{$user->id}}">Edit</a> |
-                                <i class="fa fa-trash-o  fa-fw"></i><a href="user/delete/{{$user->id}}" onclick = "return confirm('Are you sure?')"> Delete</a>
+                                <a href="user/edit/{{$user->id}}"><i class="fa fa-pencil fa-fw"></i>Edit</a> |
+                                <a href="user/delete/{{$user->id}}" onclick = "return confirm('Are you sure?')"> <i class="fa fa-trash-o  fa-fw"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach

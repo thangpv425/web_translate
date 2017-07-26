@@ -31,7 +31,6 @@
                                 @else
                                     <option value="0" > VietNamese</option>
                                     <option value="1" selected="selected"> English</option>
-
                                 @endif                               
                                 
                             @else

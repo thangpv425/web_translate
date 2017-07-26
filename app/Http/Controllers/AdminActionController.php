@@ -15,11 +15,8 @@ class AdminActionController extends Controller
     public function post_keywordAdd(Request $request){
         
         $this->validate($request,[
-            'txtKeyWord' => 'required|string|unique:wt_keyword,value'
-        ],[
-            'txtKeyWord.unique'=>'This keyword existed',
-            'txtKeyWord.required'=>'keyword Require!',
-            'txtKeyWord.string'=>'Must be string'
+            'txtKeyWord' => 'required|alpha|unique:wt_keyword,value',
+            'txtMeaning' => 'required|alpha'
         ]);
         $keyword = new keyword();
         $keyword->value = $request->txtKeyWord;
@@ -48,17 +45,18 @@ class AdminActionController extends Controller
     public function post_keywordEdit(Request $request) {
         
         $id=$request->keyword_id;
-//        
-//        $this->validate($request,[
-//            'txtKeyWord,txtMeaning' => 'required|string'
-//        ]);
+        
+        $this->validate($request,[
+            'txtKeyWord' => 'required|alpha',
+            'txtMeaning' => 'required|alpha'
+        ]);
         
         $keyword = keyword::find($id);
         $keyword->value = $request->txtKeyWord;
         $keyword->status= 1;
         $keyword->save();
         
-        $meaning = meaning::where('keyword_id',$id)->get()->first();
+        $meaning = $keyword->meaning['0'];//meaning::where('keyword_id',$id)->get()->first();
         $meaning->value = $request->txtMeaning;
         $meaning->index = 1;
         $meaning->status = 1;
