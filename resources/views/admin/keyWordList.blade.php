@@ -10,7 +10,8 @@
                     </div>
                     <!-- /.col-lg-12 -->
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                        <tr class="odd gradeX" align="center">
+                        <thead>
+                            <tr class="odd gradeX" align="center">
                             
                                 <td><b>ID</b></b></td>
                                 <td><b>Keyword</b></td>
@@ -18,8 +19,9 @@
                                 <td><b>Language</b></td>
                                 <td><b>Delete</b></td>                                
                                 <td><b>Edit</b></td>
-                            </tr>
-                            
+                            </tr>    
+                        </thead>
+                        <tbody>
                         @foreach($keyword as $tl)
                             @if($tl->status == 1)
                             <tr class="odd gradeX" align="center">
@@ -40,8 +42,8 @@
                             </tr>
                             @endif
                         @endforeach
+                        </tbody>
                         <a href="admin/keywordAdd" class="btn btn-default" role="button">+ Add new key word</a>
-                        
                     </table>
                     
                 </div>

@@ -15,8 +15,7 @@
                         <option value="o"> Japanese</option>}
                     </select><br>
                     <div class="form-group">              
-                        <textarea name="keyword" cols='73' rows = '5' placeholder="Input field">
-                        </textarea>
+                        <textarea name="keyword" cols='73' rows = '5' placeholder="Input here"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Search</button>                    
                 </div>
