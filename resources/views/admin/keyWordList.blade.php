@@ -2,14 +2,15 @@
 @section('content')
     <div id="page-wrapper">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">Word list
-                            
-                        </h1>
+                <div class="page-header row">
+                    <h1 class="col-6">Word list</h1>
+                    <div class="col-6"><a href="admin/keywordAdd" class="btn btn-default" role="button">+ Add new key word</a>
                     </div>
-                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
                         <tr class="odd gradeX" align="center">
                             
                                 <td><b>Id</b></b></td>
@@ -18,20 +19,25 @@
                                 <td><b>Delete</b></td>
                                 <td><b>Edit</b></td>
                             </tr>
-                            
+                        </thead>
+                        </tbody>
+                        <?php //echo count($keyword); 
+                            $count=0;
+                        ?>
                         @foreach($keyword as $tl)
                             @if($tl->status == 1)
+                            <?php $count++; ?>
                             <tr class="odd gradeX" align="center">
-                                <td>{{$tl->meaning_id}}</td>
+                                <td>{{$count}}</td>
                                 <td>{{$tl->keyword->value}}</td>
                                 <td>{{$tl->value}}</td>
                                 
-                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="admin/delete_word/{{$tl->meaning_id}}"> Delete</a></td>
-                                <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/keywordEdit/{{$tl->keyword_id}}">Edit</a></td>
+                                <td class="center"><a href="admin/delete_word/{{$tl->meaning_id}}"><i class="fa fa-trash-o  fa-fw"></i> Delete</a></td>
+                                <td class="center"><a href="admin/keywordEdit/{{$tl->keyword_id}}"> <i class="fa fa-pencil fa-fw"></i> Edit</a></td>
                             </tr>
                             @endif
                         @endforeach
-                        <a href="admin/keywordAdd" class="btn btn-default" role="button">+ Add new key word</a>
+                        </tbody>
                         
                     </table>
                     

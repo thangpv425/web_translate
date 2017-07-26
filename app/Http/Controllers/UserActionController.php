@@ -11,26 +11,26 @@ use App\keyword_temp;
 class UserActionController extends Controller
 {
     public function get_keywordAdd(){
-        return view('admin.keywordAdd');
+        //return view('admin.keywordAdd');
     }
     public function post_keywordAdd(Request $request){
-        
+//        $user=Sentinel::getUser();
 //        $this->validate($request,[
-//            'txtKeyWord' => 'required|string|unique:wt_keyword,value'
-//        ],[
-//            'txtKeyWord.unique'=>'This keyword existed',
-//            'txtKeyWord.required'=>'keyword Require!',
-//            'txtKeyWord.string'=>'Must be string'
+//            'txtKeyWord' => 'required|alpha|unique:wt_keyword,value',
+//            'txtMeaning' => 'required|alpha'
 //        ]);
+//        $keyword = new keyword();
+//        $keyword->value = $request->txtKeyWord;
+//        $keyword->status= -1;
+//        $keyword->save();
+//        //$id=$keyword->keyword_id;
 //        
 //        $keyword_temp = new keyword_temp();
-//        $keyword_temp->opCode = 0;  
-//        $keyword_temp->user_id = 1;
-//        $keyword_temp->old_keyword_id = -1;
+//        $keyword_temp->opCode = 0;
+//        $keyword_temp->user_id = $user->id;
+//        $keyword_temp->old_keyword_id = $keyword->keyword_id;
 //        $keyword_temp->new_keyword = $request->txtKeyWord;
-//        dd($keyword_temp);
-        //$keyword_temp->save();
-        //$id=$keyword->keyword_id;
+//        $keyword_temp->save();
 //        
 //        $meaning = new meaning();
 //        $meaning->keyword_id = $id;
