@@ -209,4 +209,11 @@ class AdminController extends Controller
         return redirect('admin/show')->with('notification','You have successfully added the user');
     }
 
+    public function delete($id = NULL)
+    {
+        $user = Users::find($id);
+        $user->delete();
+        return redirect('admin/show')->with('notification','You have successfully deleted the user');
+    }
+
 }
