@@ -44,6 +44,7 @@
                         <label>Comment</label>
                         <input class="form-control" name="txtComment" placeholder="Example: comment" />
                     @endif
+                    
                     <div class="form-group" id= "add_meaning">
                     </div>
                         
