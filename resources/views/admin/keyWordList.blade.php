@@ -11,15 +11,14 @@
                     <!-- /.col-lg-12 -->
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
-                        <tr class="odd gradeX" align="center">
-                            
+                            <tr class="odd gradeX" align="center">                           
                                 <td><b>ID</b></b></td>
                                 <td><b>Keyword</b></td>
                                 <td><b>Meaning</b></td>
                                 <td><b>Language</b></td>
                                 <td><b>Delete</b></td>                                
                                 <td><b>Edit</b></td>
-                        </tr>
+                            </tr>
                         </thead>
                         <tbody>
                         @foreach($keyword as $tl)
@@ -33,13 +32,13 @@
                                 @else
                                     <td>English</td>
                                 @endif
-                                <td class="center"><a href="admin/delete_word/{{$tl->meaning_id}}"><i class="fa fa-trash-o  fa-fw"></i>Delete</a></td>
+                                <td class="center"><a href="admin/delete_word/{{$tl->meaning_id}}"><i class="fa fa-trash-o fa-fw"></i>Delete</a></td>
                                 <td class="center"><a href="admin/keywordEdit/{{$tl->keyword_id}}"><i class="fa fa-pencil fa-fw"></i> Edit</a></td>
                             </tr>
                             @endif
                         @endforeach
+                        </tbody>
                         <a href="admin/keywordAdd" class="btn btn-default" role="button">+ Add new key word</a>
-                    </tbody>
                     </table>
                     
                 </div>
