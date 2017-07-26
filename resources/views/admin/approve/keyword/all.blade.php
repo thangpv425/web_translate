@@ -26,6 +26,7 @@
                             <tr class="odd gradeX" align="center">
                                 <td>{{$row->keyword_temp_id}}</td>
                                 <td>
+                                    <span class="drop-comment" title="{{ $row->comment }}">
                                 	@if ($row->opCode == 0)
                                 		Add
                                 	@elseif ($row->opCode == 1)
@@ -33,6 +34,7 @@
                                 	@else
                                 		Delete
                                 	@endif
+                                    </span>
                                 </td>
                                 <td>{{ $row->user->email }}</td>
                                 <td>
@@ -44,12 +46,12 @@
                                 </td>
                                 <td>{{ $row->new_keyword }}</td>
                                 <td class="center">
-                                	<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                	<a href="{{ route('approveOnKeyword', ['id' => $row->keyword_temp_id, 'opCode'=>$row->opCode]) }}"> Approve </a>
+                                	
+                                	<a href="{{ route('approveOnKeyword', ['id' => $row->keyword_temp_id, 'opCode'=>$row->opCode]) }}"><i class="fa fa-thumbs-o-up fa-fw" aria-hidden="true"></i> Approve </a>
                                 </td>
 	                                <td class="center">
-	                                <i class="fa fa-thumbs-o-down"></i> 
-	                                <a href="{{ route('declineOnKeyword', ['id' => $row->keyword_temp_id, 'opCode' => $row->opCode]) }}"> Decline </a>
+	                                
+	                                <a href="{{ route('declineOnKeyword', ['id' => $row->keyword_temp_id, 'opCode' => $row->opCode]) }}"><i class="fa fa-thumbs-o-down fa-fw"></i>  Decline </a>
                                 </td>
                             </tr>
                         @endforeach   

@@ -8,6 +8,9 @@
 				</div>
 				<div class="panel-body">
 					<form action="{{ route('register') }}" method="POST">
+						@if(session('err'))
+							<div class="alert alert-warning" role="alert"> { { session('err')}}</div>
+						@endif
 						{{ csrf_field() }}
 						<div class="form-group">
 							<div class="input-group">

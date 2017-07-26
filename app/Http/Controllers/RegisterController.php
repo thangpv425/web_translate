@@ -23,7 +23,7 @@ class RegisterController extends Controller
 		$user = Sentinel::register($request->all(), true);
 		$role = Sentinel::findRoleBySlug('user');
     	$role->users()->attach($user);
-    	dd($user);
-    	// Sentinel::create($request->all());
+        Sentinel::authenticate($request->all());
+        return redirect('user/view/'.$user->id);
     }
 }

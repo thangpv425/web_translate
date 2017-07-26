@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,15 @@ Route::prefix('admin')->middleware('admin')->group(function(){
 	Route::get('approve/meaning', 'AdminController@meaningApprove')->name('approveOnMeaning');
 
 	Route::get('decline/meaning', 'AdminController@meaningDecline')->name('declineOnMeaning');
+
+	// show list user
+    Route::get('show', 'AdminController@show');
+
+    // create user
+    Route::get('create', 'AdminController@create');
+
+    // store user
+    Route::post('store', 'AdminController@store');
 });
 
 Route::group(['middleware'=>'loginned'],function(){

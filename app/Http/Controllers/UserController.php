@@ -89,9 +89,4 @@ class UserController extends Controller
         $user ->update();
         return redirect('user/edit/'.$id)->with('notification','Edit completed');
     }
-
-    public function show()
-    {
-
-    }
 }

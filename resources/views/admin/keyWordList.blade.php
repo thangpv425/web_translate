@@ -2,43 +2,44 @@
 @section('content')
     <div id="page-wrapper">
             <div class="container-fluid">
-                <div class="page-header row">
-                    <h1 class="col-6">Word list</h1>
-                    <div class="col-6"><a href="admin/keywordAdd" class="btn btn-default" role="button">+ Add new key word</a>
-                    </div>
-                </div>
-                <!-- /.row -->
                 <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Word
+                            <small>List</small>
+                        </h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                         <tr class="odd gradeX" align="center">
                             
-                                <td><b>Id</b></b></td>
-                                <td><b>keyword</b></td>
-                                <td><b>Value</b></td>
-                                <td><b>Delete</b></td>
+                                <td><b>ID</b></b></td>
+                                <td><b>Keyword</b></td>
+                                <td><b>Meaning</b></td>
+                                <td><b>Language</b></td>
+                                <td><b>Delete</b></td>                                
                                 <td><b>Edit</b></td>
-                            </tr>
+                        </tr>
                         </thead>
-                        </tbody>
-                        <?php //echo count($keyword); 
-                            $count=0;
-                        ?>
+                        <tbody>
                         @foreach($keyword as $tl)
                             @if($tl->status == 1)
-                            <?php $count++; ?>
                             <tr class="odd gradeX" align="center">
-                                <td>{{$count}}</td>
+                                <td>{{$tl->meaning_id}}</td>
                                 <td>{{$tl->keyword->value}}</td>
                                 <td>{{$tl->value}}</td>
-                                
-                                <td class="center"><a href="admin/delete_word/{{$tl->meaning_id}}"><i class="fa fa-trash-o  fa-fw"></i> Delete</a></td>
-                                <td class="center"><a href="admin/keywordEdit/{{$tl->keyword_id}}"> <i class="fa fa-pencil fa-fw"></i> Edit</a></td>
+                                @if($tl->language==0)
+                                    <td>Vietnamese</td>
+                                @else
+                                    <td>English</td>
+                                @endif
+                                <td class="center"><a href="admin/delete_word/{{$tl->meaning_id}}"><i class="fa fa-trash-o  fa-fw"></i>Delete</a></td>
+                                <td class="center"><a href="admin/keywordEdit/{{$tl->keyword_id}}"><i class="fa fa-pencil fa-fw"></i> Edit</a></td>
                             </tr>
                             @endif
                         @endforeach
-                        </tbody>
-                        
+                        <a href="admin/keywordAdd" class="btn btn-default" role="button">+ Add new key word</a>
+                    </tbody>
                     </table>
                     
                 </div>
