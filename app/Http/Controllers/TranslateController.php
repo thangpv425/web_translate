@@ -37,6 +37,6 @@ class TranslateController extends Controller
         //echo count($result);
     	//echo $result;
     	//echo $result[0]->value.'<br>'.$result[0]->value;
-    	return view('translatePage',['keyword'=>$request->keyword,'result'=>$result,'selected'=>$selected]);
+    	return view('translatePage',['keyword'=>$r,'result'=>$result,'selected'=>$selected]);
     }
 }

@@ -44,7 +44,7 @@
                             <div class="panel-body" style="background-color:lavender;height:120px">
                                 @if(isset($keyword))
                                     @php
-                                    echo '<h4>'.$keyword.':</h4>';
+                                    echo '<h4>'.$keyword->value.':</h4>';
                                     @endphp
                                 @endif
                                 @if(isset($result))
@@ -62,7 +62,11 @@
 
                             </div>
                         </div>
-
+                        <a class="btn btn-primary" href='user/keywordAdd'>Add word</a>
+                        @if(isset($result))
+                            <a class="btn btn-primary" href='user/keywordEdit/{{$keyword->keyword_id}}'>Edit</a>
+                            <a class="btn btn-primary">Delete</a>
+                        @endif
                     </fieldset>                    
                 </div>
             </div>
