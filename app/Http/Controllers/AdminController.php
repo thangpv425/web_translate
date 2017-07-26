@@ -49,9 +49,7 @@ class AdminController extends Controller
 	    			$keyword = keyword::find($data['old_keyword_id']);
 	    			$keyword->status = 0;
 	    			break;	
-	    		default:
-
-	    			break;
+	    		default: break;
     		}
     		$keyword->save();
     		$data->delete();

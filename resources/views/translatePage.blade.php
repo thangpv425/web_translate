@@ -11,9 +11,28 @@
 
                     {{ csrf_field() }}
                     <legend>Enter keyword</legend>
-                    <select class="form-control" name='idSource' style='width:300px;'>
-                        <option value="o"> Japanese</option>}
-                    </select><br>
+<!--                    <select class="form-control" name='idSource' style='width:300px;'>
+                        <option value="o"> Japanese</option>
+                    </select>-->
+                    <div>
+                        <div class="pull-left" style="margin-right:5px">
+                            <select class="form-control" name='idSource' style='width:300px;'>
+                                <option value="o"> Japanese</option>}
+                            </select>
+                        </div>
+                        <div>
+                            <div class="input-group">
+                                @if((Sentinel::check())&& (Sentinel::inRole('user')))
+                                <a href="user/keywordAdd" class="btn btn-default" role="button"> + </a>
+                                @endif
+
+                                @if((Sentinel::check())&& (Sentinel::inRole('admin')))
+                                <a href="admin/keywordAdd" class="btn btn-default" role="button"> + </a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <br>
                     <div class="form-group">              
                         <textarea name="keyword" cols='73' rows = '5' placeholder="Input field">
                         </textarea>

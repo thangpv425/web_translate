@@ -5,43 +5,48 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\keyword;
 use App\meaning;
-use App\keyword_temp;
+use App\KeywordTemp;
+use App\MeaningTemp;
+use Sentinel;
 
 
 class UserActionController extends Controller
 {
     public function get_keywordAdd(){
-        //return view('admin.keywordAdd');
+        return view('admin/keywordAdd');
     }
     public function post_keywordAdd(Request $request){
-//        $user=Sentinel::getUser();
-//        $this->validate($request,[
-//            'txtKeyWord' => 'required|alpha|unique:wt_keyword,value',
-//            'txtMeaning' => 'required|alpha'
-//        ]);
-//        $keyword = new keyword();
-//        $keyword->value = $request->txtKeyWord;
-//        $keyword->status= -1;
-//        $keyword->save();
-//        //$id=$keyword->keyword_id;
-//        
-//        $keyword_temp = new keyword_temp();
-//        $keyword_temp->opCode = 0;
-//        $keyword_temp->user_id = $user->id;
-//        $keyword_temp->old_keyword_id = $keyword->keyword_id;
-//        $keyword_temp->new_keyword = $request->txtKeyWord;
-//        $keyword_temp->save();
-//        
-//        $meaning = new meaning();
-//        $meaning->keyword_id = $id;
-//        $meaning->value = $request->txtMeaning;
-//        $meaning->index = 1;
-//        $meaning->status = 1;
-//        
-//        $meaning->language = $request->language;
-//        $meaning->save();
-//        
-//        return redirect('admin/keywordList');
+        $user=Sentinel::getUser();
+        $this->validate($request,[
+            'txtKeyWord' => 'required|alpha|unique:wt_keyword,value',
+            'txtMeaning' => 'required|regex:/^[A-Za-z ]+$/',
+            'txtCommment'=> 'alpha'
+        ]);
+        //add to wt_keyword with status = -1
+        $keyword = new keyword();
+        $keyword->value = $request->txtKeyWord;
+        $keyword->status= -1;
+        $keyword->save();
+        $id=$keyword->keyword_id;        
+        
+        $keyword_temp = new KeywordTemp();
+        $keyword_temp->opCode = 0;
+        $keyword_temp->old_keyword_id = $id;
+        $keyword_temp->user_id = $user->id;
+        $keyword_temp->new_keyword = $request->txtKeyWord;
+        $keyword_temp->comment = $request->txtComment;
+        $keyword_temp->save();
+        
+        $meaning_temp = new MeaningTemp();
+        $meaning_temp->opCode = 0;
+        $meaning_temp->user_id = $user->id;
+        $meaning_temp->keyword_id = $id;
+        $meaning_temp->new_meaning = $request->txtMeaning;
+        $meaning_temp->index = 1;
+        $meaning_temp->language = $request->language;
+        $meaning_temp->comment = $request->txtComment;
+        $meaning_temp->save();
+        return redirect('translate');
     }
     
     public function get_keywordEdit($id) {
