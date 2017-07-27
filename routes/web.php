@@ -34,3 +34,9 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::get('register', 'Auth\RegisterController@registerForm')->middleware('guest');
 
 Route::post('register', 'Auth\RegisterController@register')->name('register');
+
+
+Route::group(['middleware'=>'checkLogin'],function(){
+	Route::get('translate','User\TranslateController@showPage');
+	Route::post('search','User\TranslateController@search');
+});
