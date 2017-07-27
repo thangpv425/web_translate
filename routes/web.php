@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return redirect()->route('loginForm');
+	return redirect()->route('loginForm');
 });
 
 Route::get('home', function(){
@@ -20,7 +20,7 @@ Route::get('home', function(){
 });
 
 /**
- * Route login, logout
+ * Route guest
  */
 Route::get('login', 'Auth\LoginController@loginForm')->name('loginForm')->middleware('guest');
 
@@ -28,9 +28,29 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 
 Route::get('logout', 'Auth\LoginController@logout');
 
-/**
- * Route register
- */
-Route::get('register', 'Auth\RegisterController@registerForm')->middleware('guest');
+Route::get('register', 'Auth\LoginController@registerForm')->middleware('guest');
 
-Route::post('register', 'Auth\RegisterController@register')->name('register');
+Route::post('register', 'Auth\LoginController@register')->name('register');
+
+/**
+ * Route admin
+ */
+Route::prefix('admin')->middleware('admin')->group(function(){
+	// keyword table
+	Route::get('queue/keyword', 'admin\AdminController@listKeywordTemp')->name('keywordTempList'); // return view
+
+	Route::get('approve/keyword', 'admin\AdminController@approveKeyword')->name('approveOnKeyword')->where(['id' => '[0-9]+','opCode' => '[0-9]+']);
+
+	Route::get('decline/keyword', 'admin\AdminController@declineKeyword')->name('declineOnKeyword');
+	
+	// meaning table
+	Route::get('queue/meaning', 'admin\AdminController@listMeaningTemp')->name('meaningTempList');
+
+	Route::get('approve/meaning', 'admin\AdminController@approveMeaning')->name('approveOnMeaning');
+
+	Route::get('decline/meaning', 'admin\AdminController@declineMeaning')->name('declineOnMeaning');
+});
+
+/**
+ * Route user
+ */

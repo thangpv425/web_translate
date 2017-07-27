@@ -11,16 +11,16 @@ class MeaningTemp extends Model
 
     public function user()
     {
-    	return $this->belongsTo('App\Users');
+    	return $this->belongsTo('App\User');
     }
 
     public function keyword()
     {
-        return $this->belongsTo('App\keyword', 'keyword_id', 'keyword_id');
+        return $this->belongsTo('App\Keyword', 'keyword_id', 'keyword_id');
     }
 
     public function oldMeaning()
     {
-        return $this->hasOne('App\meaning', 'meaning_id', 'old_meaning_id');
+        return $this->hasOne('App\Meaning', 'meaning_id', 'old_meaning_id');
     }
 }
