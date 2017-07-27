@@ -12,5 +12,25 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('loginForm');
 });
+
+Route::get('home', function(){
+	echo "Content";
+});
+
+/**
+ * Route login, logout
+ */
+Route::get('login', 'Auth\LoginController@loginForm')->name('loginForm')->middleware('guest');
+
+Route::post('login', 'Auth\LoginController@login')->name('login');
+
+Route::get('logout', 'Auth\LoginController@logout');
+
+/**
+ * Route register
+ */
+Route::get('register', 'Auth\RegisterController@registerForm')->middleware('guest');
+
+Route::post('register', 'Auth\RegisterController@register')->name('register');
