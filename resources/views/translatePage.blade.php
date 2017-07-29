@@ -11,18 +11,18 @@
 
                     {{ csrf_field() }}
                     <legend>Enter keyword</legend>
-                    <select class="form-control" name='idSource' style='width:300px;'>
+                    <select class="form-control" name='idSource' style='width:50%;'>
                         <option value="o"> Japanese</option>}
                     </select><br>
                     <div class="form-group">              
-                        <textarea name="keyword" cols='73' rows = '5' placeholder="Input here"></textarea>
+                        <textarea  name="keyword" style='width:90%;resize: none;' rows='8' placeholder="Input field"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Search</button>                    
                 </div>
                 <div class="col-sm-6" >
                     <fieldset >     
                         <legend>Result</legend>
-                        <select class="form-control" name='idLanguage' style='width:300px;'>
+                        <select class="form-control" name='idLanguage' style='width:50%;'>
                             @if(isset($selected))
                                 
                                 @if($selected==0)
@@ -38,28 +38,38 @@
                                 <option value="1" selected="selected"> English</option>
                             @endif
                         </select><br>
-                        <div class="panel panel-default">
-                            <div class="panel-body" style="background-color:lavender;height:120px">
-                                @if(isset($keyword))
+                        <div class="form-group"> 
+                        @php
+                            $meaning='';
+                        @endphp
+                        @if(isset($keyword))
                                     @php
-                                    echo '<h4>'.$keyword.':</h4>';
+                                    $meaning= $meaning.'&#10;+ '.$keyword->value.' :&#10;';
                                     @endphp
                                 @endif
                                 @if(isset($result))
                                     @php
-
                                         if($result=='nullVal')
-                                            echo '<font color=\'red\'>* this keyword does not exist</font>';
+                                            $meaning= $meaning. '* this keyword does not exist';
                                         else
                                             foreach ($result as $result)
-                                                echo '- '.$result->value.'<br>';
+                                                $meaning= $meaning. ' - '.$result->value.'&#10;';
                                                                          
                                     @endphp
 
-                                @endif
-
-                            </div>
-                        </div>
+                                @endif  
+                        <textarea name="res" style='width:90%;resize: none;'  rows = '8' placeholder="Input field" readonly>{{$meaning}}</textarea>
+                    </div>
+                    <a href="user/keywordAdd" class="btn btn-primary">Add word</a>  
+                    @if(isset($result) && $result!='nullVal')
+                        @if(Sentinel::inRole('admin'))
+                            <a href="admin/keywordEdit/{{$keyword->keyword_id}}" class="btn btn-primary">Edit</a>  
+                            <a href="admin/delete_word/{{$keyword->keyword_id}}" class="btn btn-primary">Delete</a>  
+                        @else
+                            <a href="user/keywordEdit/{{$keyword->keyword_id}}" class="btn btn-primary">Edit</a>  
+                            <a href="user/delete_word/{{$keyword->keyword_id}}" class="btn btn-primary">Delete</a>  
+                        @endif
+                    @endif 
 
                     </fieldset>                    
                 </div>

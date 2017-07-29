@@ -87,7 +87,7 @@ class UserController extends Controller
                 'last_name.regex'=>'Only accept lowercase or uppercase letters'
             ]);
 
-	if ($validator->fails()) {
+        if ($validator->fails()) {
             return redirect('user/edit/'.$id)
                 ->withErrors($validator)
                 ->withInput();

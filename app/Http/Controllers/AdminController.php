@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\KeywordTemp;
 use App\MeaningTemp;
@@ -9,7 +7,6 @@ use App\Users;
 use App\keyword;
 use App\meaning;
 use Validator;
-
 class AdminController extends Controller
 {
 	/**
@@ -21,7 +18,6 @@ class AdminController extends Controller
     	$data = KeywordTemp::all();
     	return view('admin.approve.keyword.all', ['data' => $data]);
     }
-
     /**
      * Approve request on keyword table
      * @param  [type] $id     [description]
@@ -37,28 +33,30 @@ class AdminController extends Controller
     	if($data != null){
     		switch ($opCode) {
 	    		case '0': // Add
-	    			$keyword = new keyword;
-	    			$keyword->value = $data['new_keyword'];
+	    			$keyword = keyword::find($data->old_keyword_id);
 	    			$keyword->status = 1;
+                    $keyword->save();
+                    $data->delete();
 	    			break;
 	    		case '1': // Edit
 	    			$keyword = keyword::find($data['old_keyword_id']);
 	    			$keyword->value = $data['new_keyword'];
+                    $keyword->save();
+                    $data->delete();
 	    			break;
 	    		case '2': // Delete
 	    			$keyword = keyword::find($data['old_keyword_id']);
 	    			$keyword->status = 0;
+                    $keyword->save();
+                    $data->delete();
 	    			break;	
 	    		default:
-
 	    			break;
     		}
-    		$keyword->save();
-    		$data->delete();
+    		
     	}
     	return redirect()->route('keywordTempList');
     }
-
     /**
      * Decline request on keyword table
      * @param  Request $request [description]
@@ -83,13 +81,11 @@ class AdminController extends Controller
 	    			$data->delete();
 	    			break;	
 	    		default:
-
 	    			break;
     		}	
     	}
     	return redirect()->route('keywordTempList');
     }
-
     /**
      * return list request on meaning table
      * @return [type] [description]
@@ -99,7 +95,6 @@ class AdminController extends Controller
     	$data = MeaningTemp::all();
     	return view('admin.approve.meaning.list', ['data' => $data]);
     }
-
     public function meaningApprove(Request $request)
     {
     	$id = $request->id;
@@ -112,6 +107,8 @@ class AdminController extends Controller
 	    			$meaning->value = $data['new_meaning'];
 	    			$meaning->language = $data['language'];
 	    			$meaning->index = $data['index'];
+                    $meaning->keyword_id = $data['keyword_id'];
+                    $meaning->status = 1;
 	    			$meaning->save();
 	    			$data->delete();
 	    			break;
@@ -132,7 +129,6 @@ class AdminController extends Controller
     	}
     	return redirect()->route('meaningTempList');
     }
-
     public function meaningDecline(Request $request)
     {
     	$data = MeaningTemp::find($request->id);
@@ -147,12 +143,10 @@ class AdminController extends Controller
         $users = Users::all();
         return view('users.show', ['users' => $users]);
     }
-
     public function create()
     {
         return view('users.create');
     }
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),
@@ -181,7 +175,6 @@ class AdminController extends Controller
                 'password_confirm.same'=>'The password don\'t match. Try again?',
                 'password_confirm.regex'=>'Contain at least one uppercase/lowercase letters and one number.'
             ]);
-
         if ($validator->fails()) {
             return redirect('admin/create')
                 ->withErrors($validator)
@@ -192,7 +185,6 @@ class AdminController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-
         //send mail
 //        $data = ['email'=>$request->email,'password'=>$request->password,'name'=>$request->name];
 //        Mail::send(['text'=>'mail'],['data'=> $data],function($message) use ($data){
@@ -202,10 +194,10 @@ class AdminController extends Controller
         $user->save();
         return redirect('admin/show')->with('notification','You have successfully added the user');
     }
-	public function delete($id = NULL)
-     {
-         $user = Users::find($id);
-         $user->delete();
-         return redirect('admin/show')->with('notification','You have successfully deleted the user');
-     }
+    public function delete($id = NULL)
+    {
+        $user = Users::find($id);
+        $user->delete();
+        return redirect('admin/show')->with('notification','You have successfully deleted the user');
+    }
 }
