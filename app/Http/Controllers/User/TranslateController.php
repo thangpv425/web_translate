@@ -25,21 +25,24 @@ class TranslateController extends Controller
     * return @return Illuminate\resources\views\user\translate_page
     */
     public function search(Request $request){
-        $this->validate($request,[
-            			'keyword'=>'required|alpha'
-        ]);
-
-        $selected=$request->idLanguage;
-        $r=Keyword::where('value',$request->keyword)
-        			->where('status',1)        
-        			->first();        
-        if($r!=null)            
+        define('EXIST',1,true);
+        define('NOT_EXIST','* Sorry! this keyword does not exist',true);
+        $this->validate($request,['keyword'=>'required|alpha']);
+        //search keyword
+        $keyword=Keyword::where('keyword',$request->keyword)
+        			     ->where('status',EXIST)        
+        			     ->first();        
+        if($keyword!=null)            
         {
-        	$result= $r->meaning->where('language',$request->idLanguage)->where('status',1);
-        	if(count($result)==0) $result='nullVal';
+        	$meaning= $keyword->meaning->where('language',$request->language)
+                                       ->where('status',EXIST);
+        	if(count($meaning)==0) $meaning=NOT_EXIST;
         }     
         else
-        	$result='nullVal';        
-        return view('translatePage',['keyword'=>$r,'result'=>$result,'selected'=>$selected]);
+        	$meaning=NOT_EXIST;        
+        return view('user.translate_page',['keyword'=>$keyword,
+                                           'result'=>$meaning,
+                                           'language'=>$request->language
+                                           ]);
     }
 }

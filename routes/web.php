@@ -40,3 +40,13 @@ Route::group(['middleware'=>'checkLogin'],function(){
 	Route::get('translate','User\TranslateController@showPage');
 	Route::post('search','User\TranslateController@search');
 });
+Route::group(['prefix'=>'user','middleware'=>'user'],function(){
+	Route::get('keywordEdit/{id}', 'User\EditWordController@showEditPage');
+	Route::post('keywordEdit', 'User\EditWordController@wordEdit');
+});
+Route::group(['prefix'=>'admin','middleware'=>'admin'],function(){
+	Route::get('wordList','Admin\AdminController@wordList');
+	Route::get('deleteWord/{id}','Admin\AdminController@deleteWord');
+});
+
+
