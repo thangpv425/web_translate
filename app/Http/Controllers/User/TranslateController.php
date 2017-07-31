@@ -25,8 +25,6 @@ class TranslateController extends Controller
     * return @return Illuminate\resources\views\user\translate_page
     */
     public function search(Request $request){
-        define('EXIST',1,true);
-        define('NOT_EXIST','* Sorry! this keyword does not exist',true);
         $this->validate($request,['keyword'=>'required|alpha']);
         //search keyword
         $keyword=Keyword::where('keyword',$request->keyword)

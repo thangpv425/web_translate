@@ -18,9 +18,9 @@ class CheckLogin
             {
                 return $next($request);
             }
-            return Redirect::to('login')->withError('you have to log in');
+            return Redirect::to('login')->withError('You have to log in!');
         }catch(\Exception $e){
-            return Redirect::to('login')->withError('you are not allowed to access');
+            return Redirect::to('login')->withError('You are not allowed to access!');
         }
     }
 }

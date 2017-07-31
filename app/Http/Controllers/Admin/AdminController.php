@@ -22,8 +22,8 @@ class AdminController extends Controller
     }
     
     public function postKeywordAdd(Request $request){
-        DB::beginTransaction();
         try {
+            DB::beginTransaction();
             $this->validate($request,[
                 'txtKeyWord' => 'required|alpha|unique:wt_keyword,keyword',
                 'txtMeaning' => 'required|alpha'
@@ -33,9 +33,8 @@ class AdminController extends Controller
             $keyword->status = APPROVED;
             $keyword->save();
         
-            $id = $keyword->id;
             $meaning = new meaning();
-            $meaning->keyword_id = $id;
+            $meaning->keyword_id = $keyword->id;
             $meaning->meaning = $request->txtMeaning;
             $meaning->index = 1; //muc do uu tien cao nhat
             $meaning->status = APPROVED;
@@ -54,12 +53,12 @@ class AdminController extends Controller
     *@todo allow admin to solf delete word 
     */
     public function deleteWord($id){
-    	DB::beginTransaction();
     	try {
-    		$meaning= meaning::where($id)->first();
-    		$meaning->status= DELETED;
-    		$meaning->save();
-    		DB::commit();
+            DB::beginTransaction();
+            $meaning= meaning::where($id)->first();
+            $meaning->status= DELETED;
+            $meaning->save();
+            DB::commit();
     	} catch (\Exception $e) {
     		DB::rollback();
     	}
