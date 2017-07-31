@@ -32,3 +32,7 @@ Homestead.yaml
 npm-debug.log
 .env
 
+/nbproject/private/
+
+public/admin_asset
+public/css

@@ -4,35 +4,29 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MainDatabase extends Migration
+class CreateMeaningTable extends Migration
 {
     /**
-     * create keyword and meaning table
+     * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('wt_keyword', function($table){
-            $table->increments('keyword_id');
-            $table->string('value');
-            $table->smallInteger('status');
-            $table->timestamps();
-            $table->unique('value');
-        });
-
-        Schema::create('wt_meaning', function($table){
-            $table->increments('meaning_id');
+            Schema::create('wt_meaning', function($table){
+            $table->increments('id');
             $table->integer('keyword_id')->unsigned();
-            $table->string('value');
+            $table->string('meaning');
             $table->smallInteger('index')->unsigned();
             $table->boolean('status');
             $table->smallInteger('language')->unsigned();
+            $table->smallInteger('type')->unsigned()->nullable();
             $table
                 ->foreign('keyword_id')
-                ->references('keyword_id')
+                ->references('id')
                 ->on('wt_keyword')
                 ->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -45,6 +39,5 @@ class MainDatabase extends Migration
     public function down()
     {
         Schema::drop('wt_meaning');
-        Schema::drop('wt_keyword');
     }
 }
