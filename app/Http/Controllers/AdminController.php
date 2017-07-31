@@ -49,7 +49,7 @@ class AdminController extends Controller
 	    			$keyword->status = 0;
                     $keyword->save();
                     $data->delete();
-	    			break;	
+	    			break;
 	    		default:
 	    			break;
     		}

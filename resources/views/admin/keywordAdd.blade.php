@@ -21,8 +21,15 @@
                        @endforeach
                     </div>
                 @endif
-                <button id="more_fields" onclick="add_fields();" class="btn btn-default">+ Translate</button>
-                <form action="admin/keywordAdd" method="POST">
+                <button id="more_fields" onclick="add_fields();" class="btn btn-default">+ Translate </button>
+                
+                @if((Sentinel::check())&& (Sentinel::inRole('user')))
+                <form action="user/keywordAdd" method="POST" >
+                @endif
+                
+                @if((Sentinel::check())&& (Sentinel::inRole('admin')))
+                <form action="admin/keywordAdd" method="POST" >
+                @endif
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                     <div class="form-group">
                         <label>Key word</label>
@@ -32,6 +39,11 @@
                         <input class="form-control" name="txtMeaning" placeholder="Example: chơi" />
                         <input type="radio" name="language" value='0' checked="true" /> Vietnamese<br>
                         <input type="radio" name="language" value='1' /> English<br>
+                    
+                    @if((Sentinel::check())&& (Sentinel::inRole('user')))
+                        <label>Comment</label>
+                        <input class="form-control" name="txtComment" placeholder="Example: comment" />
+                    @endif
                     
                     <div class="form-group" id= "add_meaning">
                     </div>

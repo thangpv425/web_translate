@@ -11,9 +11,25 @@
 
                     {{ csrf_field() }}
                     <legend>Enter keyword</legend>
-                    <select class="form-control" name='idSource' style='width:50%;'>
-                        <option value="o"> Japanese</option>}
-                    </select><br>
+                    <div>
+                        <div class="pull-left" style="margin-right:5px">
+                            <select class="form-control" name='idSource' style='width:300px;'>
+                                <option value="o"> Japanese</option>}
+                            </select>
+                        </div>
+                        <div>
+                            <div class="input-group">
+                                @if((Sentinel::check())&& (Sentinel::inRole('user')))
+                                <a href="user/keywordAdd" class="btn btn-default" role="button"> + </a>
+                                @endif
+
+                                @if((Sentinel::check())&& (Sentinel::inRole('admin')))
+                                <a href="admin/keywordAdd" class="btn btn-default" role="button"> + </a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <br>
                     <div class="form-group">              
                         <textarea  name="keyword" style='width:90%;resize: none;' rows='8' placeholder="Input field"></textarea>
                     </div>
@@ -60,7 +76,6 @@
                                 @endif  
                         <textarea name="res" style='width:90%;resize: none;'  rows = '8' placeholder="Input field" readonly>{{$meaning}}</textarea>
                     </div>
-                    <a href="user/keywordAdd" class="btn btn-primary">Add word</a>  
                     @if(isset($result) && $result!='nullVal')
                         @if(Sentinel::inRole('admin'))
                             <a href="admin/keywordEdit/{{$keyword->keyword_id}}" class="btn btn-primary">Edit</a>  

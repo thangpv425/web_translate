@@ -93,8 +93,6 @@ Route::group(['middleware'=>'loginned'],function(){
  */
 Route::prefix('user')->middleware('user')->group(function(){
 
-	Route::get('keywordList','KeywordListController@keywordList');
-    
     Route::get('keywordAdd','UserActionController@get_keywordAdd');
     Route::post('keywordAdd', 'UserActionController@post_keywordAdd');
     Route::get('keywordEdit/{id}', 'UserActionController@get_keywordEdit');
