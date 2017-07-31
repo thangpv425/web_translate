@@ -24,10 +24,10 @@ class UserActionController extends Controller
         ]);
         //add to wt_keyword with status = -1
         $keyword = new keyword();
-        $keyword->value = $request->txtKeyWord;
+        $keyword->keyword = $request->txtKeyWord;
         $keyword->status= -1;
         $keyword->save();
-        $id=$keyword->keyword_id;        
+        $id=$keyword->id;        
         
         $keyword_temp = new KeywordTemp();
         $keyword_temp->opCode = 0;

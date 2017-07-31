@@ -19,14 +19,14 @@ class AdminActionController extends Controller
             'txtMeaning' => 'required|alpha'
         ]);
         $keyword = new keyword();
-        $keyword->value = $request->txtKeyWord;
+        $keyword->keyword = $request->txtKeyWord;
         $keyword->status= 1;
         $keyword->save();
-        $id=$keyword->keyword_id;
+        $id=$keyword->id;
         
         $meaning = new meaning();
         $meaning->keyword_id = $id;
-        $meaning->value = $request->txtMeaning;
+        $meaning->meaning = $request->txtMeaning;
         $meaning->index = 1;
         $meaning->status = 1;
         
@@ -37,7 +37,7 @@ class AdminActionController extends Controller
     }
     
     public function get_keywordEdit($id) {
-        $keyword = keyword::where('keyword_id',$id)->first();
+        $keyword = keyword::find($id)->first();
         $meaning = meaning::where('keyword_id',$id)->get()->first();
         return view('admin.keywordEdit',['keyword'=>$keyword,'meaning'=>$meaning]);
     }
@@ -52,12 +52,12 @@ class AdminActionController extends Controller
         ]);
         
         $keyword = keyword::find($id);
-        $keyword->value = $request->txtKeyWord;
+        $keyword->keyword = $request->txtKeyWord;
         $keyword->status= 1;
         $keyword->save();
         
         $meaning = $keyword->meaning['0'];//meaning::where('keyword_id',$id)->get()->first();
-        $meaning->value = $request->txtMeaning;
+        $meaning->meaning = $request->txtMeaning;
         $meaning->index = 1;
         $meaning->status = 1;
         $meaning->language = $request->language;

@@ -14,17 +14,19 @@ class CreateMeaningTable extends Migration
     public function up()
     {
             Schema::create('wt_meaning', function($table){
-            $table->increments('meaning_id');
+            $table->increments('id');
             $table->integer('keyword_id')->unsigned();
-            $table->string('value');
+            $table->string('meaning');
             $table->smallInteger('index')->unsigned();
             $table->boolean('status');
             $table->smallInteger('language')->unsigned();
+            $table->smallInteger('type')->unsigned()->nullable();
             $table
                 ->foreign('keyword_id')
-                ->references('keyword_id')
+                ->references('id')
                 ->on('wt_keyword')
                 ->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

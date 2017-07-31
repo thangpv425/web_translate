@@ -14,7 +14,7 @@ class CreateKeywordTempTable extends Migration
     public function up()
     {
         Schema::create('wt_keyword_temp', function($table){
-            $table->increments('keyword_temp_id'); 
+            $table->increments('id'); 
             /**
              * opCode:
              * 0 - 1 - 2 : Add - Edit - Delete
@@ -25,7 +25,7 @@ class CreateKeywordTempTable extends Migration
             $table->string('new_keyword')->nullable();
             $table->mediumText('comment')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('old_keyword_id')->references('keyword_id')->on('wt_keyword');
+            $table->foreign('old_keyword_id')->references('id')->on('wt_keyword');
             $table->timestamps();
         });
     }

@@ -14,11 +14,12 @@ class CreateKeywordTable extends Migration
     public function up()
     {
         Schema::create('wt_keyword', function($table){
-            $table->increments('keyword_id');
-            $table->string('value');
+            $table->increments('id');
+            $table->string('keyword');
             $table->smallInteger('status');
+            $table->softDeletes();
             $table->timestamps();
-            $table->unique('value');
+            $table->unique('keyword');
         });
     }
 

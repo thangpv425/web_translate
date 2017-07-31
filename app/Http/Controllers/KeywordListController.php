@@ -17,7 +17,7 @@ class KeywordListController extends Controller
     	return view('admin.keyWordList',['keyword'=>$keyword]);
     }
     public function deleteWord($id){
-    	$meaning= meaning::where('meaning_id',$id)->first();
+    	$meaning= meaning::find($id)->first();
     	//$meaning= meaning::find(3);
     	$meaning->status= 0;
     	$meaning->save();
