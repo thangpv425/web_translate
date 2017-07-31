@@ -25,8 +25,8 @@ class AdminController extends Controller
         try {
             DB::beginTransaction();
             $this->validate($request,[
-                'txtKeyWord' => 'required|alpha|unique:wt_keyword,keyword',
-                'txtMeaning' => 'required|alpha'
+                'txtKeyWord' => 'required|regex:^[a-zA-Z]+$^|unique:wt_keyword,keyword',
+                'txtMeaning' => 'required|regex:^[a-zA-Z]+$^'
             ]);
             $keyword = new keyword();
             $keyword->keyword = $request->txtKeyWord;
