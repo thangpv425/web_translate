@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-
-class Keywords extends Migration
+class CreateMeaningTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,16 +13,7 @@ class Keywords extends Migration
      */
     public function up()
     {
-        Schema::create('wt_keyword', function($table){
-            $table->increments('keyword_id');
-            $table->string('value');
-            $table->smallInteger('status');
-            $table->timestamps();
-
-            $table->unique('value');
-        });
-
-        Schema::create('wt_meaning', function($table){
+            Schema::create('wt_meaning', function($table){
             $table->increments('meaning_id');
             $table->integer('keyword_id')->unsigned();
             $table->string('value');
@@ -47,6 +37,5 @@ class Keywords extends Migration
     public function down()
     {
         Schema::drop('wt_meaning');
-        Schema::drop('wt_keyword');
     }
 }

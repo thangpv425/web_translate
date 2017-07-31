@@ -11,26 +11,11 @@ class KeywordTemp extends Model
 
     public function user()
     {
-    	return $this->belongsTo('App\Users', 'user_id', 'id');
+    	return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
     public function keyword()
     {
-    	return $this->belongsTo('App\keyword', 'old_keyword_id', 'keyword_id');
-    }
-
-    public function addingList()
-    {
-    	return $this->where('opCode', 0)->get();
-    }
-
-    public function editingList()
-    {
-    	return $this->where('opCode', 1)->get();
-    }
-
-    public function deletingList()
-    {
-    	return $this->where('opCode', 2)->get();
+    	return $this->belongsTo('App\Keyword', 'old_keyword_id', 'keyword_id');
     }
 }
