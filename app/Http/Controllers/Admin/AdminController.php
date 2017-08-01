@@ -30,9 +30,7 @@ class AdminController extends Controller
             $keyword->status= APPROVED;
             $keyword->save();
             $id=$keyword->keyword_id;
-
-
-
+            
             //create new meaning
             foreach ( $request->translate as $key => $value ) {
                 $meaning = new meaning();
