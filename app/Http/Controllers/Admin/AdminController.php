@@ -22,31 +22,33 @@ class AdminController extends Controller
     }
     
     public function postKeywordAdd(Request $request){
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
-            $this->validate($request,[
-                'txtKeyWord' => 'required|regex:/[^\!-\@\[-\_\{-\}]+$/u|unique:wt_keyword,keyword',
-                'txtMeaning' => 'required|regex:/[^\!-\@\[-\_\{-\}]+$/u'
-            ]);
+            //create new keyword
             $keyword = new keyword();
-            $keyword->keyword = $request->txtKeyWord;
-            $keyword->status = APPROVED;
+            $keyword->value = $request->txtKeyWord;
+            $keyword->status= APPROVED;
             $keyword->save();
-        
-            $meaning = new meaning();
-            $meaning->keyword_id = $keyword->id;
-            $meaning->meaning = $request->txtMeaning;
-            $meaning->index = 1; //muc do uu tien cao nhat
-            $meaning->status = APPROVED;
-            $meaning->language = $request->language;
-            $meaning->save();
-            
+            $id=$keyword->keyword_id;
+
+
+
+            //create new meaning
+            foreach ( $request->translate as $key => $value ) {
+                $meaning = new meaning();
+                $meaning->keyword_id = $id;
+                $meaning->value = $value['meaning'];
+                $meaning->index = $key;
+                $meaning->status = APPROVED;
+                $meaning->language = $value['language'];
+                $meaning->save();
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            return 'Error: ' . $e->getMessage();
         }
-        return redirect('admin/keywordList');
+        return redirect('admin/keywordList')->with('notification','You have successfully add new keyword');
     }
     
     /*
@@ -64,5 +66,11 @@ class AdminController extends Controller
     	}
     	$meaning= meaning::all();
     	return view('admin.keyWordlist',['meaning'=>$meaning]);
+    }
+
+    public function checkExistKeyword(Request $request)
+    {
+        $count = keyword::where('value', $request->keyword)->count();
+        return $count;
     }
 }
