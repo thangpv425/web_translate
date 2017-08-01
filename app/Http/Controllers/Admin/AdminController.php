@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-	/*
-	* @todo show all words to admin
-	* @return Illuminate\resource\views\admin\keyword_list
-	*/
+    /*
+    * @todo show all words to admin
+    * @return Illuminate\resource\views\admin\keyword_list
+    */
     public function wordList(){   	    	
         $meaning=Meaning::all();
         return view('admin.keyWordlist',['meaning'=>$meaning]);
@@ -25,8 +25,8 @@ class AdminController extends Controller
         try {
             DB::beginTransaction();
             $this->validate($request,[
-                'txtKeyWord' => 'required|regex:^[a-zA-Z]+$^|unique:wt_keyword,keyword',
-                'txtMeaning' => 'required|regex:^[a-zA-Z]+$^'
+                'txtKeyWord' => 'required|regex:/[^\!-\@\[-\_\{-\}]+$/u|unique:wt_keyword,keyword',
+                'txtMeaning' => 'required|regex:/[^\!-\@\[-\_\{-\}]+$/u'
             ]);
             $keyword = new keyword();
             $keyword->keyword = $request->txtKeyWord;
