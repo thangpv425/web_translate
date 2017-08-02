@@ -17,7 +17,7 @@ class CreateKeywordTempTable extends Migration
             $table->increments('id'); // PK
             /**
              * opCode:
-             * 0 - 1 - 2 : Add - Edit - Delete
+             * 0 - 1 : Add - Edit
              */
             $table->smallInteger('opCode');
             $table->integer('user_id')->unsigned(); // current user

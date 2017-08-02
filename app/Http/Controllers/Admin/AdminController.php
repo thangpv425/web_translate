@@ -152,7 +152,7 @@ class AdminController extends Controller
         return $mess;
     }
     /**
-     * Decline request on keyword table 
+     * Decline request on keyword table
      * @param  Request $request [description]
      * @return [type]           [description]
      */

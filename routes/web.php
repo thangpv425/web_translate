@@ -39,7 +39,7 @@ Route::group(['middleware'=>'checkLogin'],function(){
 });
 
 /*
- * Route admin 
+ * Route admin
  */
 
 Route::prefix('admin')->middleware('admin')->group(function(){
@@ -48,7 +48,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('keywordAdd', 'Admin\AdminController@getKeywordAdd');
     
     Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd');
-    
+
     // keyword table
 	Route::get('queue/keyword', 'Admin\AdminController@keywordTempList')->name('keywordTempList'); // return view
 

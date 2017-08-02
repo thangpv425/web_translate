@@ -64,7 +64,7 @@
                             </form> 
                         </td>
                         <td class="center">
-                         <form action="{{ route('declineOnKeyword') }}" method="POST" id="decline">
+                        <form action="{{ route('declineOnKeyword') }}" method="POST" id="decline">
                             {{ csrf_field() }}
                             <label for="id"></label>
                             <input type="hidden" name="id" value="{{ $row->id }}">

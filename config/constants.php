@@ -6,6 +6,7 @@ define('DECLINE', 0);
  * opCode
  */
 define('ADD', 0);
+
 define('EDIT', 1);
 
 /**

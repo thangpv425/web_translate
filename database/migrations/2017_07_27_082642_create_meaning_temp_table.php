@@ -41,7 +41,6 @@ class CreateMeaningTempTable extends Migration
             ->references('id')
             ->on('wt_meaning')
             ->onDelete('cascade');
-            
             $table->timestamps();
         });
     }
