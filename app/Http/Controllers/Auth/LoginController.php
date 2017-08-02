@@ -14,7 +14,7 @@ class LoginController extends Controller
      * @param  Request $Request [description]
      * @return [type]           [description]
      */
-    public function loginForm() 
+    public function login() 
     {   
         return view('guest.login');
     }
@@ -24,7 +24,7 @@ class LoginController extends Controller
      * @param  CheckLoginRequest $request [description]
      * @return redirect                     [description]
      */
-    public function login(CheckLoginRequest $request)   
+    public function processLogin(CheckLoginRequest $request)   
     {
         try {
             if (Sentinel::authenticate($request->all())) {
@@ -48,5 +48,26 @@ class LoginController extends Controller
     {
         Sentinel::logout();
         return redirect('/login');
+    }
+    /**
+     * registration form
+     * @return [type] [description]
+     */
+     public function register(){
+        return view('guest.register');
+    }
+
+    /**
+     * Register a new user
+     * @param  CheckRegistrationRequest $request [validate request]
+     * @return [type]                            [description]
+     */
+    public function processRegister(CheckRegistrationRequest $request)
+    {
+        $user = Sentinel::register($request->all(), true);
+        $role = Sentinel::findRoleBySlug('user');
+        $role->users()->attach($user);
+        Sentinel::authenticate($request->all());
+        return redirect('user/view/'.$user->id);
     }
 }

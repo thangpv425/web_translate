@@ -20,23 +20,21 @@ Route::get('home', function(){
 });
 
 /**
- * Route login, logout
+ * Route login, logout, register
  */
-Route::get('login', 'Auth\LoginController@loginForm')->name('loginForm')->middleware('guest');
+Route::get('login', 'Auth\LoginController@login')->name('loginForm')->middleware('guest');
 
-Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::post('login', 'Auth\LoginController@processLogin')->name('login');
 
 Route::get('logout', 'Auth\LoginController@logout');
 
-/**
- * Route register
- */
-Route::get('register', 'Auth\RegisterController@registerForm')->middleware('guest');
+Route::get('register', 'Auth\LoginController@register')->middleware('guest');
 
-Route::post('register', 'Auth\RegisterController@register')->name('register');
+Route::post('register', 'Auth\LoginController@processRegister')->name('register');
 
 Route::group(['middleware'=>'checkLogin'],function(){
 	Route::get('translate','User\TranslateController@showPage');
+	
 	Route::post('search','User\TranslateController@search');
 });
 
@@ -46,7 +44,24 @@ Route::group(['middleware'=>'checkLogin'],function(){
 
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('keywordList','Admin\AdminController@wordList');
-    Route::get('keywordAdd', 'Admin\AdminController@getKeywordAdd');
-    Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd');
     
+    Route::get('keywordAdd', 'Admin\AdminController@getKeywordAdd');
+    
+    Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd');
+    // keyword table
+	Route::get('queue/keyword', 'Admin\AdminController@keywordTempList')->name('keywordTempList'); // return view
+
+	Route::post('approve/keyword', 'Admin\AdminController@approveChangesOnKeywordTable')->name('approveOnKeyword')->where(['id' => '[0-9]+','opCode' => '[0-9]+']);
+
+	Route::post('decline/keyword', 'Admin\AdminController@declineChangesOnKeywordTable')->name('declineOnKeyword');
+
+	Route::post('deleteRequest', 'Admin\AdminController@deleteRequest')->name('deleteRequest');
+
+	// meaning table
+	Route::get('queue/meaning', 'Admin\AdminController@meaningTempList')->name('meaningTempList');
+
+	Route::post('approve/meaning', 'Admin\AdminController@approveChangesOnMeaningTable')->name('approveOnMeaning');
+
+	Route::post('decline/meaning', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
+
 });

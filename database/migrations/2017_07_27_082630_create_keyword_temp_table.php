@@ -23,6 +23,7 @@ class CreateKeywordTempTable extends Migration
             $table->integer('user_id')->unsigned(); // current user
             $table->integer('old_keyword_id')->unsigned()->nullable(); // use when edit or delete
             $table->string('new_keyword')->nullable();
+            $table->smallInteger('status'); // INQUEUE - APPROVED - DECLINED
             $table->mediumText('comment')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('old_keyword_id')->references('id')->on('wt_keyword');
