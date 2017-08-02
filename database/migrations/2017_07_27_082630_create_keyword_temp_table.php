@@ -14,7 +14,7 @@ class CreateKeywordTempTable extends Migration
     public function up()
     {
         Schema::create('wt_keyword_temp', function($table){
-            $table->increments('id'); 
+            $table->increments('id'); // PK
             /**
              * opCode:
              * 0 - 1 - 2 : Add - Edit - Delete

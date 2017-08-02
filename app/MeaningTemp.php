@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class MeaningTemp extends Model
 {
     protected $table = 'wt_meaning_temp';
+    
     public $primaryKey = 'id';
 
     public function user()

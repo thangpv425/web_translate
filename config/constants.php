@@ -1,6 +1,7 @@
 <?php
 
 define('DECLINE', 0);
+
 /**
  * opCode
  */

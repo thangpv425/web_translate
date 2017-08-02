@@ -21,14 +21,14 @@
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr class="odd gradeX" align="center">
-                        <th>ID</th>
-                        <th>OpCode</th>
-                        <th>User</th>
-                        <th>Old Keyword</th>
-                        <th>New Keyword</th>
-                        <th>Approve</th>
-                        <th>Decline</th>
-                        <th>Delete</th>
+                        <td><b>ID</b></td>
+                        <td><b>OpCode</b></td>
+                        <td><b>User</b></td>
+                        <td><b>Old Keyword</b></td>
+                        <td><b>New Keyword</b></td>
+                        <td><b>Approve</b></td>
+                        <td><b>Decline</b></td>
+                        <td><b>Delete</b></td>
                     </tr>
                 </thead>
                 <tbody>

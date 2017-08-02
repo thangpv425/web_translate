@@ -10,7 +10,7 @@ use Sentinel;
 class LoginController extends Controller
 {
     /**
-     * create login form
+     * create login form 
      * @param  Request $Request [description]
      * @return [type]           [description]
      */

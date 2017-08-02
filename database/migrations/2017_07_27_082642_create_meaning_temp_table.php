@@ -26,7 +26,7 @@ class CreateMeaningTempTable extends Migration
             $table->string('new_meaning')->nullable();
             $table->smallInteger('language')->unsigned()->nullable();
             $table->smallInteger('index')->unsigned()->nullable();
-            $table->smallInteger('type')->unsigned()->nullable(); // danh tu dong tu tinh tu
+            $table->smallInteger('type')->unsigned()->nullable(); // danh tu, dong tu, tinh tu
             $table->smallInteger('status'); // INQUEUE - APPROVED - DECLINED
             $table->mediumText('comment')->nullable();
             $table
