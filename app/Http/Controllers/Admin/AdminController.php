@@ -86,20 +86,21 @@ class AdminController extends Controller
      */
     public function approveChangesOnKeywordTable(Request $request)
     {
-        // echo $id;
-        $id = $request->id;
+        if (!$request->has('opCode') || !$request->has('id')) {
+            return redirect()->route('keywordTempList')->with('mess', 'Invalid Request!');
+        }
+        $keywordTemp = KeywordTemp::find($request->id);
+        if ($keywordTemp == null) {
+            return redirect()->route('keywordTempList')->with('mess', 'Request is not exist!');
+        }
+        // $keywordTemp != null
         $opCode = $request->opCode;
-        $keywordTemp = KeywordTemp::find($id);
-        if($keywordTemp != null){
-            if ($opCode == ADD) {
-                $mess = AdminController::approveAddKeyword($keywordTemp);
-            }elseif ($opCode == EDIT){
-                $mess = AdminController::approveEditKeyword($keywordTemp);
-            }else{
-                $mess = "Invalid Operation Code.";
-            }
+        if ($opCode == ADD) {
+            $mess = AdminController::approveAddKeyword($keywordTemp);
+        }elseif ($opCode == EDIT){
+            $mess = AdminController::approveEditKeyword($keywordTemp);
         }else{
-            $mess = "Request is not exist!";
+            $mess = "Invalid Operation Code.";
         }
         return redirect()->route('keywordTempList')->with('mess', $mess);
     }
@@ -158,25 +159,29 @@ class AdminController extends Controller
      */
     public function declineChangesOnKeywordTable(Request $request)
     {
-        $id = $request->id;
+        if (!$request->has('opCode') || !$request->has('id')) {
+            return redirect()->route('keywordTempList')->with('mess', 'Invalid Request!');
+        }
+        $keywordTemp = KeywordTemp::find($request->id);
+        if ($keywordTemp == null) {
+            return redirect()->route('keywordTempList')->with('mess', 'Request is not exist!');
+        }
+        // $keywordTemp != null
         $opCode = $request->opCode;
-        $keywordTemp = KeywordTemp::find($id);
-        if($keywordTemp != null){
-            if ($opCode == ADD || $opCode == EDIT) {
-                try {
-                    DB::beginTransaction();
-                    $keywordTemp->status = DECLINED;
-                    $keywordTemp->comment = $request->get('cmt');
-                    $keywordTemp->save();
-                    DB::commit();
-                    $mess = "User's Request Declined!";
-                } catch (\Exception $e) {
-                    DB::rollback();
-                    $mess = "Something wrong!";
-                }
-            } else {
-                $mess = "Invalid Operation Code.";
+        if ($opCode == ADD || $opCode == EDIT) {
+            try {
+                DB::beginTransaction();
+                $keywordTemp->status = DECLINED;
+                $keywordTemp->comment = $request->get('cmt');
+                $keywordTemp->save();
+                DB::commit();
+                $mess = "User's Request Declined!";
+            } catch (\Exception $e) {
+                DB::rollback();
+                $mess = "Something wrong!";
             }
+        } else {
+            $mess = "Invalid Operation Code.";
         }
         return redirect()->route('keywordTempList')->with('mess', $mess);
     }
