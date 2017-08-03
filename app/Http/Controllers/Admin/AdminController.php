@@ -62,7 +62,7 @@ class AdminController extends Controller {
         try {
             DB::beginTransaction();
             $meaning = meaning::find($id);
-            $meaning->status = 0;
+            $meaning->status = DELETED;
             $meaning->save();
             $meaning->delete();
             DB::commit();
