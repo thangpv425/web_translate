@@ -46,6 +46,8 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('keywordList','Admin\AdminController@wordList');
     
     Route::get('keywordAdd', 'Admin\AdminController@getKeywordAdd');
+
+    Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd')->name('adminAddKeyword');
     
     Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd');
 
