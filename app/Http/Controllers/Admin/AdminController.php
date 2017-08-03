@@ -207,4 +207,5 @@ class AdminController extends Controller
         }
         return redirect()->route('keywordTempList')->with('mess', $mess);
     }
+    
 }
