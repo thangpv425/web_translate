@@ -91,21 +91,17 @@ class AdminController extends Controller
      */
     public function approveChangesOnKeywordTable(Request $request)
     {
-        if (!$request->has('opCode') || !$request->has('id')) {
-            return redirect()->route('keywordTempList')->with('mess', 'Invalid Request!');
-        }
+        $mess = "Request is not exist!";
         $keywordTemp = KeywordTemp::find($request->id);
-        if ($keywordTemp == null) {
-            return redirect()->route('keywordTempList')->with('mess', 'Request is not exist!');
-        }
-        // $keywordTemp != null
         $opCode = $request->opCode;
-        if ($opCode == ADD) {
+        if (!$request->has('id') || !$request->has('opCode') || ($request->opCode != ADD && $request->opCode != EDIT)) {
+            $mess = "Invalid Request!";
+        }
+        if (isset($opCode) && $opCode == ADD && $keywordTemp != null) {
             $mess = AdminController::approveAddKeyword($keywordTemp);
-        }elseif ($opCode == EDIT){
+        }
+        if ($opCode == EDIT && $keywordTemp != null){
             $mess = AdminController::approveEditKeyword($keywordTemp);
-        }else{
-            $mess = "Invalid Operation Code.";
         }
         return redirect()->route('keywordTempList')->with('mess', $mess);
     }
@@ -163,17 +159,9 @@ class AdminController extends Controller
      * @return [type]           [description]
      */
     public function declineChangesOnKeywordTable(Request $request)
-    {
-        if (!$request->has('opCode') || !$request->has('id')) {
-            return redirect()->route('keywordTempList')->with('mess', 'Invalid Request!');
-        }
-        $keywordTemp = KeywordTemp::find($request->id);
-        if ($keywordTemp == null) {
-            return redirect()->route('keywordTempList')->with('mess', 'Request is not exist!');
-        }
-        // $keywordTemp != null
-        $opCode = $request->opCode;
-        if ($opCode == ADD || $opCode == EDIT) {
+    {   
+        if ($request->has('id')) {
+            $keywordTemp = KeywordTemp::find($request->id);
             try {
                 DB::beginTransaction();
                 $keywordTemp->status = DECLINED;
@@ -186,7 +174,7 @@ class AdminController extends Controller
                 $mess = "Something wrong!";
             }
         } else {
-            $mess = "Invalid Operation Code.";
+            $mess = "Request is not exist!";
         }
         return redirect()->route('keywordTempList')->with('mess', $mess);
     }
@@ -231,24 +219,19 @@ class AdminController extends Controller
      */
     public function approveChangesOnMeaningTable(Request $request)
     {
-        if (!$request->has('opCode') || !$request->has('id')) {
-            return redirect()->route('meaningTempList')->with('mess', 'Invalid Request!');
-        }
-        $meaningTemp = MeaningTemp::find($request->id);
-        if ($meaningTemp == null) {
-            return redirect()->route('meaningTempList')->with('mess', 'Request is not exist!');
-        }
-        // $meaningTemp != null
+        $mess = "Request is not exist!";
         $opCode = $request->opCode;
-        if ($opCode == ADD) {
+        $meaningTemp = MeaningTemp::find($request->id);
+        if (!$request->has('opCode') || !$request->has('id') || ($opCode != ADD && $opCode != EDIT)) {
+            $mess = "Invalid Request!";
+        }
+        if (isset($opCode) && $opCode == ADD && $meaningTemp != null) {
             $mess = AdminController::approveAddMeaning($meaningTemp);
-        }elseif ($opCode == EDIT){
+        }
+        if ($opCode == EDIT && $meaningTemp != null){
             $mess = AdminController::approveEditMeaning($meaningTemp);
-        }else{
-            $mess = "Invalid Operation Code!";
         }
         return redirect()->route('meaningTempList')->with('mess', $mess);
-
     }
 
     public function approveAddMeaning($meaningTemp)
@@ -300,7 +283,7 @@ class AdminController extends Controller
     public function declineChangesOnMeaningTable(Request $request)
     {
         if (!$request->has('id')) {
-            return redirect()->route('meaningTempList')->with('mess', 'Invalid Request!');
+            $mess = "Invalid Request!";
         }
         $meaningTemp = MeaningTemp::find($request->id);
         if($meaningTemp != null){
