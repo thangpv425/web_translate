@@ -19,24 +19,24 @@ class AdminController extends Controller
         return view('admin.keyWordList',['meaning'=>$meaning]);
     }
     
-    public function getKeywordAdd(){
+    public function addKeyword(){
         return view('admin.keywordAdd');
     }
     
-    public function postKeywordAdd(Request $request){
+    public function processAddKeyword(Request $request){
         try {
             DB::beginTransaction();
             //create new keyword
             $keyword = new keyword();
-            $keyword->value = $request->txtKeyWord;
+            $keyword->keyword = $request->txtKeyWord;
             $keyword->status= APPROVED;
             $keyword->save();
             
             //create new meaning
             foreach ( $request->translate as $key => $value ) {
                 $meaning = new meaning();
-                $meaning->keyword_id = $keyword->keyword_id;
-                $meaning->value = $value['meaning'];
+                $meaning->keyword_id = $keyword->id;
+                $meaning->meaning = $value['meaning'];
                 $meaning->index = $key;
                 $meaning->status = APPROVED;
                 $meaning->language = $value['language'];
@@ -57,20 +57,22 @@ class AdminController extends Controller
     public function deleteWord($id){
     	try {
             DB::beginTransaction();
-            $meaning= meaning::where($id)->first();
-            $meaning->status= DELETED;
+            $meaning = meaning::find($id);
+            $meaning->status = 0;
             $meaning->save();
+            $meaning->delete();
             DB::commit();
     	} catch (\Exception $e) {
-    		DB::rollback();
+            DB::rollback();
+            throw $e;
     	}
-    	$meaning= meaning::all();
+    	$meaning = Meaning::all();
     	return view('admin.keyWordlist',['meaning'=>$meaning]);
     }
 
     public function checkExistKeyword(Request $request)
     {
-        return keyword::where('value', $request->keyword)->count();
+        return keyword::where('keyword', $request->keyword)->count();
     }
 
     /**

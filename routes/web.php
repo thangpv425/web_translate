@@ -45,26 +45,27 @@ Route::group(['middleware'=>'checkLogin'],function(){
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('keywordList','Admin\AdminController@wordList');
     
-    Route::get('keywordAdd', 'Admin\AdminController@getKeywordAdd');
+    Route::get('keywordAdd', 'Admin\AdminController@addKeyword');
+    Route::post('keywordAdd', 'Admin\AdminController@processAddKeyword')->name('adminAddKeyword');
 
-    Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd')->name('adminAddKeyword');
+    //Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd')->name('adminAddKeyword');
     
-    Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd');
+    Route::get('deleteWord/{id}','Admin\AdminController@deleteWord');
 
     // keyword table
-	Route::get('queue/keyword', 'Admin\AdminController@keywordTempList')->name('keywordTempList'); // return view
+    Route::get('queue/keyword', 'Admin\AdminController@keywordTempList')->name('keywordTempList'); // return view
 
-	Route::post('approve/keyword', 'Admin\AdminController@approveChangesOnKeywordTable')->name('approveOnKeyword')->where(['id' => '[0-9]+','opCode' => '[0-9]+']);
+    Route::post('approve/keyword', 'Admin\AdminController@approveChangesOnKeywordTable')->name('approveOnKeyword')->where(['id' => '[0-9]+','opCode' => '[0-9]+']);
 
-	Route::post('decline/keyword', 'Admin\AdminController@declineChangesOnKeywordTable')->name('declineOnKeyword');
+    Route::post('decline/keyword', 'Admin\AdminController@declineChangesOnKeywordTable')->name('declineOnKeyword');
 
-	Route::post('deleteRequest', 'Admin\AdminController@deleteRequest')->name('deleteRequest');
+    Route::post('deleteRequest', 'Admin\AdminController@deleteRequest')->name('deleteRequest');
 
-	// meaning table
-	Route::get('queue/meaning', 'Admin\AdminController@meaningTempList')->name('meaningTempList');
+    // meaning table
+    Route::get('queue/meaning', 'Admin\AdminController@meaningTempList')->name('meaningTempList');
 
-	Route::post('approve/meaning', 'Admin\AdminController@approveChangesOnMeaningTable')->name('approveOnMeaning');
+    Route::post('approve/meaning', 'Admin\AdminController@approveChangesOnMeaningTable')->name('approveOnMeaning');
 
-	Route::post('decline/meaning', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
+    Route::post('decline/meaning', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
 
 });
