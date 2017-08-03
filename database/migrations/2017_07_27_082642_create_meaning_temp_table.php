@@ -26,7 +26,8 @@ class CreateMeaningTempTable extends Migration
             $table->string('new_meaning')->nullable();
             $table->smallInteger('language')->unsigned()->nullable();
             $table->smallInteger('index')->unsigned()->nullable();
-            $table->smallInteger('type')->unsigned()->nullable();
+            $table->smallInteger('type')->unsigned()->nullable(); // danh tu, dong tu, tinh tu
+            $table->smallInteger('status'); // INQUEUE - APPROVED - DECLINED
             $table->mediumText('comment')->nullable();
             $table
                 ->foreign('keyword_id')
@@ -40,7 +41,6 @@ class CreateMeaningTempTable extends Migration
             ->references('id')
             ->on('wt_meaning')
             ->onDelete('cascade');
-            
             $table->timestamps();
         });
     }

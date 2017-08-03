@@ -26,6 +26,11 @@
                 <li>
                     <a href="admin/show"><i class="fa fa-male fa-fw"></i> User Management</a>
                 </li>
+                <li>
+                    <a href="{{ route('keywordTempList') }}"><i class="fa fa-stack-exchange fa-fw"></i> Approval Keyword</a>
+                </li>
+                
+                <li><a href="{{ route('meaningTempList') }}"><i class="fa fa-stack-exchange fa-fw"></i>  Approval Meaning</a></li>
             @endif
         </ul>
     </div>
