@@ -22,31 +22,31 @@ class AdminController extends Controller
     }
     
     public function postKeywordAdd(Request $request){
-        DB::beginTransaction();
         try {
+            DB::beginTransaction();
             //create new keyword
             $keyword = new keyword();
             $keyword->value = $request->txtKeyWord;
             $keyword->status= APPROVED;
             $keyword->save();
-            $id=$keyword->keyword_id;
             
             //create new meaning
             foreach ( $request->translate as $key => $value ) {
                 $meaning = new meaning();
-                $meaning->keyword_id = $id;
+                $meaning->keyword_id = $keyword->keyword_id;
                 $meaning->value = $value['meaning'];
                 $meaning->index = $key;
                 $meaning->status = APPROVED;
                 $meaning->language = $value['language'];
                 $meaning->save();
             }
+            $notification = 'You have successfully add new keyword.';
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            return 'Error: ' . $e->getMessage();
+            $notification = 'Something went wrong!';
         }
-        return redirect('admin/keywordList')->with('notification','You have successfully add new keyword');
+        return redirect('admin/keywordList')->with('notification', $notification);
     }
     
     /*
@@ -68,7 +68,6 @@ class AdminController extends Controller
 
     public function checkExistKeyword(Request $request)
     {
-        $count = keyword::where('value', $request->keyword)->count();
-        return $count;
+        return keyword::where('value', $request->keyword)->count();
     }
 }

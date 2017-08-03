@@ -20,7 +20,7 @@
                         @endforeach
                     </div>
                 @endif
-                <form action="admin/keywordAdd" method="POST" id="add_keyword_form">
+                <form action="{{ route('adminAddKeyword') }}" method="POST" id="add_keyword_form">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                     <div id="add_word">
                         <div class="form-group">
@@ -130,7 +130,7 @@
                             url : "./admin/checkExistKeyword",
                             data: {keyword: $("#keyword").val()},
                             dataFilter: function (data) {
-                                if (data == 1) {
+                                if (data >= 1) {
                                     return "\"" + "Keyword already in use!" + "\"";
                                 } else {
                                     return 'true';

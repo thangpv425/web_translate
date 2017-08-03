@@ -47,6 +47,6 @@ Route::group(['middleware'=>'checkLogin'],function(){
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('keywordList','Admin\AdminController@wordList');
     Route::get('keywordAdd', 'Admin\AdminController@getKeywordAdd');
-    Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd');
+    Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd')->name('adminAddKeyword');
     
 });
