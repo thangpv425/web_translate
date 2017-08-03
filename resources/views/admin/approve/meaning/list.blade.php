@@ -70,7 +70,7 @@
                         </form>
                         </td>
                         <td class="center">
-                        <form action="{{ route('deleteRequest') }}" method="POST" id="delete">
+                        <form action="{{ route('deleteRequestMeaning') }}" method="POST" id="delete">
                             {{ csrf_field() }}
                             <input type="hidden" name="id" value="{{ $row->id }}">
                             <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o fa-fw"></i>Delete</button>
