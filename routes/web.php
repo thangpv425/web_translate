@@ -48,8 +48,6 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('keywordAdd', 'Admin\AdminController@getKeywordAdd');
 
     Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd')->name('adminAddKeyword');
-    
-    Route::post('keywordAdd', 'Admin\AdminController@postKeywordAdd');
 
     // keyword table
 	Route::get('queue/keyword', 'Admin\AdminController@keywordTempList')->name('keywordTempList'); // return view
@@ -66,5 +64,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
 	Route::post('approve/meaning', 'Admin\AdminController@approveChangesOnMeaningTable')->name('approveOnMeaning');
 
 	Route::post('decline/meaning', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
+
+	Route::post('deleteRequest/meaning', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
 
 });
