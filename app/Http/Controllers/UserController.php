@@ -11,22 +11,22 @@ class UserController extends Controller
 {
     public function view($id = NULL)
     {
-        $user = Sentinel::getUser();
+        $user = User::find($id);
         return view('user.view')->with('user', $user);
     }
 
     public function edit($id = NULL)
     {
-        $user = Sentinel::getUser();
+        $user = User::find($id);
         return view('user.edit')->with('user', $user);
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(),
             [
-                'first_name' => 'required|min:6|max:32|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/',
-                'last_name' => 'required|min:6|max:32|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'
+                'first_name' => 'required|min:1|max:32|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/',
+                'last_name' => 'required|min:1|max:32|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'
             ],
             [
                 'first_name.required'=>'Please enter first name',
