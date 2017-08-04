@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\meaning;
-use App\keyword;
-use App\Users;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Validator;
 
@@ -46,7 +43,7 @@ class UserController extends Controller
                 ->withInput();
         }
 
-        $user = Users::find($id);
+        $user = User::find($id);
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user ->update();
