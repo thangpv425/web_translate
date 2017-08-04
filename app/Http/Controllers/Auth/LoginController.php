@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckLoginRequest;
+use App\Http\Requests\CheckRegistrationRequest;
 use Illuminate\Http\Request;
 use Sentinel;
 
