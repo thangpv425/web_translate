@@ -93,22 +93,19 @@ class AdminController extends Controller {
      * @param  [type] $opCode [description]
      * @return [type]         [description]
      */
-    public function approveChangesOnKeywordTable(Request $request) {
-        if (!$request->has('opCode') || !$request->has('id')) {
-            return redirect()->route('keywordTempList')->with('mess', 'Invalid Request!');
-        }
+    public function approveChangesOnKeywordTable(Request $request)
+    {
+        $mess = "Request is not exist!";
         $keywordTemp = KeywordTemp::find($request->id);
-        if ($keywordTemp == null) {
-            return redirect()->route('keywordTempList')->with('mess', 'Request is not exist!');
-        }
-        // $keywordTemp != null
         $opCode = $request->opCode;
-        if ($opCode == ADD) {
+        if (!$request->has('id') || !$request->has('opCode') || ($request->opCode != ADD && $request->opCode != EDIT)) {
+            $mess = "Invalid Request!";
+        }
+        if (isset($opCode) && $opCode == ADD && $keywordTemp != null) {
             $mess = AdminController::approveAddKeyword($keywordTemp);
-        } elseif ($opCode == EDIT) {
+        }
+        if ($opCode == EDIT && $keywordTemp != null){
             $mess = AdminController::approveEditKeyword($keywordTemp);
-        } else {
-            $mess = "Invalid Operation Code.";
         }
         return redirect()->route('keywordTempList')->with('mess', $mess);
     }
@@ -164,17 +161,11 @@ class AdminController extends Controller {
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function declineChangesOnKeywordTable(Request $request) {
-        if (!$request->has('opCode') || !$request->has('id')) {
-            return redirect()->route('keywordTempList')->with('mess', 'Invalid Request!');
-        }
-        $keywordTemp = KeywordTemp::find($request->id);
-        if ($keywordTemp == null) {
-            return redirect()->route('keywordTempList')->with('mess', 'Request is not exist!');
-        }
-        // $keywordTemp != null
-        $opCode = $request->opCode;
-        if ($opCode == ADD || $opCode == EDIT) {
+
+    public function declineChangesOnKeywordTable(Request $request)
+    {   
+        if ($request->has('id')) {
+            $keywordTemp = KeywordTemp::find($request->id);
             try {
                 DB::beginTransaction();
                 $keywordTemp->status = DECLINED;
@@ -187,7 +178,7 @@ class AdminController extends Controller {
                 $mess = "Something wrong!";
             }
         } else {
-            $mess = "Invalid Operation Code.";
+            $mess = "Request is not exist!";
         }
         return redirect()->route('keywordTempList')->with('mess', $mess);
     }
@@ -211,6 +202,125 @@ class AdminController extends Controller {
             $mess = "Something wrong!";
         }
         return redirect()->route('keywordTempList')->with('mess', $mess);
+    }
+
+    /**
+     * return list request on meaning table
+     * @return [type] [description]
+     */
+    public function meaningTempList()
+    {
+        $data = MeaningTemp::where('status', IN_QUEUE)->get();
+        return view('admin.approve.meaning.list', ['data' => $data]);
+    }
+
+    /**
+     * Approve changes on meaning table
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function approveChangesOnMeaningTable(Request $request)
+    {
+        $mess = "Request is not exist!";
+        $opCode = $request->opCode;
+        $meaningTemp = MeaningTemp::find($request->id);
+        if (!$request->has('opCode') || !$request->has('id') || ($opCode != ADD && $opCode != EDIT)) {
+            $mess = "Invalid Request!";
+        }
+        if (isset($opCode) && $opCode == ADD && $meaningTemp != null) {
+            $mess = AdminController::approveAddMeaning($meaningTemp);
+        }
+        if ($opCode == EDIT && $meaningTemp != null){
+            $mess = AdminController::approveEditMeaning($meaningTemp);
+        }
+        return redirect()->route('meaningTempList')->with('mess', $mess);
+    }
+
+    public function approveAddMeaning($meaningTemp)
+    {
+        $mess = "";
+        try {
+            DB::beginTransaction();
+            $meaning = new Meaning;
+            $meaning->meaning = $meaningTemp['new_meaning'];
+            $meaning->language = $meaningTemp['language'];
+            $meaning->index = $meaningTemp['index'];
+            $meaning->keyword_id = $meaningTemp['keyword_id'];
+            $meaning->status = APPROVED;
+            $meaning->save();
+            $meaningTemp->status = APPROVED;
+            $meaningTemp->save();
+            DB::commit();
+            $mess = "Successful!";
+        } catch (\Exception $e) {
+            DB::rollback();
+            $mess = "Something wrong!";
+        }
+        return $mess;
+    }
+
+    public function approveEditMeaning($meaningTemp)
+    {
+        try {
+            DB::beginTransaction();
+            $meaning = Meaning::find($meaningTemp['old_meaning_id']);
+            $meaning->meaning = $meaningTemp['new_meaning'];
+            $meaning->save();
+            $meaningTemp->status = APPROVED;
+            $meaningTemp->save();
+            DB::commit();
+            $mess = "Successful!";
+        } catch (\Exception $e) {
+            DB::rollback();
+            $mess = "Something wrong!";
+        }
+        return $mess;
+    }
+
+    /**
+     * Decline changes on meaning table
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function declineChangesOnMeaningTable(Request $request)
+    {
+        if (!$request->has('id')) {
+            $mess = "Invalid Request!";
+        }
+        $meaningTemp = MeaningTemp::find($request->id);
+        if($meaningTemp != null){
+            try {
+                DB::beginTransaction();
+                $meaningTemp->status = DECLINED;
+                $meaningTemp->comment = $request->get('cmt');
+                $meaningTemp->save();
+                DB::commit();
+                $mess = "Successful!";
+            } catch (\Exception $e) {
+                DB::rollback();
+                $mess = "Something wrong!";
+            }
+        }else{
+            $mess = "Request is not exist!";
+        }
+        return redirect()->route('meaningTempList')->with('mess', $mess);
+    }
+
+    public function deleteRequestOnMeaningTable(Request $request)
+    {
+        $mess = "";
+        try {
+            DB::beginTransaction();
+            $meaningTemp = MeaningTemp::find($request->id);
+            $meaningTemp->status = DELETED;
+            $meaningTemp->save();
+            DB::commit();
+            $mess = "Request Deleted!";
+        } catch (\Exception $e) {
+            DB::rollback();
+            $mess = "Something wrong!";
+        }
+        return redirect()->route('meaningTempList')->with('mess', $mess);
     }
 
 }

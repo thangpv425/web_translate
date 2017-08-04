@@ -36,5 +36,12 @@ class MainDatabaseSeeder extends Seeder
         	['keyword_id'=>'8', 'meaning'=>'mot nghia khac cua country', 'index'=>'1', 'status'=>'1', 'language'=>'1'],
         	
         	]);
+
+        DB::table('roles')->insert([
+            ['id' => '1', 'slug' => 'admin', 'name' => 'Admmin', 'permissions' => ''],
+            ['id' => '2', 'slug' => 'manager', 'name' => 'Manager', 'permissions' => ''],
+            ['id' => '3', 'slug' => 'user', 'name' => 'User', 'permissions' => ''],
+            ['id' => '4', 'slug' => 'guest', 'name' => 'Guest', 'permissions' => ''],
+        ]);
     }
 }
