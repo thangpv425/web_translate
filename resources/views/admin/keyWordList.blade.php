@@ -6,7 +6,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">Word
                             <small>List</small> 
-                    <a href="admin/keywordAdd" class="btn btn-default" role="button">+ Add new key word</a>
+                    <a href="admin/add/keyword" class="btn btn-default" role="button">+ Add new key word</a>
                         </h1>
                     </div>
                     <!-- /.col-lg-12 -->
