@@ -11,13 +11,6 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            @if (session('mess'))
-            <div class="alert alert-danger">
-                <ul>
-                    <li>{{ session('mess') }}</li>
-                </ul>
-            </div>
-            @endif
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr class="odd gradeX" align="center">
@@ -91,30 +84,5 @@
 </div>
 @endsection
 @section('script')
-<script>
-$( document ).ready(function() {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $('#decline').on('submit', function(e){
-        e.preventDefault();
-        var cmt = prompt("Please enter comment", "This word is ...");
-        var id = $('input[name=id]').val();
-        var opCode = $('input[name=opCode]').val();
-        var url = $(this).attr('action');
-        var post = $(this).attr('method');
-        $.ajax({
-            type : post,
-            url : url,
-            data : {'id' : id, 'opCode' : opCode, 'cmt' : cmt},
-            success:function(data){
-                console.log(data)
-            }
-        });
-        location.reload();
-    });
-});
-</script>
+    @include('js.admin.approve.list')
 @endsection

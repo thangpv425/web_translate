@@ -14,7 +14,7 @@ class Meaning extends Model {
     protected $dates = ['deleted_at'];
 
     public function keyword() {
-        return $this->belongsTo('App\Keyword', 'keyword_id', 'id');
+        return $this->belongsTo('App\Keyword', 'id', 'keyword_id');
     }
 
 }
