@@ -72,13 +72,7 @@ class AdminController extends Controller
         }
         return redirect('admin/keywordList');
     }
-
-
-    public function checkExistKeyword(Request $request)
-    {
-        return keyword::where('value', $request->keyword)->count();
-    }
-
+    
     /**
      * return List request of keyword table
      * @return [type] [description]
