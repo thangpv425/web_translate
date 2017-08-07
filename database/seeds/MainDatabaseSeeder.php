@@ -38,7 +38,7 @@ class MainDatabaseSeeder extends Seeder
         	]);
 
         DB::table('roles')->insert([
-            ['id' => '1', 'slug' => 'admin', 'name' => 'Admmin', 'permissions' => ''],
+            ['id' => '1', 'slug' => 'admin', 'name' => 'Admin', 'permissions' => ''],
             ['id' => '2', 'slug' => 'manager', 'name' => 'Manager', 'permissions' => ''],
             ['id' => '3', 'slug' => 'user', 'name' => 'User', 'permissions' => ''],
             ['id' => '4', 'slug' => 'guest', 'name' => 'Guest', 'permissions' => ''],
