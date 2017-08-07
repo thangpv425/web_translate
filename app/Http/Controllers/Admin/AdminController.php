@@ -61,22 +61,20 @@ class AdminController extends Controller {
     public function deleteWord($id) {
         try {
             DB::beginTransaction();
+            //delete meaning
             $meaning = Meaning::find($id);
             $meaning->delete();
-            $keywords = Keyword::all(); //with('meaning')->orderBy('id')->get();
-            foreach ($keywords as $keyword) {
-                $numberOfMeanings = Meaning::where('keyword_id', $keyword->id)->count();
-                //echo $keyword->keyword.":".$numberOfMeanings."<br>";
-                if ($numberOfMeanings == 0) {
-                    $keyword->delete();
-                }
+            //delete keyword if there are not any meaning
+            $numberOfMeanings = Meaning::where('keyword_id', $meaning->keyword_id)->count();
+            if ($numberOfMeanings == 0) {
+                $keyword = Keyword::find($meaning->keyword_id);
+                $keyword->delete();
             }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }
-        $meaning = Meaning::all();
         return redirect('admin/keywordList');
     }
 
