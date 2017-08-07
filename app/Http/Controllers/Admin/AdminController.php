@@ -67,11 +67,6 @@ class AdminController extends Controller
     	return view('admin.keyWordlist',['meaning'=>$meaning]);
     }
 
-    public function checkExistKeyword(Request $request)
-    {
-        return keyword::where('value', $request->keyword)->count();
-    }
-
     /**
      * return List request of keyword table
      * @return [type] [description]

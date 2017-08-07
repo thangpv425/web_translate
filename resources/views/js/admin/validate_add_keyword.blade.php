@@ -60,6 +60,13 @@
                 return this.optional(element) || /^([a-zA-z\s]+)$/.test(value);
             }, "Please insert alphabet."
         );
+
+        jQuery.validator.addMethod("alphabet", function(value, element) {
+                return this.optional(element) || /[^a-zA-Z_\x{00C0}-\x{00FF}\x{1EA0}-\x{1EFF}]/u.test(value);
+            }, "Please insert alphabet."
+        );
+
+
         $.validator.addMethod("uniqueKeyword", 
         function(value, element) {
             var result = false;
