@@ -61,7 +61,7 @@
             }, "Please insert alphabet."
         );
 
-        jQuery.validator.addMethod("alphabet", function(value, element) {
+        jQuery.validator.addMethod("vietnamese", function(value, element) {
                 return this.optional(element) || /[^a-zA-Z_\x{00C0}-\x{00FF}\x{1EA0}-\x{1EFF}]/u.test(value);
             }, "Please insert alphabet."
         );
@@ -90,7 +90,8 @@
         $.validator.addClassRules({
             meaning: {
                 required: true,
-                alphabet: true
+                alphabet: true,
+                vietnamese: true
             }
         });
         $('#add_keyword_form').validate({
