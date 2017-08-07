@@ -23,8 +23,8 @@
                 '</div>\n' +
                 '<label for="">Language</label>\n' +
                 '<div class="form-group">\n' +
-                '<label><input type="radio" name="translate['+i+'][language]" value=\'0\' checked /> Vietnamese<br></label>\n' +
-                '<label><input type="radio" name="translate['+i+'][language]" value=\'1\' /> English<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][language]" value="0" checked /> Vietnamese<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][language]" value="1" /> English<br></label>\n' +
                 '</div>\n' +
                 '</div>\n' +
                 '<hr />'
