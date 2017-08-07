@@ -23,14 +23,13 @@
                 <form action="{{ route('adminAddKeyword') }}" method="POST" id="add_keyword_form">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                     <div id="add_word">
-                        <label for="keyword">Keyword</label><font color="red"><small><span id="errNm1">  </span></small></font>
-                        <input type="text" class="form-control keyword" name="keyword" placeholder="Example: play" data-error="#errNm1">
+                        <label for="keyword">Keyword</label><font color="red"><small><span id="errNm0">  </span></small></font>
+                        <input type="text" class="form-control keyword" name="keyword" placeholder="Example: play" data-error="#errNm0">
                         <br>
-                        <font color="red"><small><div id="errNm1"></div></small></font>
-                        <label>Meaning</label><font color="red"><small><span id="errNm2"> </span></small></font>
+                        <label>Meaning</label><font color="red"><small><span id="errNm1"> </span></small></font>
                         <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control meaning" name="translate[1][meaning]" placeholder="VD: chơi" data-error="#errNm2">
+                            <input type="text" class="form-control meaning" name="translate[1][meaning]" placeholder="VD: chơi" data-error="#errNm1">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" id="more_meaning" type="button">
                                     <i class="fa fa-plus"></i>
@@ -74,9 +73,9 @@
                 $('#add_word').append(
                     '<div id="number'+i+'">\n'+
                     '<div class="form-group">\n' +
-                    '<label>Meaning</label>\n' +
+                    '<label>Meaning</label><font color="red"><small><span id="errNm'+i+'"> </span></small></font>' +
                     '<div class="input-group">' +
-                    '<input type="text" class="form-control meaning" name=translate['+i+'][meaning]" placeholder="Input meaning here...">' +
+                    '<input type="text" class="form-control meaning" name="translate['+i+'][meaning]" placeholder="Input meaning here..." data-error="#errNm'+i+'">' +
                     '<span class="input-group-btn">'+
                     '<button class="btn btn-default btn_remove" id="'+i+'">'+
                     '<i class="fa fa-times"></i>'+
@@ -139,7 +138,7 @@
                     return result;
 
                 },
-                "This keyword is already taken!"
+                "This keyword is already added!"
             );
 
             $.validator.addClassRules({
