@@ -15,28 +15,27 @@ class AdminController extends Controller
     * @return Illuminate\resource\views\admin\keyword_list
     */
     public function wordList(){   	    	
-        $meaning=Meaning::all();
+        $meaning = Meaning::all();
         return view('admin.keyWordList',['meaning'=>$meaning]);
     }
     
-    public function getKeywordAdd(){
+    public function addKeyword(){
         return view('admin.keywordAdd');
     }
     
-    public function postKeywordAdd(Request $request){
+    public function processAddKeyword(Request $request){
         try {
             DB::beginTransaction();
-            //create new keyword
-            $keyword = new keyword();
-            $keyword->value = $request->txtKeyWord;
+            // add new keyword
+            $keyword = new Keyword;
+            $keyword->keyword = $request->keyword;
             $keyword->status= APPROVED;
-            $keyword->save();
-            
-            //create new meaning
+            $keyword->save();          
+            // add new meanings
             foreach ( $request->translate as $key => $value ) {
-                $meaning = new meaning();
-                $meaning->keyword_id = $keyword->keyword_id;
-                $meaning->value = $value['meaning'];
+                $meaning = new Meaning;
+                $meaning->keyword_id = $keyword->id;
+                $meaning->meaning = $value['meaning'];
                 $meaning->index = $key;
                 $meaning->status = APPROVED;
                 $meaning->language = $value['language'];
