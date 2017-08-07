@@ -53,20 +53,26 @@ class AdminController extends Controller
     /*
     *@todo allow admin to solf delete word 
     */
-    public function deleteWord($id){
-    	try {
+    public function deleteWord($id) {
+        try {
             DB::beginTransaction();
-            $meaning= meaning::where($id)->first();
-            $meaning->status= DELETED;
-            $meaning->save();
+            //delete meaning
+            $meaning = Meaning::find($id);
+            $meaning->delete();
+            //delete keyword if there are not any meaning
+            $numberOfMeanings = Meaning::where('keyword_id', $meaning->keyword_id)->count();
+            if ($numberOfMeanings == 0) {
+                $keyword = Keyword::find($meaning->keyword_id);
+                $keyword->delete();
+            }
             DB::commit();
-    	} catch (\Exception $e) {
-    		DB::rollback();
-    	}
-    	$meaning= meaning::all();
-    	return view('admin.keyWordlist',['meaning'=>$meaning]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+        return redirect('admin/keywordList');
     }
-
+    
     /**
      * return List request of keyword table
      * @return [type] [description]
