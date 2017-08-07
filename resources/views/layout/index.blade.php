@@ -26,7 +26,7 @@
     <!-- DataTables Responsive CSS -->
     <link href="admin_asset/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="admin_asset/dist/css/comment.css">
-    <link rel="stylesheet" href="css/app.css"> 
+    <link rel="stylesheet" href="css/app.css">
 </head>
 
 <body>
@@ -58,6 +58,8 @@
     <!-- DataTables JavaScript -->
     <script src="admin_asset/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="admin_asset/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
@@ -67,7 +69,9 @@
         });
     });
     </script>
+    {{-- Pretty popup notification --}}
+    @include('js.common')
+    {{-- Custom script here --}}
     @yield('script')
 </body>
-
 </html>

@@ -45,9 +45,10 @@ Route::group(['middleware'=>'checkLogin'],function(){
 Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('keywordList','Admin\AdminController@wordList');
     
-    Route::get('keywordAdd', 'Admin\AdminController@addKeyword');
-    Route::post('keywordAdd', 'Admin\AdminController@processAddKeyword')->name('adminAddKeyword');
+    Route::get('add/keyword', 'Admin\AdminController@addKeyword');
 
+    Route::post('add/keyword', 'Admin\AdminController@processAddKeyword')->name('adminAddKeyword');
+    
     Route::get('deleteWord/{id}','Admin\AdminController@deleteWord');
     
     Route::get('editKeyword/{id}', 'Admin\AdminController@editKeyword');
@@ -70,5 +71,12 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::post('decline/meaning', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
 
     Route::post('deleteRequest/meaning', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
+
+});
+/**
+ * Check validate
+ */
+Route::prefix('check')->middleware('checkLogin')->group(function(){
+	Route::post('unique/keyword', 'ValidationController@checkUniqueKeyword')->name('uniqueKeyword');
 
 });

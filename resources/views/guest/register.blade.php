@@ -9,12 +9,12 @@
 				<div class="panel-body">
 					<form action="{{ route('register') }}" method="POST">
 						@if(session('err'))
-							<div class="alert alert-warning" role="alert"> { { session('err')}}</div>
+							<div class="alert alert-warning" role="alert"> {{ session('err') }}</div>
 						@endif
 						{{ csrf_field() }}
 						<div class="form-group">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+								<span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
 								<input type="email" name="email" class="form-control" placeholder="example@example.com" value="{{ old('email') }}">
 							</div>
 						</div>
@@ -29,23 +29,21 @@
 
 						<div class="form-group">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-user"></i></span>
+								<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
 								<input type="text" name="first_name" class="form-control" placeholder="First Name">
 							</div>
 						</div>
 
-
-
 						<div class="form-group">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-user"></i></span>
+								<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
 								<input type="text" name="last_name" class="form-control" placeholder="Last Name">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+								<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
 								<input type="password" name="password" class="form-control" placeholder="Password">
 							</div>
 						</div>
@@ -60,7 +58,7 @@
 
 						<div class="form-group">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+								<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
 								<input type="password" name="password_confirmation" class="form-control" placeholder="Password Confirmation">
 							</div>
 						</div>

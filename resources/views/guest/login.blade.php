@@ -13,7 +13,7 @@
 						{{ csrf_field() }}
 						<div class="form-group">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+								<span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
 								<input type="email" name="email" class="form-control" placeholder="example@example.com" value="{{ old('email') }}">
 							</div>
 						</div>
@@ -28,7 +28,7 @@
 
 						<div class="form-group">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+								<span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
 								<input type="password" name="password" class="form-control" placeholder="Password">
 							</div>
 						</div>
