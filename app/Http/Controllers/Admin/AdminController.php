@@ -30,14 +30,14 @@ class AdminController extends Controller {
         try {
             DB::beginTransaction();
             //create new keyword
-            $keyword = new keyword();
+            $keyword = new Keyword;
             $keyword->keyword = $request->txtKeyWord;
             $keyword->status = APPROVED;
             $keyword->save();
 
             //create new meaning
             foreach ($request->translate as $key => $value) {
-                $meaning = new meaning();
+                $meaning = new Meaning;
                 $meaning->keyword_id = $keyword->id;
                 $meaning->meaning = $value['meaning'];
                 $meaning->index = $key;
@@ -61,17 +61,23 @@ class AdminController extends Controller {
     public function deleteWord($id) {
         try {
             DB::beginTransaction();
-            $meaning = meaning::find($id);
-            $meaning->status = DELETED;
-            $meaning->save();
+            $meaning = Meaning::find($id);
             $meaning->delete();
+            $keywords = Keyword::all(); //with('meaning')->orderBy('id')->get();
+            foreach ($keywords as $keyword) {
+                $numberOfMeanings = Meaning::where('keyword_id', $keyword->id)->count();
+                //echo $keyword->keyword.":".$numberOfMeanings."<br>";
+                if ($numberOfMeanings == 0) {
+                    $keyword->delete();
+                }
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }
         $meaning = Meaning::all();
-        return view('admin.keyWordlist', ['meaning' => $meaning]);
+        return redirect('admin/keywordList');
     }
 
     public function checkExistKeyword(Request $request) {
@@ -93,8 +99,7 @@ class AdminController extends Controller {
      * @param  [type] $opCode [description]
      * @return [type]         [description]
      */
-    public function approveChangesOnKeywordTable(Request $request)
-    {
+    public function approveChangesOnKeywordTable(Request $request) {
         $mess = "Request is not exist!";
         $keywordTemp = KeywordTemp::find($request->id);
         $opCode = $request->opCode;
@@ -104,7 +109,7 @@ class AdminController extends Controller {
         if (isset($opCode) && $opCode == ADD && $keywordTemp != null) {
             $mess = AdminController::approveAddKeyword($keywordTemp);
         }
-        if ($opCode == EDIT && $keywordTemp != null){
+        if ($opCode == EDIT && $keywordTemp != null) {
             $mess = AdminController::approveEditKeyword($keywordTemp);
         }
         return redirect()->route('keywordTempList')->with('mess', $mess);
@@ -161,9 +166,7 @@ class AdminController extends Controller {
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-
-    public function declineChangesOnKeywordTable(Request $request)
-    {   
+    public function declineChangesOnKeywordTable(Request $request) {
         if ($request->has('id')) {
             $keywordTemp = KeywordTemp::find($request->id);
             try {
@@ -208,8 +211,7 @@ class AdminController extends Controller {
      * return list request on meaning table
      * @return [type] [description]
      */
-    public function meaningTempList()
-    {
+    public function meaningTempList() {
         $data = MeaningTemp::where('status', IN_QUEUE)->get();
         return view('admin.approve.meaning.list', ['data' => $data]);
     }
@@ -219,8 +221,7 @@ class AdminController extends Controller {
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function approveChangesOnMeaningTable(Request $request)
-    {
+    public function approveChangesOnMeaningTable(Request $request) {
         $mess = "Request is not exist!";
         $opCode = $request->opCode;
         $meaningTemp = MeaningTemp::find($request->id);
@@ -230,14 +231,13 @@ class AdminController extends Controller {
         if (isset($opCode) && $opCode == ADD && $meaningTemp != null) {
             $mess = AdminController::approveAddMeaning($meaningTemp);
         }
-        if ($opCode == EDIT && $meaningTemp != null){
+        if ($opCode == EDIT && $meaningTemp != null) {
             $mess = AdminController::approveEditMeaning($meaningTemp);
         }
         return redirect()->route('meaningTempList')->with('mess', $mess);
     }
 
-    public function approveAddMeaning($meaningTemp)
-    {
+    public function approveAddMeaning($meaningTemp) {
         $mess = "";
         try {
             DB::beginTransaction();
@@ -259,8 +259,7 @@ class AdminController extends Controller {
         return $mess;
     }
 
-    public function approveEditMeaning($meaningTemp)
-    {
+    public function approveEditMeaning($meaningTemp) {
         try {
             DB::beginTransaction();
             $meaning = Meaning::find($meaningTemp['old_meaning_id']);
@@ -282,13 +281,12 @@ class AdminController extends Controller {
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function declineChangesOnMeaningTable(Request $request)
-    {
+    public function declineChangesOnMeaningTable(Request $request) {
         if (!$request->has('id')) {
             $mess = "Invalid Request!";
         }
         $meaningTemp = MeaningTemp::find($request->id);
-        if($meaningTemp != null){
+        if ($meaningTemp != null) {
             try {
                 DB::beginTransaction();
                 $meaningTemp->status = DECLINED;
@@ -300,14 +298,13 @@ class AdminController extends Controller {
                 DB::rollback();
                 $mess = "Something wrong!";
             }
-        }else{
+        } else {
             $mess = "Request is not exist!";
         }
         return redirect()->route('meaningTempList')->with('mess', $mess);
     }
 
-    public function deleteRequestOnMeaningTable(Request $request)
-    {
+    public function deleteRequestOnMeaningTable(Request $request) {
         $mess = "";
         try {
             DB::beginTransaction();
