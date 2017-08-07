@@ -77,6 +77,20 @@ class AdminController extends Controller {
         }
         return redirect('admin/keywordList');
     }
+    
+    public function editKeyword($id) {
+        
+        $keyword = Keyword::find($id);
+        echo $keyword->keyword;
+        $meanings = $keyword->meaning;
+        dd($meanings);
+//        
+//        foreach($meanings as $m){
+//            echo $m->id;
+//        }
+//        return view('admin.keywordEdit', ['keyword' => $keyword,
+//                                           'meaning' => $meaning]);
+    }
 
     public function checkExistKeyword(Request $request) {
         return keyword::where('keyword', $request->keyword)->count();
