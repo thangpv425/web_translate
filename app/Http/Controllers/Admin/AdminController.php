@@ -76,10 +76,11 @@ class AdminController extends Controller
     public function editKeyword($id) {
         
         $keyword = Keyword::find($id);
-        echo $keyword->keyword;
         $meaning = $keyword->meaning;
+        $numberOfMeanings = Meaning::where('keyword_id', $id)->count();
         return view('admin.keywordEdit', ['keyword' => $keyword,
-                                           'meaning' => $meaning]);
+                                          'meaning' => $meaning,
+                                          'numberOfMeanings' => $numberOfMeanings]);
     }
     
     public function processEditKeyword(){

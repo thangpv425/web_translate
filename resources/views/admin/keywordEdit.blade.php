@@ -1,17 +1,18 @@
 @extends('layout.index')
 
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- Page Content -->
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">
-                    Edit word <small> {{$keyword->keyword}} </small>
+                <h1 class="page-header">Keyword
+                    <small>Edit</small>
                 </h1>
             </div>
-            <!-- /.col-lg-12 -->
-            <div class="col-lg-7" style="padding-bottom:120px">
+            
+            <div class="col-sm-4">
                 @if(count($errors)>0)
                 <div class="alert alert-danger">
                     @foreach($errors->all() as $err)
@@ -22,29 +23,43 @@
                 <form action="{{ route('keywordEditRoute') }}" method="POST">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                     <input type="hidden" name="keyword_id" value='{{ $keyword['keyword_id'] }}' />
-                    <div class="form-group">
-                        <h3>Key word</h3>
-                        <input class="form-control" name="txtKeyWord" value="{{$keyword->keyword}}" />
-                    </div>
-
-                    <h3>Meaning</h3>
-                    @php $i=1;
-                    @endphp
-                    
-                    @foreach($meaning as $meaning)
-                    <br>#{{$i}}
-                        @php $i++;
+                    <div id="edit_word">
+                        <label for="keyword">Keyword</label><font color="red"><small><span id="errNm0">  </span></small></font>
+                        <input type="text" class="form-control keyword" name="keyword" value="{{$keyword->keyword}}" data-error="#errNm0">
+                        <br>
+                        
+                        @php 
+                            $i=1;
                         @endphp
-                    <input class="form-control" name="meaning[]" value="{{$meaning->meaning}}" />
-                    <input type="hidden" name="meaning_id[]" value='{{ $meaning->id }}' />
-                    <br>
-                    <input type="radio" name="language[]" value='0' @if($meaning->language==0) checked @endif /> Vietnamese<br>
-                    <input type="radio" name="language[]" value='1' @if($meaning->language==1) checked @endif /> English<br>
-                    @endforeach
-                    <div class="form-group" id= "add_meaning">
-                    </div>
-                    <button type="submit" class="btn btn-default">Edit</button>
-                    <button type="reset" class="btn btn-default">Reset</button>
+
+                        @foreach($meaning as $meaning)
+                        <label>Meaning #{{$i}}</label><font color="red"><small><span id="errNm1"> </span></small></font>
+                        <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control meaning" name="meaning[]" value="{{$meaning->meaning}}" data-error="#errNm1">
+                            @if($i==$numberOfMeanings)
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" id="more_meaning" type="button">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </span>
+                            @endif
+                            <input type="hidden" name="meaning_id[]" value="{{ $meaning->id }}" />
+                        </div>
+                        <label for="">Language</label>
+                        <div class="form-group">
+                            <label><input type="radio" name="language[]" value='0' checked /> Vietnamese<br></label>
+                            <label><input type="radio" name="language[]" value='1' /> English<br></label>
+                        </div>
+                        @php $i++;@endphp
+                        </div>
+                        @endforeach
+                        
+                    </div> 
+                    <button id="submit" type="submit" class="btn btn-success">
+                        <i class="fa fa-floppy-o fa-fw" aria-hidden="true"></i>Save
+                    </button>
+                    <button type="reset" class="btn btn-danger"><i class="fa fa-refresh fa-fw"></i>Reset</button>
                 </form>
                 
             </div>
@@ -57,11 +72,5 @@
 @endsection
 
 @section('script')
-<script>
-    function add_fields() {
-        document.getElementById('add_meaning').innerHTML += '<br><label>Translate</label> \n\
-<input class="form-control" name="txtMeaning" placeholder="Example: chơi" />\n\
-<input type="radio" name="language" value=\'0\'/> Vietnamese<br>\n\
-<input type="radio" name="language" value=\'1\'/> English<br>';
-    }
-</script>
+@include('js.admin.validate_edit_keyword')
+@endsection
