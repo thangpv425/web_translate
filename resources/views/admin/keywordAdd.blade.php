@@ -59,5 +59,5 @@
 @endsection
 
 @section('script')
-@include('js.validate_add_keyword')
+@include('js.admin.validate_add_keyword')
 @endsection
