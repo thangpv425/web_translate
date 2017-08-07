@@ -51,6 +51,7 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('deleteWord/{id}','Admin\AdminController@deleteWord');
     
     Route::get('editKeyword/{id}', 'Admin\AdminController@editKeyword');
+    Route::post('editKeyword', 'Admin\AdminController@processEditKeyword')->name('keywordEditRoute');
 
     // keyword table
     Route::get('queue/keyword', 'Admin\AdminController@keywordTempList')->name('keywordTempList'); // return view

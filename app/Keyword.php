@@ -14,6 +14,6 @@ class Keyword extends Model
     protected $dates = ['deleted_at'];
     
     public function meaning(){
-    	return $this->hasMany('App\Meaning','id','keyword_id');
+    	return $this->hasMany('App\Meaning','keyword_id','id');
     }
 }

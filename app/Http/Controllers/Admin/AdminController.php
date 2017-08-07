@@ -82,14 +82,13 @@ class AdminController extends Controller {
         
         $keyword = Keyword::find($id);
         echo $keyword->keyword;
-        $meanings = $keyword->meaning;
-        dd($meanings);
-//        
-//        foreach($meanings as $m){
-//            echo $m->id;
-//        }
-//        return view('admin.keywordEdit', ['keyword' => $keyword,
-//                                           'meaning' => $meaning]);
+        $meaning = $keyword->meaning;
+        return view('admin.keywordEdit', ['keyword' => $keyword,
+                                           'meaning' => $meaning]);
+    }
+    
+    public function processEditKeyword(){
+        
     }
 
     public function checkExistKeyword(Request $request) {
