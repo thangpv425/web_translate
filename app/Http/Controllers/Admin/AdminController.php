@@ -91,19 +91,25 @@ class AdminController extends Controller
      */
     public function approveChangesOnKeywordTable(Request $request)
     {
-        $mess = "Request is not exist!";
+            $notification = array(
+                    'message' => 'Request is not exist.', 
+                    'alert-type' => 'error'
+                );
         $keywordTemp = KeywordTemp::find($request->id);
         $opCode = $request->opCode;
         if (!$request->has('id') || !$request->has('opCode') || ($request->opCode != ADD && $request->opCode != EDIT)) {
-            $mess = "Invalid Request!";
+            $notification = array(
+                    'message' => 'Invalid request.', 
+                    'alert-type' => 'error'
+                );
         }
         if (isset($opCode) && $opCode == ADD && $keywordTemp != null) {
-            $mess = AdminController::approveAddKeyword($keywordTemp);
+            $notification = AdminController::approveAddKeyword($keywordTemp);
         }
         if ($opCode == EDIT && $keywordTemp != null){
-            $mess = AdminController::approveEditKeyword($keywordTemp);
+            $notification = AdminController::approveEditKeyword($keywordTemp);
         }
-        return redirect()->route('keywordTempList')->with('mess', $mess);
+        return redirect()->route('keywordTempList')->with($notification);
     }
 
     /**
@@ -113,7 +119,6 @@ class AdminController extends Controller
      */
     public function approveAddKeyword($keywordTemp)
     {
-        $mess = "";
         try {
             DB::beginTransaction();
             $keyword = Keyword::find($keywordTemp->old_keyword_id);
@@ -122,12 +127,18 @@ class AdminController extends Controller
             $keywordTemp->status = APPROVED;
             $keywordTemp->save();
             DB::commit();
-            $mess = "Successful!";
+            $notification = array(
+                    'message' => 'Keyword \''. $keyword['keyword'] .'\' added successfully.', 
+                    'alert-type' => 'success'
+                );
         } catch (\Exception $e) {
             DB::rollback();
-            $mess = "Something wrong.";
+            $notification = array(
+                    'message' => 'Something went wrong.', 
+                    'alert-type' => 'error'
+                );
         }
-        return $mess;
+        return $notification;
     }
 
     /**
@@ -137,21 +148,26 @@ class AdminController extends Controller
      */
     public function approveEditKeyword($keywordTemp)
     {
-        $mess = "";
         try {
             DB::beginTransaction();
             $keyword = Keyword::find($keywordTemp['old_keyword_id']);
+            $notification = array(
+                    'message' => 'Keyword edited successfully. <br>\''.$keyword->keyword.'\' to \''.$keywordTemp['new_keyword'].'\'', 
+                    'alert-type' => 'success'
+                );
             $keyword->keyword = $keywordTemp['new_keyword'];
             $keyword->save();
             $keywordTemp->status = APPROVED;
             $keywordTemp->save();
             DB::commit();
-            $mess = "Successful!";
         } catch (\Exception $e) {
             DB::rollback();
-            $mess = "Something wrong!";
+            $notification = array(
+                    'message' => 'Something went wrong.', 
+                    'alert-type' => 'error'
+                );
         }
-        return $mess;
+        return $notification;
     }
     /**
      * Decline request on keyword table
@@ -168,15 +184,24 @@ class AdminController extends Controller
                 $keywordTemp->comment = $request->get('cmt');
                 $keywordTemp->save();
                 DB::commit();
-                $mess = "User's Request Declined!";
+            $notification = array(
+                    'message' => 'Request declined successfully.', 
+                    'alert-type' => 'success'
+                );
             } catch (\Exception $e) {
                 DB::rollback();
-                $mess = "Something wrong!";
+            $notification = array(
+                    'message' => 'Something went wrong.', 
+                    'alert-type' => 'error'
+                );
             }
         } else {
-            $mess = "Request is not exist!";
+            $notification = array(
+                    'message' => 'Request is not exist.', 
+                    'alert-type' => 'error'
+                );
         }
-        return redirect()->route('keywordTempList')->with('mess', $mess);
+        return redirect()->route('keywordTempList')->with($notification);
     }
 
     /**
@@ -186,19 +211,24 @@ class AdminController extends Controller
      */
     public function deleteRequest(Request $request)
     {
-        $mess = "";
         try {
             DB::beginTransaction();
             $keywordTemp = KeywordTemp::find($request->id);
             $keywordTemp->status = DELETED;
             $keywordTemp->save();
             DB::commit();
-            $mess = "Request Deleted!";
+            $notification = array(
+                    'message' => 'Request deleted.', 
+                    'alert-type' => 'success'
+                );
         } catch (\Exception $e) {
             DB::rollback();
-            $mess = "Something wrong!";
+            $notification = array(
+                    'message' => 'Something went wrong.', 
+                    'alert-type' => 'error'
+                );
         }
-        return redirect()->route('keywordTempList')->with('mess', $mess);
+        return redirect()->route('keywordTempList')->with($notification);
     }
     
 
@@ -219,24 +249,29 @@ class AdminController extends Controller
      */
     public function approveChangesOnMeaningTable(Request $request)
     {
-        $mess = "Request is not exist!";
+            $notification = array(
+                    'message' => 'Request is not exist.', 
+                    'alert-type' => 'error'
+                );
         $opCode = $request->opCode;
         $meaningTemp = MeaningTemp::find($request->id);
         if (!$request->has('opCode') || !$request->has('id') || ($opCode != ADD && $opCode != EDIT)) {
-            $mess = "Invalid Request!";
+            $notification = array(
+                    'message' => 'Invalid request.', 
+                    'alert-type' => 'error'
+                );
         }
         if (isset($opCode) && $opCode == ADD && $meaningTemp != null) {
-            $mess = AdminController::approveAddMeaning($meaningTemp);
+            $notification = AdminController::approveAddMeaning($meaningTemp);
         }
         if ($opCode == EDIT && $meaningTemp != null){
-            $mess = AdminController::approveEditMeaning($meaningTemp);
+            $notification = AdminController::approveEditMeaning($meaningTemp);
         }
-        return redirect()->route('meaningTempList')->with('mess', $mess);
+        return redirect()->route('meaningTempList')->with($notification);
     }
 
     public function approveAddMeaning($meaningTemp)
     {
-        $mess = "";
         try {
             DB::beginTransaction();
             $meaning = new Meaning;
@@ -249,12 +284,18 @@ class AdminController extends Controller
             $meaningTemp->status = APPROVED;
             $meaningTemp->save();
             DB::commit();
-            $mess = "Successful!";
+            $notification = array(
+                    'message' => "Successfully added new meaning.<br>".$meaning->keyword['keyword'].' : '.$meaning->meaning, 
+                    'alert-type' => 'success'
+                );
         } catch (\Exception $e) {
             DB::rollback();
-            $mess = "Something wrong!";
+            $notification = array(
+                    'message' => 'Something went wrong.', 
+                    'alert-type' => 'error'
+                );
         }
-        return $mess;
+        return $notification;
     }
 
     public function approveEditMeaning($meaningTemp)
@@ -267,12 +308,18 @@ class AdminController extends Controller
             $meaningTemp->status = APPROVED;
             $meaningTemp->save();
             DB::commit();
-            $mess = "Successful!";
+            $notification = array(
+                    'message' => 'Successfully edited meaning.', 
+                    'alert-type' => 'success'
+                );
         } catch (\Exception $e) {
             DB::rollback();
-            $mess = "Something wrong!";
+            $notification = array(
+                    'message' => 'Something went wrong.', 
+                    'alert-type' => 'error'
+                );
         }
-        return $mess;
+        return $notification;
     }
 
     /**
@@ -283,7 +330,10 @@ class AdminController extends Controller
     public function declineChangesOnMeaningTable(Request $request)
     {
         if (!$request->has('id')) {
-            $mess = "Invalid Request!";
+            $notification = array(
+                    'message' => 'Invalid request.', 
+                    'alert-type' => 'error'
+                );
         }
         $meaningTemp = MeaningTemp::find($request->id);
         if($meaningTemp != null){
@@ -293,32 +343,46 @@ class AdminController extends Controller
                 $meaningTemp->comment = $request->get('cmt');
                 $meaningTemp->save();
                 DB::commit();
-                $mess = "Successful!";
+                $notification = array(
+                        'message' => 'Request declined successfully.', 
+                        'alert-type' => 'success'
+                    );
             } catch (\Exception $e) {
                 DB::rollback();
-                $mess = "Something wrong!";
+            $notification = array(
+                    'message' => 'Something went wrong.', 
+                    'alert-type' => 'error'
+                );
             }
         }else{
-            $mess = "Request is not exist!";
+            $notification = array(
+                    'message' => 'Request is not exist.', 
+                    'alert-type' => 'error'
+                );
         }
-        return redirect()->route('meaningTempList')->with('mess', $mess);
+        return redirect()->route('meaningTempList')->with($notification);
     }
 
     public function deleteRequestOnMeaningTable(Request $request)
     {
-        $mess = "";
         try {
             DB::beginTransaction();
             $meaningTemp = MeaningTemp::find($request->id);
             $meaningTemp->status = DELETED;
             $meaningTemp->save();
             DB::commit();
-            $mess = "Request Deleted!";
+            $notification = array(
+                    'message' => 'Request deleted successfully.', 
+                    'alert-type' => 'success'
+                );
         } catch (\Exception $e) {
             DB::rollback();
-            $mess = "Something wrong!";
+            $notification = array(
+                    'message' => 'Something went wrong.', 
+                    'alert-type' => 'error'
+                );
         }
-        return redirect()->route('meaningTempList')->with('mess', $mess);
+        return redirect()->route('meaningTempList')->with($notification);
     }
 
 }

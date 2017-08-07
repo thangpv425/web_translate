@@ -11,13 +11,6 @@
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
-            @if (session('mess'))
-            <div class="alert alert-danger">
-                <ul>
-                    <li>{{ session('mess') }}</li>
-                </ul>
-            </div>
-            @endif
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr class="odd gradeX" align="center">
