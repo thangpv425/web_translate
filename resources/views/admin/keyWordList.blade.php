@@ -33,8 +33,8 @@
                                 @else
                                     <td>English</td>
                                 @endif
-                                <td class="center"><a href="admin/delete_word/{{$tl->id}}"><i class="fa fa-trash-o fa-fw"></i>Delete</a></td>
-                                <td class="center"><a href="admin/keywordEdit/{{$tl->keyword_id}}"><i class="fa fa-pencil fa-fw"></i> Edit</a></td>
+                                <td class="center"><a href="admin/deleteWord/{{$tl->id}}"><i class="fa fa-trash-o fa-fw"></i>Delete</a></td>
+                                <td class="center"><a href="admin/editKeyword/{{$tl->keyword_id}}"><i class="fa fa-pencil fa-fw"></i> Edit</a></td>
                             </tr>
                             @endif
                         @endforeach

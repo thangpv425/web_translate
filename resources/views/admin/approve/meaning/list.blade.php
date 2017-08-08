@@ -1,6 +1,5 @@
 @extends('layout.index')
 @section('content')
-
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div id="page-wrapper">
     <div class="container-fluid">

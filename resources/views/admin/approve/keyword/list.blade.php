@@ -6,9 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Approval
-                    <small>Keyword List
-                    </small>
-                    
+                    <small>Keyword List</small>
                 </h1>
                 
             </div>
@@ -19,7 +17,7 @@
                         <td><b>ID</b></td>
                         <td><b>OpCode</b></td>
                         <td><b>User</b></td>
-                         <td><b>Old Keyword</b></td>
+                        <td><b>Old Keyword</b></td>
                         <td><b>New Keyword</b></td>
                         <td><b>Approve</b></td>
                         <td><b>Decline</b></td>

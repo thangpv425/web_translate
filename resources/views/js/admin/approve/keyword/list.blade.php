@@ -1,5 +1,10 @@
 <script>
     $(document).ready(function() {
+        $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
         var canClick = '';
         var dataTable = $('#dataTables-example').DataTable({
             "dom": '<"lenght"l><"toolbar">frt<"info"i>p',

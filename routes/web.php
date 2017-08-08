@@ -48,6 +48,8 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     Route::get('add/keyword', 'Admin\AdminController@addKeyword');
 
     Route::post('add/keyword', 'Admin\AdminController@processAddKeyword')->name('adminAddKeyword');
+    
+    Route::get('deleteWord/{id}','Admin\AdminController@deleteWord');
 
     // keyword table
 	Route::get('queue/keyword', 'Admin\AdminController@indexKeywordTemp')->name('keywordTempList'); // return view
@@ -56,9 +58,9 @@ Route::prefix('admin')->middleware('admin')->group(function(){
 
 	Route::post('approve/keyword', 'Admin\AdminController@approveChangesOnKeywordTable')->name('approveOnKeyword');
 
-	Route::post('decline/keyword', 'Admin\AdminController@declineChangesOnKeywordTable')->name('declineOnKeyword');
+    Route::post('decline/keyword', 'Admin\AdminController@declineChangesOnKeywordTable')->name('declineOnKeyword');
 
-	Route::post('deleteRequest', 'Admin\AdminController@deleteRequest')->name('deleteRequest');
+    Route::post('deleteRequest', 'Admin\AdminController@deleteRequest')->name('deleteRequest');
 
 	// meaning table
 	Route::get('queue/meaning', 'Admin\AdminController@indexMeaningTemp')->name('meaningTempList');
@@ -67,9 +69,9 @@ Route::prefix('admin')->middleware('admin')->group(function(){
 	
 	Route::post('approve/meaning', 'Admin\AdminController@approveChangesOnMeaningTable')->name('approveOnMeaning');
 
-	Route::post('decline/meaning', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
+    Route::post('decline/meaning', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
 
-	Route::post('deleteRequest/meaning', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
+    Route::post('deleteRequest/meaning', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
 
 });
 /**
