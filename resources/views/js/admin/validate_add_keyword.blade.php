@@ -1,4 +1,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+
+{{-- Validate --}}
 <script>
     $(document).ready(function(){
         $.ajaxSetup({

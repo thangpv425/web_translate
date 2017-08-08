@@ -46,3 +46,6 @@
             <!-- /.container-fluid -->
         </div>
 @endsection
+@section('script')
+    @include('js.admin.ListKeyword')
+@endsection

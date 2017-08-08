@@ -6,9 +6,16 @@ use App\User;
 use Illuminate\Http\Request;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Validator;
-
+use App\Repositories\Interfaces\UserRepositoryInterface;
 class UserController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function view($id = NULL)
     {
         $user = User::find($id);
