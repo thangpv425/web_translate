@@ -72,7 +72,7 @@ class AdminController extends Controller
         }
         return redirect('admin/keywordList');
     }
-    
+
     public function editKeyword($id) {
         
         $keyword = Keyword::find($id);
@@ -85,12 +85,6 @@ class AdminController extends Controller
     
     public function processEditKeyword(){
         
-    }
-
-
-    public function checkExistKeyword(Request $request)
-    {
-        return keyword::where('value', $request->keyword)->count();
     }
 
     /**

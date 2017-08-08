@@ -23,8 +23,8 @@
                 '</div>\n' +
                 '<label for="">Language</label>\n' +
                 '<div class="form-group">\n' +
-                '<label><input type="radio" name="translate['+i+'][language]" value=\'0\' checked /> Vietnamese<br></label>\n' +
-                '<label><input type="radio" name="translate['+i+'][language]" value=\'1\' /> English<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][language]" value="0" checked /> Vietnamese<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][language]" value="1" /> English<br></label>\n' +
                 '</div>\n' +
                 '</div>\n' +
                 '<hr />'
@@ -60,6 +60,13 @@
                 return this.optional(element) || /^([a-zA-z\s]+)$/.test(value);
             }, "Please insert alphabet."
         );
+
+        jQuery.validator.addMethod("vietnamese", function(value, element) {
+                return this.optional(element) || /[^a-zA-Z_\x{00C0}-\x{00FF}\x{1EA0}-\x{1EFF}]/u.test(value);
+            }, "Please insert alphabet."
+        );
+
+
         $.validator.addMethod("uniqueKeyword", 
         function(value, element) {
             var result = false;
@@ -83,7 +90,8 @@
         $.validator.addClassRules({
             meaning: {
                 required: true,
-                alphabet: true
+                alphabet: true,
+                vietnamese: true
             }
         });
         $('#add_keyword_form').validate({
