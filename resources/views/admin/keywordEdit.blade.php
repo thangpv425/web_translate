@@ -11,7 +11,7 @@
                     <small>Edit</small>
                 </h1>
             </div>
-            
+
             <div class="col-sm-4">
                 @if(count($errors)>0)
                 <div class="alert alert-danger">
@@ -20,48 +20,42 @@
                     @endforeach
                 </div>
                 @endif
-                <form action="{{ route('keywordEditRoute') }}" method="POST">
+                <form action="{{ route('keywordEditRoute') }}" method="POST" id="edit_keyword_form">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                    <input type="hidden" name="keyword_id" value='{{ $keyword['keyword_id'] }}' />
+                    <input type="hidden" name="keyword_id" value="{{ $keyword->id }}" />
+                    
                     <div id="edit_word">
-                        <label for="keyword">Keyword</label><font color="red"><small><span id="errNm0">  </span></small></font>
+                        <label for="keyword">Keyword - {{$keyword->id}}</label><font color="red"><small><span id="errNm0">  </span></small></font>
                         <input type="text" class="form-control keyword" name="keyword" value="{{$keyword->keyword}}" data-error="#errNm0">
                         <br>
-                        
+
                         @php 
-                            $i=1;
+                        $i=1;
                         @endphp
 
                         @foreach($meaning as $meaning)
-                        <label>Meaning #{{$i}}</label><font color="red"><small><span id="errNm1"> </span></small></font>
-                        <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" class="form-control meaning" name="meaning[]" value="{{$meaning->meaning}}" data-error="#errNm1">
-                            @if($i==$numberOfMeanings)
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" id="more_meaning" type="button">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </span>
-                            @endif
-                            <input type="hidden" name="meaning_id[]" value="{{ $meaning->id }}" />
-                        </div>
-                        <label for="">Language</label>
-                        <div class="form-group">
-                            <label><input type="radio" name="language[]" value='0' checked /> Vietnamese<br></label>
-                            <label><input type="radio" name="language[]" value='1' /> English<br></label>
-                        </div>
-                        @php $i++;@endphp
+                        <label>Meaning</label><font color="red"><small><span id="errNm1"> </span></small></font>
+                        <div class="form-group" id="number{{$i}}">
+                            <div class="input-group">
+                                <input type="text" class="form-control meaning" name="translate[{{$i}}][meaning]" value="{{$meaning->meaning}}" data-error="#errNm{{$i}}">
+                                <input type="hidden" name="meaning_id[{{$i}}]" value="{{ $meaning->id }}" />
+                            </div>
+                            <label for="">Language</label>
+                            <div class="form-group">
+                                <label><input type="radio" name="translate[{{$i}}][language]" value='0' @if($meaning->language==0) checked @endif /> Vietnamese<br></label>
+                                <label><input type="radio" name="translate[{{$i}}][language]" value='1' @if($meaning->language==1) checked @endif /> English<br></label>
+                            </div>
+                            @php $i++;@endphp
                         </div>
                         @endforeach
-                        
+                    <hr>
                     </div> 
                     <button id="submit" type="submit" class="btn btn-success">
                         <i class="fa fa-floppy-o fa-fw" aria-hidden="true"></i>Save
                     </button>
                     <button type="reset" class="btn btn-danger"><i class="fa fa-refresh fa-fw"></i>Reset</button>
                 </form>
-                
+
             </div>
         </div>
         <!-- /.row -->
