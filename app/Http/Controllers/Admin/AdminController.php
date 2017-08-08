@@ -90,13 +90,13 @@ class AdminController extends Controller
             //update database
             $keyword = Keyword::find($id);
             //if keyword is edited to be a existed keyword
-            if (($request->keyword!=$keyword->keyword)&&(Keyword::where('keyword',$request->keyword)->count()!=0)){
-                $notification = 'This keyword is existed.';
-            } else {
+//            if (($request->keyword!=$keyword->keyword)&&(Keyword::where('keyword',$request->keyword)->count()!=0)){
+//                $notification = 'This keyword is existed.';
+//            } else {
                 $keyword->keyword = $request->keyword;
                 $keyword->status = APPROVED;
                 $keyword->save();
-            }
+//            }
             $i = 1;
             foreach ($request->translate as $key => $value) {
                 $meaning = Meaning::find($request->meaning_id[$i]);
@@ -110,7 +110,6 @@ class AdminController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            $notification = 'Something went wrong!';
             throw $e;
         }
         //print_r($notification);

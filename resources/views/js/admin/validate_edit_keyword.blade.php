@@ -84,7 +84,7 @@
                 return result;
 
             },
-            "This keyword is already edited!"
+            "This keyword is existed!"
         );
 
         $.validator.addClassRules({
@@ -98,7 +98,8 @@
             rules: {
                 "keyword": {
                     required: true,
-                    alphabet: true
+                    alphabet: true,
+                    uniqueKeyword: true
                 },
             },
             messages: {},
