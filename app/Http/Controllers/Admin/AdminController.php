@@ -80,14 +80,15 @@ class AdminController extends Controller
     public function getDataForKeywordTemp(Request $request)
     {
         $list = IN_QUEUE;
-        $list = $request->list;
+        if ($request->has('list')) {
+            $list = $request->list;
+        }
         $result = KeywordTemp::where('status', $list)->get();
         $data[] = array();
         foreach ($result as $key => $value) {
             $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'], $value->new_keyword, $value['comment']);
             $data[] = $sub;
         }
-        // dd($data);
         array_splice($data, 0, 1);
         $output = array('data' => $data);
         echo json_encode($output);
@@ -414,10 +415,5 @@ class AdminController extends Controller
                 );
         }
         return redirect()->route('meaningTempList')->with($notification);
-    }
-
-    public function test(Request $request)
-    {
-        
     }
 }

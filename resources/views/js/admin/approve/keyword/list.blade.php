@@ -1,10 +1,5 @@
 <script>
-    $(document).ready(function() {
-        $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+    $(document).ready(function() {      
         var canClick = '';
         var dataTable = $('#dataTables-example').DataTable({
             "dom": '<"lenght"l><"toolbar">frt<"info"i>p',
@@ -53,7 +48,7 @@
                     sortable: false,
                     "render": function ( data, type, row, meta ) {
                         return '<form action="{{ route('deleteRequest') }}" method="POST" id="delete">'+
-                                         '{{ csrf_field() }}'+
+                                    '{{ csrf_field() }}'+
                                     '<input type="hidden" name="id" value='+row[0]+'>'+
                                     '<button type="submit" class="btn btn-danger '+canClick+'" id="btn-delete"><i class="fa fa-trash-o fa-fw"></i>Delete</button>'+
                                 '</form>';;

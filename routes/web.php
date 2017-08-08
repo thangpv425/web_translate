@@ -81,4 +81,3 @@ Route::prefix('check')->middleware('checkLogin')->group(function(){
 	Route::post('unique/keyword', 'ValidationController@checkUniqueKeyword')->name('uniqueKeyword');
 
 });
-Route::post('test', 'Admin\AdminController@test');
