@@ -77,21 +77,20 @@ class AdminController extends Controller
      * return List request of keyword table
      * @return [type] [description]
      */
-    public function getDataForKeywordTemp(Request $request)
+    public function postDataForKeywordTemp(Request $request)
     {
         $list = IN_QUEUE;
         if ($request->has('list')) {
             $list = $request->list;
         }
         $result = KeywordTemp::where('status', $list)->get();
-        $data[] = array();
+        $data = array();
         foreach ($result as $key => $value) {
             $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'], $value->new_keyword, $value['comment']);
             $data[] = $sub;
         }
-        array_splice($data, 0, 1);
-        $output = array('data' => $data);
-        echo json_encode($output);
+        $output = array('data' => $data, 'info' => 'my info');
+        return response()->json($output);
     }
 
     public function indexKeywordTemp()
@@ -257,21 +256,20 @@ class AdminController extends Controller
         return view('admin.approve.meaning.list');
     }
 
-    public function getDataForMeaningTemp(Request $request)
+    public function postDataForMeaningTemp(Request $request)
     {
         $list = IN_QUEUE;
         if ($request->has('list')) {
             $list = $request->list;
         }
         $result = MeaningTemp::where('status', $list)->get();
-        $data[] = array();
+        $data = array();
         foreach ($result as $key => $value) {
             $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'],$value->oldMeaning['meaning'], $value->new_meaning, $value['comment']);
             $data[] = $sub;
         }
-        array_splice($data, 0, 1);
         $output = array('data' => $data);
-        echo json_encode($output);
+        return response()->json($output);
     }
 
     /**

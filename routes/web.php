@@ -51,28 +51,32 @@ Route::prefix('admin')->middleware('admin')->group(function(){
     
     Route::get('deleteWord/{id}','Admin\AdminController@deleteWord');
 
-    // keyword table
-	Route::get('queue/keyword', 'Admin\AdminController@indexKeywordTemp')->name('keywordTempList'); // return view
+    // keyword temp table
+    Route::prefix('keyword-temp')->group(function(){
+    	Route::get('list', 'Admin\AdminController@indexKeywordTemp')->name('keywordTempList'); // return view
 
-	Route::post('queue/keyword/change', 'Admin\AdminController@getDataForKeywordTemp');
+		Route::post('list', 'Admin\AdminController@postDataForKeywordTemp');
 
-	Route::post('approve/keyword', 'Admin\AdminController@approveChangesOnKeywordTable')->name('approveOnKeyword');
+		Route::post('approve', 'Admin\AdminController@approveChangesOnKeywordTable')->name('approveOnKeyword');
 
-    Route::post('decline/keyword', 'Admin\AdminController@declineChangesOnKeywordTable')->name('declineOnKeyword');
+	    Route::post('decline', 'Admin\AdminController@declineChangesOnKeywordTable')->name('declineOnKeyword');
 
-    Route::post('deleteRequest', 'Admin\AdminController@deleteRequest')->name('deleteRequest');
+	    Route::post('delete', 'Admin\AdminController@deleteRequest')->name('deleteRequest');
+    });
 
 	// meaning table
-	Route::get('queue/meaning', 'Admin\AdminController@indexMeaningTemp')->name('meaningTempList');
+	Route::prefix('meaning-temp')->group(function(){
+		Route::get('list', 'Admin\AdminController@indexMeaningTemp')->name('meaningTempList');
 
-	Route::post('queue/meaning/change', 'Admin\AdminController@getDataForMeaningTemp');
+		Route::post('list', 'Admin\AdminController@postDataForMeaningTemp');
+		
+		Route::post('approve', 'Admin\AdminController@approveChangesOnMeaningTable')->name('approveOnMeaning');
+
+	    Route::post('decline', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
+
+	    Route::post('delete', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
+	});
 	
-	Route::post('approve/meaning', 'Admin\AdminController@approveChangesOnMeaningTable')->name('approveOnMeaning');
-
-    Route::post('decline/meaning', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
-
-    Route::post('deleteRequest/meaning', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
-
 });
 /**
  * Check validate

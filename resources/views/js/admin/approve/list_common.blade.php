@@ -5,6 +5,23 @@ $.ajaxSetup({
     }
 });
 
+// draw table
+function drawTable(table, url) {
+    $.ajax({
+        type: "POST",
+        url: "admin/"+url+"-temp/list",
+        data: {
+          list: $('#list').val()
+        },
+        success: function(data) {
+            //Sets your content into your div
+            table.clear().draw();
+            table.rows.add(data.data); // Add new data
+            table.columns.adjust().draw(); // Redraw the DataTable
+        }
+     });
+}
+
 //  write comment before decline request
 $('#dataTables-example').on('submit', '#decline', function(e) {
     e.preventDefault();
@@ -18,7 +35,6 @@ $('#dataTables-example').on('submit', '#decline', function(e) {
         url : url,
         data : {'id' : id, 'opCode' : opCode, 'cmt' : cmt},
         success:function(data){
-            console.log(data)
         }
     });
     location.reload();

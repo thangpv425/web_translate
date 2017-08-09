@@ -1,7 +1,7 @@
 <script>
     $(document).ready(function() {
         var canClick = '';
-        var dataTable = $('#dataTables-example').DataTable({
+        var table = $('#dataTables-example').DataTable({
             "dom": '<"lenght"l><"toolbar">frt<"info"i>p',
             "columns" : [
                  {'data':'0'},
@@ -64,44 +64,9 @@
         $('<option/>').val('{{ DECLINED }}').text('Declined').appendTo($select);
         $('<option/>').val('{{ DELETED }}').text('Deleted').appendTo($select);
         $('<span/>').text(' request list').appendTo('div.toolbar');
-        
-        $.ajax({
-            type: "POST",
-            url: "admin/queue/meaning/change",
-            data: {
-              list: $('#list').val()
-            },
-            success: function(res) {
-                //Sets your content into your div
-                dataTable.clear().draw();
-                var json = JSON.parse(res);
-                dataTable.rows.add(json.data); // Add new data
-                dataTable.columns.adjust().draw(); // Redraw the DataTable
-                console.log();
-            }
-         });
+        drawTable(table, 'meaning');
         $('#list').on('change', function() {
-            $.ajax({
-                type: "POST",
-                url: "admin/queue/meaning/change",
-                data: {
-                  list: $('#list').val()
-                },
-                success: function(res) {
-                    //Sets your content into your div
-                    dataTable.clear().draw();
-                    var json = JSON.parse(res);
-                    dataTable.rows.add(json.data); // Add new data
-                    dataTable.columns.adjust().draw(); // Redraw the DataTable
-                    if ($('#list').val() == -1) {
-                        canClick = "active";
-                    }else{
-                        canClick = "disabled";
-                    }
-                    console.log(canClick);
-
-                }
-             });
+            drawTable(table, 'meaning');
         });
     });
 </script>

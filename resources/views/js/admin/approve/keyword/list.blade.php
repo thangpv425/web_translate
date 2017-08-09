@@ -64,43 +64,10 @@
         $('<option/>').val('{{ DELETED }}').text('Deleted').appendTo($select);
         $('<span/>').text(' request list').appendTo('div.toolbar');
         
-        $.ajax({
-            type: "POST",
-            url: "admin/queue/keyword/change",
-            data: {
-              list: $('#list').val()
-            },
-            success: function(res) {
-                //Sets your content into your div
-                dataTable.clear().draw();
-                var json = JSON.parse(res);
-                dataTable.rows.add(json.data); // Add new data
-                dataTable.columns.adjust().draw(); // Redraw the DataTable
-                console.log();
-            }
-         });
-        $('#list').on('change', function() {
-            $.ajax({
-                type: "POST",
-                url: "admin/queue/keyword/change",
-                data: {
-                  list: $('#list').val()
-                },
-                success: function(res) {
-                    //Sets your content into your div
-                    dataTable.clear().draw();
-                    var json = JSON.parse(res);
-                    dataTable.rows.add(json.data); // Add new data
-                    dataTable.columns.adjust().draw(); // Redraw the DataTable
-                    if ($('#list').val() == -1) {
-                        canClick = "active";
-                    }else{
-                        canClick = "disabled";
-                    }
-                    console.log(canClick);
+        drawTable(dataTable, 'keyword');
 
-                }
-             });
+        $('#list').on('change', function() {
+            drawTable(dataTable, 'keyword');
         });
     });
 </script>
