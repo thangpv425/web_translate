@@ -90,7 +90,7 @@
         $.validator.addClassRules({
             meaning: {
                 required: true,
-                vietnameese: true,
+                vietnamese: true,
                 alphabet: true
             }
         });
