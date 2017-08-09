@@ -49,6 +49,7 @@ class AdminController extends Controller {
         } catch (\Exception $e) {
             DB::rollback();
             $notification = 'Something went wrong!';
+            return redirect('admin/add/keyword')->withErrors($notification);
         }
         return redirect('admin/keywordList')->with('notification', $notification);
     }
@@ -119,9 +120,26 @@ class AdminController extends Controller {
      * return List request of keyword table
      * @return [type] [description]
      */
-    public function keywordTempList() {
-        $data = KeywordTemp::where('status', IN_QUEUE)->get();
-        return view('admin.approve.keyword.list', ['data' => $data]);
+
+    public function postDataForKeywordTemp(Request $request)
+    {
+        $list = IN_QUEUE;
+        if ($request->has('list')) {
+            $list = $request->list;
+        }
+        $result = KeywordTemp::where('status', $list)->get();
+        $data = array();
+        foreach ($result as $key => $value) {
+            $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'], $value->new_keyword, $value['comment']);
+            $data[] = $sub;
+        }
+        $output = array('data' => $data, 'info' => 'my info');
+        return response()->json($output);
+    }
+
+    public function indexKeywordTemp()
+    {
+        return view('admin.approve.keyword.list');
     }
 
     /**
@@ -280,9 +298,26 @@ class AdminController extends Controller {
      * return list request on meaning table
      * @return [type] [description]
      */
-    public function meaningTempList() {
-        $data = MeaningTemp::where('status', IN_QUEUE)->get();
-        return view('admin.approve.meaning.list', ['data' => $data]);
+
+    public function indexMeaningTemp()
+    {
+        return view('admin.approve.meaning.list');
+    }
+
+    public function postDataForMeaningTemp(Request $request)
+    {
+        $list = IN_QUEUE;
+        if ($request->has('list')) {
+            $list = $request->list;
+        }
+        $result = MeaningTemp::where('status', $list)->get();
+        $data = array();
+        foreach ($result as $key => $value) {
+            $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'],$value->oldMeaning['meaning'], $value->new_meaning, $value['comment']);
+            $data[] = $sub;
+        }
+        $output = array('data' => $data);
+        return response()->json($output);
     }
 
     /**
@@ -314,6 +349,8 @@ class AdminController extends Controller {
 
     public function approveAddMeaning($meaningTemp) {
         try {
+            $meaningTemp->status = APPROVED;
+            
             DB::beginTransaction();
             $meaning = Meaning::create([
                 'meaning' => $meaningTemp['new_meaning'],
@@ -322,9 +359,9 @@ class AdminController extends Controller {
                 'index' => $meaningTemp['index'],
                 'keyword_id' => $meaningTemp['keyword_id']
             ]);
-            $meaningTemp->status = APPROVED;
             $meaningTemp->save();
             DB::commit();
+            
             $notification = array(
                 'message' => "Successfully added new meaning.<br>" . $meaning->keyword['keyword'] . ' : ' . $meaning->meaning,
                 'alert-type' => 'success'
@@ -428,5 +465,5 @@ class AdminController extends Controller {
         }
         return redirect()->route('meaningTempList')->with($notification);
     }
-
 }
+
