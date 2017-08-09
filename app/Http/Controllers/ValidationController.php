@@ -11,10 +11,7 @@ class ValidationController extends Controller
     public function checkUniqueKeyword(Request $request)
     {
         $keyword = DB::select('select * from wt_keyword where keyword REGEXP BINARY ?', ['^'.$request->keyword]);
-        if (count($keyword) >= 1) {
-    		echo true;
-    	} else {
-    		echo false;
-    	}
+        $result = (count($keyword) >= 1) ? true : false;
+        return $result;
     }
 }

@@ -76,7 +76,7 @@
                 url: "check/unique/keyword", // script to validate in server side
                 data: {'keyword': value},
                 success: function(data) {
-                    result = (data == false) ? true : false;
+                    result = data;
                 }
                 });
                 // return true if keyword is exist in database
