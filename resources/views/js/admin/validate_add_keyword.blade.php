@@ -37,32 +37,32 @@
         });
 
         jQuery.validator.addMethod("kana", function(value, element) {
-                return this.optional(element) || /^([ァ-ヶーぁ-ん]+)$/.test(value);
+                return this.optional(element) || /^([[a-zA-zァ-ヶーぁ-ん]+)$/.test(value);
             }, "<br/>Please enter full-width hiragana katakana."
         );
 
         jQuery.validator.addMethod("hiragana", function(value, element) {
-                return this.optional(element) || /^([ぁ-ん]+)$/.test(value);
+                return this.optional(element) || /^([[a-zA-zぁ-ん]+)$/.test(value);
             }, "<br/>Please enter full-width Hiragana."
         );
 
         jQuery.validator.addMethod("katakana", function(value, element) {
-                return this.optional(element) || /^([ァ-ヶー]+)$/.test(value);
+                return this.optional(element) || /^([[a-zA-zァ-ヶー]+)$/.test(value);
             }, "<br/>Please enter full-width katakana."
         );
 
         jQuery.validator.addMethod("hankana", function(value, element) {
-                return this.optional(element) || /^([ｧ-ﾝﾞﾟ]+)$/.test(value);
+                return this.optional(element) || /^([a-zA-z[ｧ-ﾝﾞﾟ]+)$/.test(value);
             }, "<br/>Please enter half-width katakana."
         );
 
-        // jQuery.validator.addMethod("alphabet", function(value, element) {
-        //         return this.optional(element) || /^([a-zA-z\s]+)$/.test(value);
-        //     }, "Please insert alphabet."
-        // );
+//        jQuery.validator.addMethod("alphabet", function(value, element) {
+//                return this.optional(element) || /^([a-zA-z\s]+)$/.test(value);
+//            }, "Please insert alphabet."
+//         );
 
         jQuery.validator.addMethod("vietnamese", function(value, element) {
-                return this.optional(element) || /^(a-zA-Zx{00C0}-x{00FF}x{1EA0}-x{1EFF}\s]+)$/.test(value);
+                return this.optional(element) || /^[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$/.test(value);
             }, "Please insert Japanese or English."
         );
 
@@ -90,6 +90,7 @@
         $.validator.addClassRules({
             meaning: {
                 required: true,
+                vietnameese: true,
                 alphabet: true
             }
         });
@@ -97,7 +98,10 @@
             rules: {
                 "keyword": {
                     required: true,
-                    vietnamese: true,
+                    kana: true,
+                    hiragana: true,
+                    katakana: true,
+                    hankana: true,
                     uniqueKeyword: true
                 },
             },
