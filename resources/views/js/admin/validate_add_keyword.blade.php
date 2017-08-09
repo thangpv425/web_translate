@@ -56,14 +56,14 @@
             }, "<br/>Please enter half-width katakana."
         );
 
-        jQuery.validator.addMethod("alphabet", function(value, element) {
-                return this.optional(element) || /^([a-zA-z\s]+)$/.test(value);
-            }, "Please insert alphabet."
-        );
+        // jQuery.validator.addMethod("alphabet", function(value, element) {
+        //         return this.optional(element) || /^([a-zA-z\s]+)$/.test(value);
+        //     }, "Please insert alphabet."
+        // );
 
         jQuery.validator.addMethod("vietnamese", function(value, element) {
-                return this.optional(element) || /[^a-zA-Z_\x{00C0}-\x{00FF}\x{1EA0}-\x{1EFF}]/u.test(value);
-            }, "Please insert alphabet."
+                return this.optional(element) || /^(a-zA-Zx{00C0}-x{00FF}x{1EA0}-x{1EFF}\s]+)$/.test(value);
+            }, "Please insert Japanese or English."
         );
 
 
@@ -90,15 +90,14 @@
         $.validator.addClassRules({
             meaning: {
                 required: true,
-                alphabet: true,
-                vietnamese: true
+                alphabet: true
             }
         });
         $('#add_keyword_form').validate({
             rules: {
                 "keyword": {
                     required: true,
-                    alphabet: true,
+                    vietnamese: true,
                     uniqueKeyword: true
                 },
             },
