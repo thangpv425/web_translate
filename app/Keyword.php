@@ -12,7 +12,8 @@ class Keyword extends Model
     protected $table = 'wt_keyword';
     public $primaryKey = 'id';
     protected $dates = ['deleted_at'];
-    
+    protected $fillable = ['keyword','status'];
+
     public function meaning(){
     	return $this->hasMany('App\Meaning','keyword_id','id');
     }

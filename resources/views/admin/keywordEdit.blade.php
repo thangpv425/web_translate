@@ -38,7 +38,7 @@
                         <div class="form-group" id="number{{$i}}">
                             <div class="input-group">
                                 <input type="text" class="form-control meaning" name="translate[{{$i}}][meaning]" value="{{$meaning->meaning}}" data-error="#errNm{{$i}}">
-                                <input type="hidden" name="meaning_id[{{$i}}]" value="{{ $meaning->id }}" />
+                                <input type="hidden" name="translate[{{$i}}][meaning_id]" value="{{ $meaning->id }}" />
                             </div>
                             <label for="">Language</label>
                             <div class="form-group">

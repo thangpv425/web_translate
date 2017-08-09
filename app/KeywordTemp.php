@@ -3,15 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class KeywordTemp extends Model {
 
-    use SoftDeletes;
 
     protected $table = 'wt_keyword_temp';
     public $primaryKey = 'id';
-    protected $dates = ['deleted_at'];
+    protected $fillable = ['opCode','user_id','old_keyword_id','new_keyword','status','comment'];
 
     public function user() {
         return $this->belongsTo('App\User', 'user_id', 'id');

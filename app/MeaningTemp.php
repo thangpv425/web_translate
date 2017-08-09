@@ -8,6 +8,7 @@ class MeaningTemp extends Model {
 
     protected $table = 'wt_meaning_temp';
     public $primaryKey = 'id';
+    protected $fillable = ['opCode','user_id','keyword_id','old_meaning_id','language','index','status','comment'];
 
     public function user() {
         return $this->belongsTo('App\User');

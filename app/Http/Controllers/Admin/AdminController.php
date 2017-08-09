@@ -27,28 +27,21 @@ class AdminController extends Controller {
 
     public function processAddKeyword(Request $request) {
         try {
-            $keyword = new Keyword;
-            $keyword->keyword = $request->keyword;
-            $keyword->status = APPROVED;
+            $dataMeaning = array();
 
             DB::beginTransaction();
-            $keyword->save();
-            DB::commit();
-
-            $i = 1;
+            $keyword = Keyword::create(['keyword' => $request->keyword, 'status' => APPROVED]);
             foreach ($request->translate as $key => $value) {
-                $data[$i] = new Meaning;
-                $data[$i]->keyword_id = $keyword->id;
-                $data[$i]->meaning = $value['meaning'];
-                $data[$i]->index = $key;
-                $data[$i]->status = APPROVED;
-                $data[$i]->language = $value['language'];
-                $i++;
+                $dataMeaning[] = array(
+                    'keyword_id' => $keyword->id,
+                    'meaning' => $value['meaning'],
+                    'index' => $key,
+                    'status' => APPROVED,
+                    'language' => $value['language'],
+                );
             }
-            
-            DB::beginTransaction();
-            foreach ($data as $key => $meaning) {
-                $meaning->save();
+            foreach ($dataMeaning as $key => $value) {
+                $meaning = Meaning::create($value);
             }
             DB::commit();
 
@@ -63,11 +56,12 @@ class AdminController extends Controller {
     /*
      * @todo allow admin to solf delete word 
      */
+
     public function deleteWord($id) {
         try {
             $meaning = Meaning::find($id);
             $keyword = Keyword::find($meaning->keyword_id);
-            
+
             DB::beginTransaction();
             $meaning->delete();
             //delete keyword if there are not any meaning
@@ -96,37 +90,28 @@ class AdminController extends Controller {
     public function processEditKeyword(Request $request) {
         $id = $request->keyword_id;
         try {
-            DB::beginTransaction();
-            $keyword = Keyword::find($id);
-            //if keyword is edited to be a existed keyword
-//            if (($request->keyword!=$keyword->keyword)&&(Keyword::where('keyword',$request->keyword)->count()!=0)){
-//                $notification = 'This keyword is existed.';
-//            } else {
-            $keyword->keyword = $request->keyword;
-            $keyword->status = APPROVED;
-            $keyword->save();
-//            }
-            $i = 1;
             foreach ($request->translate as $key => $value) {
-                $meaning = Meaning::find($request->meaning_id[$i]);
-                $meaning->meaning = $value['meaning'];
-                $meaning->index = $i;
-                $meaning->status = APPROVED;
-                $meaning->language = $value['language'];
-                $meaning->save();
-                $i++;
+                $dataMeaning[] = array(
+                    'meaning_id' => $value['meaning_id'],
+                    'meaning' => $value['meaning'],
+                    'language' => $value['language'],
+                );
+            }
+
+            DB::beginTransaction();            
+            Keyword::find($id)->update(['keyword'=>$request->keyword]);
+            foreach ($dataMeaning as $key => $value) {
+                Meaning::where('id', $value['meaning_id'])
+                    ->update([
+                        'meaning' => $value['meaning'],
+                        'language' => $value['language']
+                    ]);
             }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }
-        //print_r($notification);
-//        if (isset($notification)) {
-//            echo $notification;
-//            return redirect()->back()->with($notification);
-//            //return redirect('admin/editKeyword/{{$request->keyword_id}}')->with($notification);
-//        }
         return redirect('admin/keywordList');
     }
 
@@ -174,13 +159,15 @@ class AdminController extends Controller {
      */
     public function approveAddKeyword($keywordTemp) {
         try {
-            DB::beginTransaction();
             $keyword = Keyword::find($keywordTemp->old_keyword_id);
             $keyword->status = APPROVED;
-            $keyword->save();
             $keywordTemp->status = APPROVED;
+            
+            DB::beginTransaction();
+            $keyword->save();
             $keywordTemp->save();
             DB::commit();
+            
             $notification = array(
                 'message' => 'Keyword \'' . $keyword['keyword'] . '\' added successfully.',
                 'alert-type' => 'success'
@@ -202,17 +189,19 @@ class AdminController extends Controller {
      */
     public function approveEditKeyword($keywordTemp) {
         try {
-            DB::beginTransaction();
             $keyword = Keyword::find($keywordTemp['old_keyword_id']);
             $notification = array(
                 'message' => 'Keyword edited successfully. <br>\'' . $keyword->keyword . '\' to \'' . $keywordTemp['new_keyword'] . '\'',
                 'alert-type' => 'success'
             );
             $keyword->keyword = $keywordTemp['new_keyword'];
-            $keyword->save();
             $keywordTemp->status = APPROVED;
+            
+            DB::beginTransaction();
+            $keyword->save();
             $keywordTemp->save();
             DB::commit();
+            
         } catch (\Exception $e) {
             DB::rollback();
             $notification = array(
@@ -232,11 +221,13 @@ class AdminController extends Controller {
         if ($request->has('id')) {
             $keywordTemp = KeywordTemp::find($request->id);
             try {
-                DB::beginTransaction();
                 $keywordTemp->status = DECLINED;
                 $keywordTemp->comment = $request->get('cmt');
+                
+                DB::beginTransaction();
                 $keywordTemp->save();
                 DB::commit();
+                
                 $notification = array(
                     'message' => 'Request declined successfully.',
                     'alert-type' => 'success'
@@ -264,11 +255,13 @@ class AdminController extends Controller {
      */
     public function deleteRequest(Request $request) {
         try {
-            DB::beginTransaction();
             $keywordTemp = KeywordTemp::find($request->id);
             $keywordTemp->status = DELETED;
+            
+            DB::beginTransaction();
             $keywordTemp->save();
             DB::commit();
+            
             $notification = array(
                 'message' => 'Request deleted.',
                 'alert-type' => 'success'
@@ -322,13 +315,13 @@ class AdminController extends Controller {
     public function approveAddMeaning($meaningTemp) {
         try {
             DB::beginTransaction();
-            $meaning = new Meaning;
-            $meaning->meaning = $meaningTemp['new_meaning'];
-            $meaning->language = $meaningTemp['language'];
-            $meaning->index = $meaningTemp['index'];
-            $meaning->keyword_id = $meaningTemp['keyword_id'];
-            $meaning->status = APPROVED;
-            $meaning->save();
+            $meaning = Meaning::create([
+                'meaning' => $meaningTemp['new_meaning'],
+                'status' => APPROVED,
+                'language' => $meaningTemp['language'],
+                'index' => $meaningTemp['index'],
+                'keyword_id' => $meaningTemp['keyword_id']
+            ]);
             $meaningTemp->status = APPROVED;
             $meaningTemp->save();
             DB::commit();
@@ -348,13 +341,15 @@ class AdminController extends Controller {
 
     public function approveEditMeaning($meaningTemp) {
         try {
-            DB::beginTransaction();
             $meaning = Meaning::find($meaningTemp['old_meaning_id']);
             $meaning->meaning = $meaningTemp['new_meaning'];
-            $meaning->save();
             $meaningTemp->status = APPROVED;
+            
+            DB::beginTransaction();            
+            $meaning->save();
             $meaningTemp->save();
             DB::commit();
+            
             $notification = array(
                 'message' => 'Successfully edited meaning.',
                 'alert-type' => 'success'
@@ -384,11 +379,13 @@ class AdminController extends Controller {
         $meaningTemp = MeaningTemp::find($request->id);
         if ($meaningTemp != null) {
             try {
-                DB::beginTransaction();
                 $meaningTemp->status = DECLINED;
                 $meaningTemp->comment = $request->get('cmt');
+                
+                DB::beginTransaction();
                 $meaningTemp->save();
                 DB::commit();
+                
                 $notification = array(
                     'message' => 'Request declined successfully.',
                     'alert-type' => 'success'
@@ -411,11 +408,13 @@ class AdminController extends Controller {
 
     public function deleteRequestOnMeaningTable(Request $request) {
         try {
-            DB::beginTransaction();
             $meaningTemp = MeaningTemp::find($request->id);
             $meaningTemp->status = DELETED;
+            
+            DB::beginTransaction();
             $meaningTemp->save();
             DB::commit();
+            
             $notification = array(
                 'message' => 'Request deleted successfully.',
                 'alert-type' => 'success'
