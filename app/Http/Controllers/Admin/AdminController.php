@@ -46,6 +46,7 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             $notification = 'Something went wrong!';
+            return redirect('admin/add/keyword')->withErrors($notification);
         }
         return redirect('admin/keywordList')->with('notification', $notification);
     }
