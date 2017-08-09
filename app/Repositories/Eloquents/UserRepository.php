@@ -15,9 +15,4 @@ class UserRepository extends EloquentRepository implements UserRepositoryInterfa
     {
         return User::class;
     }
-
-    public function findAdmin()
-    {
-    	return User::find(1);
-    }
 }
