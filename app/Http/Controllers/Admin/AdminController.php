@@ -78,10 +78,25 @@ class AdminController extends Controller
      * return List request of keyword table
      * @return [type] [description]
      */
-    public function keywordTempList()
+    public function postDataForKeywordTemp(Request $request)
     {
-        $data = KeywordTemp::where('status', IN_QUEUE)->get();
-        return view('admin.approve.keyword.list', ['data' => $data]);
+        $list = IN_QUEUE;
+        if ($request->has('list')) {
+            $list = $request->list;
+        }
+        $result = KeywordTemp::where('status', $list)->get();
+        $data = array();
+        foreach ($result as $key => $value) {
+            $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'], $value->new_keyword, $value['comment']);
+            $data[] = $sub;
+        }
+        $output = array('data' => $data, 'info' => 'my info');
+        return response()->json($output);
+    }
+
+    public function indexKeywordTemp()
+    {
+        return view('admin.approve.keyword.list');
     }
 
     /**
@@ -237,10 +252,25 @@ class AdminController extends Controller
      * return list request on meaning table
      * @return [type] [description]
      */
-    public function meaningTempList()
+    public function indexMeaningTemp()
     {
-        $data = MeaningTemp::where('status', IN_QUEUE)->get();
-        return view('admin.approve.meaning.list', ['data' => $data]);
+        return view('admin.approve.meaning.list');
+    }
+
+    public function postDataForMeaningTemp(Request $request)
+    {
+        $list = IN_QUEUE;
+        if ($request->has('list')) {
+            $list = $request->list;
+        }
+        $result = MeaningTemp::where('status', $list)->get();
+        $data = array();
+        foreach ($result as $key => $value) {
+            $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'],$value->oldMeaning['meaning'], $value->new_meaning, $value['comment']);
+            $data[] = $sub;
+        }
+        $output = array('data' => $data);
+        return response()->json($output);
     }
 
     /**
@@ -385,5 +415,4 @@ class AdminController extends Controller
         }
         return redirect()->route('meaningTempList')->with($notification);
     }
-
 }

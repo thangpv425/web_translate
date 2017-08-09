@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style>
+    .toolbar, .lenght, .info{
+        float: left;
+    }
+    select#list.form-control{
+        height: 30px;
+        margin: auto;
+        border: none;
+    }
+
+    span#box-text{
+        padding-left: 5px;
+    }
+</style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,13 +76,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-                responsive: true
-        });
-    });
-    </script>
+
     {{-- Pretty popup notification --}}
     @include('js.common')
     {{-- Custom script here --}}
