@@ -9,6 +9,11 @@
                     <a href="admin/add/keyword" class="btn btn-default" role="button">+ Add new key word</a>
                         </h1>
                     </div>
+                    @if(session('notification'))
+                        <div class="alert alert-success">
+                            {{session('notification')}}
+                        </div>
+                    @endif
                     <!-- /.col-lg-12 -->
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
