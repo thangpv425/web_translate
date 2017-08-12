@@ -135,7 +135,14 @@ class AdminController extends Controller {
         $result = KeywordTemp::where('status', $list)->get();
         $data = array();
         foreach ($result as $key => $value) {
-            $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'], $value->new_keyword, $value['comment']);
+            $sub = array(
+                $value['id'], 
+                $value['opCode'], 
+                $value->user->email, 
+                $value->keyword['keyword'], 
+                $value->new_keyword, 
+                $value['comment']
+            );
             $data[] = $sub;
         }
         $output = array(
@@ -321,7 +328,15 @@ class AdminController extends Controller {
         $result = MeaningTemp::where('status', $list)->get();
         $data = array();
         foreach ($result as $key => $value) {
-            $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'],$value->oldMeaning['meaning'], $value->new_meaning, $value['comment']);
+            $sub = array(
+                $value['id'], 
+                $value['opCode'], 
+                $value->user->email, 
+                $value->keyword['keyword'],
+                $value->oldMeaning['meaning'],
+                $value->new_meaning,
+                $value['comment']
+            );
             $data[] = $sub;
         }
         $output = array('data' => $data);
