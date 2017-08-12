@@ -30,7 +30,10 @@ class AdminController extends Controller {
             $dataMeaning = array();
 
             DB::beginTransaction();
-            $keyword = Keyword::create(['keyword' => $request->keyword, 'status' => APPROVED]);
+            $keyword = Keyword::create([
+                'keyword' => $request->keyword,
+                'status' => APPROVED
+            ]);
             foreach ($request->translate as $key => $value) {
                 $dataMeaning[] = array(
                     'keyword_id' => $keyword->id,
@@ -83,9 +86,11 @@ class AdminController extends Controller {
         $keyword = Keyword::find($id);
         $meaning = $keyword->meaning;
         $numberOfMeanings = Meaning::where('keyword_id', $id)->count();
-        return view('admin.keywordEdit', ['keyword' => $keyword,
+        return view('admin.keywordEdit', [
+            'keyword' => $keyword,
             'meaning' => $meaning,
-            'numberOfMeanings' => $numberOfMeanings]);
+            'numberOfMeanings' => $numberOfMeanings
+        ]);
     }
 
     public function processEditKeyword(Request $request) {
@@ -133,7 +138,10 @@ class AdminController extends Controller {
             $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'], $value->new_keyword, $value['comment']);
             $data[] = $sub;
         }
-        $output = array('data' => $data, 'info' => 'my info');
+        $output = array(
+            'data' => $data,
+            'info' => 'my info'
+        );
         return response()->json($output);
     }
 
