@@ -8,7 +8,8 @@ use App\Meaning;
 use App\Keyword;
 use App\KeywordTemp;
 use App\MeaningTemp;
-use Illuminate\Support\Facades\DB;use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+use Illuminate\Support\Facades\DB;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Validator;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 
@@ -75,7 +76,8 @@ class UserController extends Controller {
                         'user_id' => $user->id,
                         'old_keyword_id' => $keyword->id,
                         'new_keyword' => $request->keyword,
-                        'comment' => $request->comment
+                        'comment' => $request->comment,
+                        'status' => IN_QUEUE
             ]);
             foreach ($request->translate as $key => $value) {
                 $dataMeaning[] = array(
@@ -86,7 +88,8 @@ class UserController extends Controller {
                     'index' => $key,
                     'language' => $value['language'],
                     'comment' => $request->comment,
-                    'type' => $request->type
+                    'type' => $value['type'],
+                    'status' => IN_QUEUE
                 );
             }
             foreach ($dataMeaning as $key => $value) {
@@ -98,6 +101,7 @@ class UserController extends Controller {
         } catch (\Exception $e) {
             DB::rollback();
             $notification = 'Something went wrong!';
+            throw $e;
             return redirect('user/add/keyword')->withErrors($notification);
         }
         return redirect('home')->with('notification', $notification);
