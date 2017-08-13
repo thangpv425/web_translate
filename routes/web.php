@@ -80,6 +80,13 @@ Route::prefix('admin')->middleware('admin')->group(function() {
         Route::post('delete', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
     });
 });
+
+Route::prefix('user') ->middleware('user')->group(function(){
+    Route::get('add/keyword', 'UserController@addKeyword');
+
+    Route::post('add/keyword', 'UserController@processAddKeyword')->name('userAddKeyword');
+
+});
 /**
  * Check validate
  */
