@@ -81,6 +81,7 @@ class UserController extends Controller {
                         'comment' => $request->comment,
                         'status' => IN_QUEUE
             ]);
+            //save meaning in meaningTemp table
             foreach ($request->translate as $key => $value) {
                 $dataMeaning[] = array(
                     'opCode' => ADD,
@@ -112,12 +113,11 @@ class UserController extends Controller {
     public function showContributeHistory() {
         $user = Sentinel::getUser();
         $id = $user->id;
-        $dataKeyword = KeywordTemp::where('user_id',$user->id)->get();
-        $dataMeaning = MeaningTemp::where('user_id',$user->id)->get();
-//        echo $user->id;
-        return view('user.contributeHistory', ['dataKeyword' => $dataKeyword,'dataMeaning' => $dataMeaning]);
+        $dataKeyword = KeywordTemp::where('user_id', $user->id)->get();
+        $dataMeaning = MeaningTemp::where('user_id', $user->id)->get();
+        return view('user.contributeHistory', ['dataKeyword' => $dataKeyword, 'dataMeaning' => $dataMeaning]);
     }
-    
+
     public function deleteKeywordContribute($id) {
         try {
             $keyword = KeywordTemp::find($id);
@@ -131,7 +131,7 @@ class UserController extends Controller {
         }
         return redirect('user/history');
     }
-    
+
     public function deleteMeaningContribute($id) {
         try {
             $meaning = MeaningTemp::find($id);

@@ -12,7 +12,7 @@ class Meaning extends Model {
     protected $table = 'wt_meaning';
     public $primaryKey = 'id';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['keyword_id','meaning','index','status','language'];
+    protected $fillable = ['keyword_id','meaning','index','status','language','type'];
 
     public function keyword() {
         return $this->belongsTo('App\Keyword', 'keyword_id', 'id');

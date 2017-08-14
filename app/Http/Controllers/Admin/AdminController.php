@@ -41,6 +41,7 @@ class AdminController extends Controller {
                     'index' => $key,
                     'status' => APPROVED,
                     'language' => $value['language'],
+                    'type' => $value['type'],
                 );
             }
             foreach ($dataMeaning as $key => $value) {
@@ -52,6 +53,7 @@ class AdminController extends Controller {
         } catch (\Exception $e) {
             DB::rollback();
             $notification = 'Something went wrong!';
+            dd($dataMeaning);
             return redirect('admin/add/keyword')->withErrors($notification);
         }
         return redirect('admin/keywordList')->with('notification', $notification);

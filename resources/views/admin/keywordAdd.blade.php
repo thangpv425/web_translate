@@ -42,6 +42,13 @@
                             <label><input type="radio" name="translate[1][language]" value='0' checked /> Vietnamese<br></label>
                             <label><input type="radio" name="translate[1][language]" value='1' /> English<br></label>
                         </div>
+                        <label for="">Type</label>
+                        <div class="form-group">
+                            <label><input type="radio" name="translate[1][type]" value='0' checked /> Noun <br></label>
+                            <label><input type="radio" name="translate[1][type]" value='1' /> Verb <br></label>
+                            <label><input type="radio" name="translate[1][type]" value='2' /> Adjective <br></label>
+                            <label><input type="radio" name="translate[1][type]" value='3' /> Preposition <br></label>
+                        </div>
                         <hr>
                     </div>
                     <button id="submit" type="submit" class="btn btn-success">
