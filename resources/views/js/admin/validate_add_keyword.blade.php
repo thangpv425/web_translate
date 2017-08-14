@@ -108,11 +108,11 @@
             rules: {
                 "keyword": {
                     required: true,
-//                    kana: true,
-//                    hiragana: true,
-//                    katakana: true,
-//                    hankana: true,
-//                    uniqueKeyword: true
+                    kana: true,
+                    hiragana: true,
+                    katakana: true,
+                    hankana: true,
+                    uniqueKeyword: true
                 },
             },
             messages: {},

@@ -17,6 +17,11 @@
             <li>
                 <a href="/translate"><i class="fa fa-home fa-fw"></i> Home Page</a>
             </li>
+            @if (Sentinel::check() && Sentinel::inRole('user'))
+            <li>
+                <a href="/user/history"><i class="fa fa-list-ul fa-fw"></i> Contribute history</a>
+            </li>
+            @endif
             
             {{-- Menu Admin --}}
             @if (Sentinel::check() && Sentinel::inRole('admin'))

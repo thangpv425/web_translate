@@ -48,10 +48,10 @@
                             <label><input type="radio" name="translate[1][type]" value='2' /> Adjective <br></label>
                             <label><input type="radio" name="translate[1][type]" value='3' /> Preposition <br></label>
                         </div>
-                        <label>Comment</label>
-                        <input class="form-control" name="comment" placeholder="I like it" />
                         <hr>
                     </div>
+                    <label>Comment</label>
+                        <input class="form-control" name="comment" placeholder="Leave your comment here..." /><br>
                     <button id="submit" type="submit" class="btn btn-success">
                         <i class="fa fa-floppy-o fa-fw" aria-hidden="true"></i>Save
                     </button>

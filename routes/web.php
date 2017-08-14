@@ -85,6 +85,13 @@ Route::prefix('user') ->middleware('user')->group(function(){
     Route::get('add/keyword', 'UserController@addKeyword');
 
     Route::post('add/keyword', 'UserController@processAddKeyword')->name('userAddKeyword');
+    
+    Route::get('history','UserController@showContributeHistory');
+    
+    Route::get('deleteKeywordContribute/{id}', 'UserController@deleteKeywordContribute');
+    
+    Route::get('deleteMeaningContribute/{id}', 'UserController@deleteMeaningContribute');
+
 
 });
 /**

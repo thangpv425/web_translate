@@ -67,10 +67,12 @@ class UserController extends Controller {
             $dataMeaning = array();
 
             DB::beginTransaction();
+            //save keyword in keyword table to get id
             $keyword = Keyword::create([
                         'keyword' => $request->keyword,
                         'status' => IN_QUEUE
             ]);
+            //save keyword in keywordTemp table 
             $keyword_temp = KeywordTemp::create([
                         'opCode' => ADD,
                         'user_id' => $user->id,
@@ -105,6 +107,43 @@ class UserController extends Controller {
             return redirect('user/add/keyword')->withErrors($notification);
         }
         return redirect('home')->with('notification', $notification);
+    }
+
+    public function showContributeHistory() {
+        $user = Sentinel::getUser();
+        $id = $user->id;
+        $dataKeyword = KeywordTemp::where('user_id',$user->id)->get();
+        $dataMeaning = MeaningTemp::where('user_id',$user->id)->get();
+//        echo $user->id;
+        return view('user.contributeHistory', ['dataKeyword' => $dataKeyword,'dataMeaning' => $dataMeaning]);
+    }
+    
+    public function deleteKeywordContribute($id) {
+        try {
+            $keyword = KeywordTemp::find($id);
+
+            DB::beginTransaction();
+            $keyword->delete();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+        return redirect('user/history');
+    }
+    
+    public function deleteMeaningContribute($id) {
+        try {
+            $meaning = MeaningTemp::find($id);
+
+            DB::beginTransaction();
+            $meaning->delete();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+        return redirect('user/history');
     }
 
 }
