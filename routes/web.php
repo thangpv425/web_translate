@@ -1,15 +1,15 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+  |--------------------------------------------------------------------------
+  | Web Routes
+  |--------------------------------------------------------------------------
+  |
+  | Here is where you can register web routes for your application. These
+  | routes are loaded by the RouteServiceProvider within a group which
+  | contains the "web" middleware group. Now create something great!
+  |
+ */
 
 Route::get('/', function () {
     return redirect()->route('loginForm');
@@ -40,41 +40,44 @@ Route::group(['middleware'=>'checkLogin'],function(){
  * Route admin
  */
 
-Route::prefix('admin')->middleware('admin')->group(function(){
-    Route::get('keywordList','Admin\AdminController@wordList');
-    
+Route::prefix('admin')->middleware('admin')->group(function() {
+    Route::get('keywordList', 'Admin\AdminController@wordList');
+
     Route::get('add/keyword', 'Admin\AdminController@addKeyword');
 
     Route::post('add/keyword', 'Admin\AdminController@processAddKeyword')->name('adminAddKeyword');
+
+    Route::get('deleteWord/{id}', 'Admin\AdminController@deleteWord');
+
+    Route::get('editKeyword/{id}', 'Admin\AdminController@editKeyword');
     
-    Route::get('deleteWord/{id}','Admin\AdminController@deleteWord');
+    Route::post('editKeyword', 'Admin\AdminController@processEditKeyword')->name('keywordEditRoute');
 
     // keyword temp table
-    Route::prefix('keyword-temp')->group(function(){
-    	Route::get('list', 'Admin\AdminController@indexKeywordTemp')->name('keywordTempList'); // return view
+    Route::prefix('keyword-temp')->group(function() {
+        Route::get('list', 'Admin\AdminController@indexKeywordTemp')->name('keywordTempList'); // return view
 
-		Route::post('list', 'Admin\AdminController@postDataForKeywordTemp');
+        Route::post('list', 'Admin\AdminController@postDataForKeywordTemp');
 
-		Route::post('approve', 'Admin\AdminController@approveChangesOnKeywordTable')->name('approveOnKeyword');
+        Route::post('approve', 'Admin\AdminController@approveChangesOnKeywordTable')->name('approveOnKeyword');
 
-	    Route::post('decline', 'Admin\AdminController@declineChangesOnKeywordTable')->name('declineOnKeyword');
+        Route::post('decline', 'Admin\AdminController@declineChangesOnKeywordTable')->name('declineOnKeyword');
 
-	    Route::post('delete', 'Admin\AdminController@deleteRequest')->name('deleteRequest');
+        Route::post('delete', 'Admin\AdminController@deleteRequest')->name('deleteRequest');
     });
 
-	// meaning table
-	Route::prefix('meaning-temp')->group(function(){
-		Route::get('list', 'Admin\AdminController@indexMeaningTemp')->name('meaningTempList');
+    // meaning table
+    Route::prefix('meaning-temp')->group(function() {
+        Route::get('list', 'Admin\AdminController@indexMeaningTemp')->name('meaningTempList');
 
-		Route::post('list', 'Admin\AdminController@postDataForMeaningTemp');
-		
-		Route::post('approve', 'Admin\AdminController@approveChangesOnMeaningTable')->name('approveOnMeaning');
+        Route::post('list', 'Admin\AdminController@postDataForMeaningTemp');
 
-	    Route::post('decline', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
+        Route::post('approve', 'Admin\AdminController@approveChangesOnMeaningTable')->name('approveOnMeaning');
 
-	    Route::post('delete', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
-	});
-	
+        Route::post('decline', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
+
+        Route::post('delete', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
+    });
 });
 /**
  * Route user

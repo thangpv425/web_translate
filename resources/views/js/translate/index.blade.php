@@ -130,6 +130,9 @@
                     }
                 };
                 $('#meaning').val(data.best).change();
+            },
+            error: function(data){
+                $('#btn-contribute').attr('style', 'display:none;');
             }
         });   
     }
