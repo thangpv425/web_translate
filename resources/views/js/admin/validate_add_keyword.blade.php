@@ -40,7 +40,7 @@
         });
 
         jQuery.validator.addMethod("kana", function(value, element) {
-                return this.optional(element) || /^([[a-zA-zァ-ヶーぁ-ん]+)$/.test(value);
+                return this.optional(element) || /^([[a-zA-zァ-ヶーぁ-んｧ-ﾝﾞﾟ]+)$/.test(value);
             }, "<br/>Please enter full-width hiragana katakana."
         );
 
@@ -102,9 +102,9 @@
                 "keyword": {
                     required: true,
                     kana: true,
-                    hiragana: true,
-                    katakana: true,
-                    hankana: true,
+                    // hiragana: true,
+                    // katakana: true,
+                    // hankana: true,
                     uniqueKeyword: true
                 },
             },

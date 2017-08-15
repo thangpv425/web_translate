@@ -15,10 +15,6 @@ Route::get('/', function () {
     return redirect()->route('loginForm');
 });
 
-Route::get('home', function() {
-    echo "Content";
-});
-
 /**
  * Route login, logout, register
  */
@@ -32,10 +28,12 @@ Route::get('register', 'Auth\LoginController@register')->middleware('guest');
 
 Route::post('register', 'Auth\LoginController@processRegister')->name('register');
 
-Route::group(['middleware' => 'checkLogin'], function() {
-    Route::get('translate', 'User\TranslateController@showPage');
+Route::group(['middleware'=>'checkLogin'],function(){
+	Route::get('home','TranslationController@index')->name('translate');
+	
+	Route::post('home','TranslationController@translate')->name('processTranslate');
 
-    Route::post('search', 'User\TranslateController@search');
+	Route::post('check/unique/keyword', 'ValidationController@checkUniqueKeyword')->name('uniqueKeyword');
 });
 
 /*
@@ -52,6 +50,7 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     Route::get('deleteWord/{id}', 'Admin\AdminController@deleteWord');
 
     Route::get('editKeyword/{id}', 'Admin\AdminController@editKeyword');
+    
     Route::post('editKeyword', 'Admin\AdminController@processEditKeyword')->name('keywordEditRoute');
 
     // keyword temp table
@@ -81,8 +80,6 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     });
 });
 /**
- * Check validate
+ * Route user
  */
-Route::prefix('check')->middleware('checkLogin')->group(function() {
-    Route::post('unique/keyword', 'ValidationController@checkUniqueKeyword')->name('uniqueKeyword');
-});
+Route::post('user/meaning/improve', 'UserController@improveMeaning')->name('improve-meaning');
