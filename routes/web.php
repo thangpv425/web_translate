@@ -37,9 +37,9 @@ Route::group(['middleware' => 'checkLogin'], function() {
 
     Route::post('search', 'User\TranslateController@search');
     
-    Route::get('user/edit/{id}','UserController@edit');
+    Route::get('user/edit','UserController@edit');
     
-    Route::post('user/edit/{id}','UserController@update');
+    Route::post('user/edit','UserController@update');
 });
 
 /*

@@ -27,8 +27,8 @@ class CheckRegistrationRequest extends FormRequest
             'email'=>'required|email|unique:users',
             'password'=>'required|min:6|max:32|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'password_confirmation' => 'required|min:6|max:32|same:password|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
-            'first_name' => 'nullable|string',
-            'last_name' => 'nullable|string',
+            'first_name' => 'required|max:32|regex:/^[a-zA-Z \d]+$/',
+            'last_name' => 'required|max:32|regex:/^[a-zA-Z \d]+$/',
             //
         ];
     }

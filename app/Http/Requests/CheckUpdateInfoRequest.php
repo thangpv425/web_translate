@@ -22,8 +22,8 @@ class CheckUpdateInfoRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'first_name' => 'required|min:1|max:32|regex:/[^\!-\@\[-\_\{-\}]+$/',
-            'last_name' => 'required|min:1|max:32|regex:/[^\!-\@\[-\_\{-\}]+$/u'
+            'first_name' => 'required|max:32|regex:/^[a-zA-Z \d]+$/',
+            'last_name' => 'required|max:32|regex:/^[a-zA-Z \d]+$/'
         ];
     }
 

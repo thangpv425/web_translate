@@ -11,18 +11,19 @@
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr class="odd gradeX" align="center">
+                        <th>Date</th>
                         <th>Your action</th>
                         <th>Old Item</th>
                         <th>New Item</th>
                         <th>Status</th>
                         <th>Comment</th>
-                        <th>Date</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($dataKeyword as $row)
                     <tr class="primary">
+                        <td>{{ $row->created_at }}</td>
                         <td>
                             @if ($row->opCode == 0) Add keyword
                             @elseif ($row->opCode == 1) Edit keyword
@@ -46,17 +47,22 @@
                             @elseif ($row->status == 2)
                             Admin declined
                             @endif
-                        </td>                        
+                        </td>
                         <td>{{ $row->comment }}</td>
-                        <td>{{ $row->created_at }}</td>
-                        <td class="center"><a href="user/deleteKeywordContribute/{{$row->id}}"><i class="fa fa-trash-o fa-fw"></i>Cancel this contribution</a></td>
+                        <td class="center">
+                            
+                            @if ($row->status == -1)
+                            <a href="user/deleteKeywordContribute/{{$row->id}}"><i class="fa fa-trash-o fa-fw"></i>Cancel this contribution</a>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
 
                     @foreach($dataMeaning as $row)
                     <tr class="primary" >
+                        <td>{{ $row->created_at }}</td>
                         <td>
-                            @if ($row->opCode == 0) Add meaning
+                            @if ($row->opCode == 0) Add meaning for '{{$row->keyword['keyword']}}'
                             @elseif ($row->opCode == 1) Edit meaning for '{{$row->keyword['keyword']}}'
                             @endif
                         </td>
@@ -115,8 +121,12 @@
                             @endif
                         </td>
                         <td>{{ $row->comment }}</td>
-                        <td>{{ $row->created_at }}</td>
-                        <td class="center"><a href="user/deleteMeaningContribute/{{$row->id}}"><i class="fa fa-trash-o fa-fw"></i>Cancel this contribution</a></td>
+                        <td class="center">
+                            
+                            @if ($row->status == -1)
+                            <a href="user/deleteMeaningContribute/{{$row->id}}"><i class="fa fa-trash-o fa-fw"></i>Cancel this contribution</a>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach 
                 </tbody>
@@ -127,6 +137,6 @@
     <!-- /.container-fluid -->
 </div>
 @endsection
-<!--@section('script')
+@section('script')
     @include('js.admin.ListKeyword')
-@endsection-->
+@endsection

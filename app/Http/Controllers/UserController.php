@@ -22,50 +22,33 @@ class UserController extends Controller {
     //     $this->user = $user;
     // }
 
-    public function view($id = NULL) {
-        $user = User::find($id);
+    public function view() {
+        $user = Sentinel::getUser();
         return view('user.view')->with('user', $user);
     }
 
-    public function edit($id = NULL) {
-        $user = User::find($id);
+    public function edit() {
+        $user = Sentinel::getUser();
         return view('user.edit')->with('user', $user);
     }
 
-    public function update(\App\Http\Requests\CheckUpdateInfoRequest $request, $id) {
-        try{
-//            $validator = Validator::make($request->all(), [
-//                'first_name' => 'required|min:1|max:32|regex:/(^[A-Za-z0-9 ]+$)+/',
-//                'last_name' => 'required|min:1|max:32|regex:/[^\!-\@\[-\_\{-\}]+$/u'
-//                    ], [
-//                'first_name.required' => 'Please enter first name',
-//                'last_name.required' => 'Please enter last name',
-//                'first_name.min' => 'The length of first name is bigger than 1',
-//                'last_name.min' => 'The length of last name is bigger than 1',
-//                'first_name.regex' => 'Only accept lowercase or uppercase letters',
-//                'last_name.regex' => 'Only accept lowercase or uppercase letters'
-//            ]);
-//        if ($validator->fails()) {
-//            return redirect('user/edit/' . $id)
-//                            ->withErrors($validator)
-//                            ->withInput();
-//        }
+    public function update(\App\Http\Requests\CheckUpdateInfoRequest $request) {
+        try {
+            $user = Sentinel::getUser();
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
 
-        $user = User::find($id);
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
+            DB::beginTransaction();
+            $user->update();
+            DB::commit();
 
-        DB::beginTransaction(); 
-        $user->update();
-        DB::commit();
-        
-        $notification = 'You have successfully update your information.';
+            $notification = 'You have successfully update your information.';
         } catch (\Exception $e) {
             DB::rollback();
             $notification = 'Something went wrong!';
-            return redirect('user/edit/' . $id)->withErrors($notification);
+            return redirect('user/edit')->withErrors($notification);
         }
-        return redirect('user/edit/' . $id)->with('notification', $notification);
+        return redirect('user/edit')->with('notification', $notification);
     }
 
     public function addKeyword() {
@@ -118,7 +101,7 @@ class UserController extends Controller {
             throw $e;
             return redirect('user/add/keyword')->withErrors($notification);
         }
-        return redirect('home')->with('notification', $notification);
+        return redirect('user/history')->with('notification', $notification);
     }
 
     public function showContributeHistory() {
@@ -130,11 +113,21 @@ class UserController extends Controller {
     }
 
     public function deleteKeywordContribute($id) {
+        //delete in wt_keyword_temp, wt_meaning_temp and wt_keyword
         try {
-            $keyword = KeywordTemp::find($id);
+            $keywordtmp = KeywordTemp::find($id);
+            $keyword = Keyword::find($keywordtmp->old_keyword_id);
+            $meaningtmps = MeaningTemp::where('keyword_id', $keyword->id);
 
             DB::beginTransaction();
-            $keyword->delete();
+            $keywordtmp->delete();
+            foreach ($meaningtmps as $meaningtmp) {
+                $meaningtmp->delete();
+            }
+            //if this keyword is added by user
+            if ($keyword->status == -1) {
+                $keyword->forceDelete();
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -144,11 +137,23 @@ class UserController extends Controller {
     }
 
     public function deleteMeaningContribute($id) {
+        //delete in wt_meaning_temp and delete keyword if there are not any meaning
         try {
-            $meaning = MeaningTemp::find($id);
+            $meaningtmp = MeaningTemp::find($id);
+            $keywordtmp = KeywordTemp::where('old_keyword_id', $meaningtmp->keyword_id);
+            $keyword = Keyword::find($meaningtmp->keyword_id);
 
             DB::beginTransaction();
-            $meaning->delete();
+            $meaningtmp->delete();
+
+            $numberOfMeanings = MeaningTemp::where('keyword_id', $meaningtmp->keyword_id)->count();
+            //delete keyword            
+            if ($numberOfMeanings == 0) {
+                $keywordtmp->delete();
+                if ($keyword->status == -1) {
+                    $keyword->forceDelete();
+                }
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();

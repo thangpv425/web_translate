@@ -19,12 +19,12 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         @if($user=Sentinel::getUser())
-                            <li><a href="user/view/{{ $user->id }}"><i class="fa fa-user fa-fw"></i>{{$user->first_name.' '.$user->last_name}}</a>
+                            <li><a href="user/view"><i class="fa fa-user fa-fw"></i>{{$user->first_name.' '.$user->last_name}}</a>
                             </li>
                         
                         @endif
                         
-                        <li><a href="user/edit/{{ $user->id }}"><i class="fa fa-gear fa-fw"></i> Edit profile</a>
+                        <li><a href="user/edit"><i class="fa fa-gear fa-fw"></i> Edit profile</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
