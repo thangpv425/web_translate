@@ -91,9 +91,9 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     });
 });
 Route::prefix('user') ->middleware('user')->group(function(){
-    Route::get('add/keyword', 'UserController@addKeyword');
+    Route::get('keyword/add', 'UserController@addKeyword');
 
-    Route::post('add/keyword', 'UserController@processAddKeyword')->name('userAddKeyword');
+    Route::post('keyword/add', 'UserController@processAddKeyword')->name('userAddKeyword');
     
     Route::get('history','UserController@showContributeHistory');
     
