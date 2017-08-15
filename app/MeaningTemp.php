@@ -8,7 +8,16 @@ class MeaningTemp extends Model {
 
     protected $table = 'wt_meaning_temp';
     protected $fillable = [
-    'opCode', 'keyword_id', 'user_id', 'old_meaning_id', 'new_meaning', 'language', 'index', 'type', 'comment', 'status'
+        'opCode', 
+        'keyword_id', 
+        'user_id', 
+        'old_meaning_id', 
+        'new_meaning', 
+        'language', 
+        'index', 
+        'type', 
+        'comment', 
+        'status'
     ];
     public $primaryKey = 'id';
 

@@ -23,7 +23,7 @@ class KeywordRepository extends EloquentRepository implements KeywordRepositoryI
      * @param  string $value [description]
      * @return [array]        [array of keyword = $value and actived]
      */
-    public function findByKeyword($value='')
+    public function findByKeyword($value = '')
     {
     	$result = 
             DB::select(DB::raw("SELECT * 
@@ -35,7 +35,7 @@ class KeywordRepository extends EloquentRepository implements KeywordRepositoryI
         return $result;
     }
 
-    public function findId($value='')
+    public function findId($value = '')
     {
         $keyword = $this->findByKeyword($value);
         if ($keyword == null) {
@@ -52,7 +52,7 @@ class KeywordRepository extends EloquentRepository implements KeywordRepositoryI
      * @param string $order [option]
      * @return query builder          [description]
      */
-    public function hasMeanings($keyword='', $lang = VIETNAMESE, $order = 'desc')
+    public function hasMeanings($keyword = '', $lang = VIETNAMESE, $order = 'desc')
     {
         $keyword_id = $this->findId($keyword);
         $meanings = 
@@ -83,7 +83,7 @@ class KeywordRepository extends EloquentRepository implements KeywordRepositoryI
                 ->groupBy('type');
         return $meanings;
     }
-    public function bestMeaning($keyword='', $lang = VIETNAMESE)
+    public function bestMeaning($keyword = '', $lang = VIETNAMESE)
     {
         $meaning = $this->hasMeanings($keyword, $lang)->first();
         if ($meaning != null) {

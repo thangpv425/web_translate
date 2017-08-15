@@ -40,32 +40,12 @@
         });
 
         jQuery.validator.addMethod("kana", function(value, element) {
-                return this.optional(element) || /^([[a-zA-zァ-ヶーぁ-んｧ-ﾝﾞﾟ]+)$/.test(value);
+                return this.optional(element) || /^([a-zA-zァ-ヶーぁ-んｧ-ﾝﾞﾟ\0x3400-\0x4DB5\0x4E00-\0x9FCB\0xF900-\0xFA6A]+)$/.test(value);
             }, "<br/>Please enter full-width hiragana katakana."
         );
 
-        jQuery.validator.addMethod("hiragana", function(value, element) {
-                return this.optional(element) || /^([[a-zA-zぁ-ん]+)$/.test(value);
-            }, "<br/>Please enter full-width Hiragana."
-        );
-
-        jQuery.validator.addMethod("katakana", function(value, element) {
-                return this.optional(element) || /^([[a-zA-zァ-ヶー]+)$/.test(value);
-            }, "<br/>Please enter full-width katakana."
-        );
-
-        jQuery.validator.addMethod("hankana", function(value, element) {
-                return this.optional(element) || /^([a-zA-z[ｧ-ﾝﾞﾟ]+)$/.test(value);
-            }, "<br/>Please enter half-width katakana."
-        );
-
-//        jQuery.validator.addMethod("alphabet", function(value, element) {
-//                return this.optional(element) || /^([a-zA-z\s]+)$/.test(value);
-//            }, "Please insert alphabet."
-//         );
-
         jQuery.validator.addMethod("vietnamese", function(value, element) {
-                return this.optional(element) || /^[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$/.test(value);
+                return this.optional(element) || /^[a-z A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựýỳỵỷỹ]+$/.test(value);
             }, "Please insert Vietnamese or English."
         );
 
@@ -79,12 +59,11 @@
                 url: "check/unique/keyword", // script to validate in server side
                 data: {'keyword': value},
                 success: function(data) {
-                    result = data;
+                    result = data.isExist;
                 }
                 });
                 // return true if keyword is exist in database
-                console.log(result);
-                return result;
+                return !result;
 
             },
             "This keyword is already added!"
@@ -94,7 +73,6 @@
             meaning: {
                 required: true,
                 vietnamese: true,
-                alphabet: true
             }
         });
         $('#add_keyword_form').validate({
@@ -102,9 +80,6 @@
                 "keyword": {
                     required: true,
                     kana: true,
-                    // hiragana: true,
-                    // katakana: true,
-                    // hankana: true,
                     uniqueKeyword: true
                 },
             },
