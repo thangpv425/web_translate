@@ -13,5 +13,5 @@ class ValidationController extends Controller
         $keyword = DB::select('select * from wt_keyword where keyword REGEXP BINARY ?', ['^'.$request->keyword]);
         $result = (count($keyword) >= 1) ? true : false;
         return $result;
-    }
+    }    
 }

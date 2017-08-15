@@ -24,7 +24,7 @@
                         
                         @endif
                         
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="user/edit/{{ $user->id }}"><i class="fa fa-gear fa-fw"></i> Edit profile</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
