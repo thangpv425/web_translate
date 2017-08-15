@@ -7,7 +7,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 
-                <a class="navbar-brand" href=""><i class="fa fa-search fa-fw" aria-hidden="true"></i>Web Translate</a>
+                <a class="navbar-brand" href=""><i class="fa fa-search fa-fw" aria-hidden="true"></i>D3 Dictionary</a>
             </div>
             <!-- /.navbar-header -->
 

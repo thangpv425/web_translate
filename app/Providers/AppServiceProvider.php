@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         
         $repositories = [
             'UserRepositoryInterface' => 'UserRepository',
+            'KeywordRepositoryInterface' => 'KeywordRepository',
         ];
         foreach ($repositories as $key=>$val){
             $this->app->bind("App\\Repositories\\Interfaces\\$key", "App\\Repositories\\Eloquents\\$val");

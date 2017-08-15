@@ -15,7 +15,7 @@
 
             {{-- Menu User --}}
             <li>
-                <a href="/translate"><i class="fa fa-home fa-fw"></i> Home Page</a>
+                <a href="/"><i class="fa fa-home fa-fw"></i> Home Page</a>
             </li>
             
             {{-- Menu Admin --}}

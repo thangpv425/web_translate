@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Meaning;
+use App\MeaningTemp;
+use App\Http\Requests\ImproveMeaningRequest;
 use Illuminate\Http\Request;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Validator;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use Illuminate\Support\Facades\DB;
+
 class UserController extends Controller
 {
     // protected $user;
@@ -55,5 +60,39 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user ->update();
         return redirect('user/edit/'.$id)->with('notification','Edit completed');
+    }
+
+    public function improveMeaning(ImproveMeaningRequest $request)
+    {
+        // dd($request->all());
+        try {
+            $oldMeaning = Meaning::find($request->old_meaning_id);
+            $newMeaning = array(
+                'opCode' => EDIT,
+                'keyword_id' => $oldMeaning->keyword_id,
+                'user_id' => Sentinel::getUser()->id,
+                'old_meaning_id' => $oldMeaning->id,
+                'new_meaning' => $request->new_meaning,
+                'language' => $oldMeaning->language,
+                'type' => $oldMeaning->type,
+                'index' => $oldMeaning->index,
+                'comment' => $request->comment,
+                'status' => IN_QUEUE,
+            );
+            DB::beginTransaction();
+            MeaningTemp::create($newMeaning);
+            DB::commit();
+            $notification = array(
+                'message' => 'Request has been sent.', 
+                'alert-type' => 'success'
+            );
+        } catch (\Exception $e) {
+            DB::rollback();
+            $notification = array(
+                'message' => 'Some thing wrong.',
+                'alert-type' => 'error',
+            );
+        }
+        return response()->json($notification);
     }
 }

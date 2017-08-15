@@ -15,10 +15,6 @@ Route::get('/', function () {
     return redirect()->route('loginForm');
 });
 
-Route::get('home', function(){
-	echo "Content";
-});
-
 /**
  * Route login, logout, register
  */
@@ -33,9 +29,11 @@ Route::get('register', 'Auth\LoginController@register')->middleware('guest');
 Route::post('register', 'Auth\LoginController@processRegister')->name('register');
 
 Route::group(['middleware'=>'checkLogin'],function(){
-	Route::get('translate','User\TranslateController@showPage');
+	Route::get('home','TranslationController@index')->name('translate');
 	
-	Route::post('search','User\TranslateController@search');
+	Route::post('home','TranslationController@translate')->name('processTranslate');
+
+	Route::post('check/unique/keyword', 'ValidationController@checkUniqueKeyword')->name('uniqueKeyword');
 });
 
 /*
@@ -79,9 +77,6 @@ Route::prefix('admin')->middleware('admin')->group(function(){
 	
 });
 /**
- * Check validate
+ * Route user
  */
-Route::prefix('check')->middleware('checkLogin')->group(function(){
-	Route::post('unique/keyword', 'ValidationController@checkUniqueKeyword')->name('uniqueKeyword');
-
-});
+Route::post('user/meaning/improve', 'UserController@improveMeaning')->name('improve-meaning');
