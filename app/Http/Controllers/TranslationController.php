@@ -19,7 +19,7 @@ class TranslationController extends Controller
     	return view('translate.index');
     }
 
-    public function translate(TranslateRequest $request)
+    public function postTranslate(TranslateRequest $request)
     {
     	$meanings = $this->keyword->hasMeaningsGroupByType(strtolower($request->text), $request->lang)->toArray();
     	$meanings['best'] = $this->keyword->bestMeaning(strtolower($request->text), $request->lang);

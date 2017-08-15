@@ -28,12 +28,17 @@ Route::get('register', 'Auth\LoginController@register')->middleware('guest');
 
 Route::post('register', 'Auth\LoginController@processRegister')->name('register');
 
+/**
+ * Route for logged-in user
+ */
 Route::group(['middleware'=>'checkLogin'],function(){
 	Route::get('home','TranslationController@index')->name('translate');
 	
-	Route::post('home','TranslationController@translate')->name('processTranslate');
+	Route::post('home','TranslationController@postTranslate')->name('processTranslate');
 
 	Route::post('check/unique/keyword', 'ValidationController@checkUniqueKeyword')->name('uniqueKeyword');
+
+	Route::post('user/meaning/improve', 'UserController@improveMeaning')->name('improve-meaning');
 });
 
 /*
@@ -41,7 +46,9 @@ Route::group(['middleware'=>'checkLogin'],function(){
  */
 
 Route::prefix('admin')->middleware('admin')->group(function() {
-    Route::get('keywordList', 'Admin\AdminController@wordList');
+    Route::get('keyword/list', 'Admin\AdminController@keywordList')->name('keyword-list');
+
+    Route::get('meaning/list', 'Admin\AdminController@meaningList')->name('meaning-list');
 
     Route::get('add/keyword', 'Admin\AdminController@addKeyword');
 
@@ -79,7 +86,3 @@ Route::prefix('admin')->middleware('admin')->group(function() {
         Route::post('delete', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
     });
 });
-/**
- * Route user
- */
-Route::post('user/meaning/improve', 'UserController@improveMeaning')->name('improve-meaning');

@@ -40,7 +40,7 @@
         });
 
         jQuery.validator.addMethod("kana", function(value, element) {
-                return this.optional(element) || /^([a-zA-zァ-ヶーぁ-んｧ-ﾝﾞﾟ\0x3400-\0x4DB5\0x4E00-\0x9FCB\0xF900-\0xFA6A]+)$/.test(value);
+                return this.optional(element) || /^([a-zA-zぁ-ゔゞァ-・ヽヾ゛゜ー一-龯\u3000-\u303F]+)$/.test(value);
             }, "<br/>Please enter full-width hiragana katakana."
         );
 
@@ -50,7 +50,7 @@
         );
 
 
-        $.validator.addMethod("uniqueKeyword", 
+        $.validator.addMethod("uniqueKeyword",
         function(value, element) {
             var result = false;
             $.ajax({

@@ -1,3 +1,5 @@
+{{-- popup notification --}}
+@include('js.toastr')
 {{-- ajax translate --}}
 <script>
     $.ajaxSetup({
@@ -44,26 +46,6 @@
 </script>
 {{-- search function --}}
 <script>
-    function toa(data) {
-        switch(data['alert-type']){
-            case 'info':
-                toastr.info(data.message, "Did You Know?");
-            break;
-
-            case 'warning':
-                toastr.warning(data.message, "Be Careful!");
-            break;
-
-            case 'success':
-                toastr["success"](data.message, "Congratulations!");
-            break;
-
-            case 'error':
-                toastr.error(data.message, "Oops!");
-            break;
-        }
-    }
-
     function nl2br (str, is_xhtml) {   
         var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';    
         return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
@@ -107,7 +89,6 @@
                 'lang': lang,
             },
             success: function(data) {
-                console.log(data);
                 if ($.isEmptyObject(data) && $('#keyword').val() != '') { 
                     $('#btn-contribute').attr('style', 'display'); 
                 } else { 
