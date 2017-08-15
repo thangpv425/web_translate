@@ -19,3 +19,11 @@ define('IN_QUEUE', -1);
 
 define('EXIST', 1, true);
 define('NOT_EXIST', '* Sorry! this keyword does not exist', true);
+
+define('VIETNAMESE', 0);
+define('ENGLISH', 1);
+define('ACTIVE', 1);
+define('NOUN', 1);
+define('VERB', 2);
+define('ADJECTIVE', 3);
+define('PREPOSITION', 4);

@@ -7,8 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class MeaningTemp extends Model {
 
     protected $table = 'wt_meaning_temp';
+    protected $fillable = [
+        'opCode', 
+        'keyword_id', 
+        'user_id', 
+        'old_meaning_id', 
+        'new_meaning', 
+        'language', 
+        'index', 
+        'type', 
+        'comment', 
+        'status'
+    ];
     public $primaryKey = 'id';
-    protected $fillable = ['opCode','user_id','keyword_id','old_meaning_id','language','index','status','comment','new_meaning','type'];
 
     public function user() {
         return $this->belongsTo('App\User');

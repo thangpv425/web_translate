@@ -15,10 +15,6 @@ Route::get('/', function () {
     return redirect()->route('loginForm');
 });
 
-Route::get('home', function() {
-    echo "Content";
-});
-
 /**
  * Route login, logout, register
  */
@@ -32,14 +28,21 @@ Route::get('register', 'Auth\LoginController@register')->middleware('guest');
 
 Route::post('register', 'Auth\LoginController@processRegister')->name('register');
 
-Route::group(['middleware' => 'checkLogin'], function() {
-    Route::get('translate', 'User\TranslateController@showPage');
+/**
+ * Route for logged-in user
+ */
+Route::group(['middleware'=>'checkLogin'],function(){
+    Route::get('home','TranslationController@index')->name('translate');
 
-    Route::post('search', 'User\TranslateController@search');
+    Route::post('home','TranslationController@postTranslate')->name('processTranslate');
+
+    Route::post('check/unique/keyword', 'ValidationController@checkUniqueKeyword')->name('uniqueKeyword');
     
     Route::get('user/edit','UserController@edit');
     
     Route::post('user/edit','UserController@update');
+
+    Route::post('user/meaning/improve', 'UserController@improveMeaning')->name('improve-meaning');
 });
 
 /*
@@ -47,7 +50,9 @@ Route::group(['middleware' => 'checkLogin'], function() {
  */
 
 Route::prefix('admin')->middleware('admin')->group(function() {
-    Route::get('keywordList', 'Admin\AdminController@wordList');
+    Route::get('keyword/list', 'Admin\AdminController@keywordList')->name('keyword-list');
+
+    Route::get('meaning/list', 'Admin\AdminController@meaningList')->name('meaning-list');
 
     Route::get('add/keyword', 'Admin\AdminController@addKeyword');
 
@@ -56,6 +61,7 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     Route::get('deleteWord/{id}', 'Admin\AdminController@deleteWord');
 
     Route::get('editKeyword/{id}', 'Admin\AdminController@editKeyword');
+    
     Route::post('editKeyword', 'Admin\AdminController@processEditKeyword')->name('keywordEditRoute');
 
     // keyword temp table
@@ -84,7 +90,6 @@ Route::prefix('admin')->middleware('admin')->group(function() {
         Route::post('delete', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
     });
 });
-
 Route::prefix('user') ->middleware('user')->group(function(){
     Route::get('add/keyword', 'UserController@addKeyword');
 
@@ -97,10 +102,4 @@ Route::prefix('user') ->middleware('user')->group(function(){
     Route::get('deleteMeaningContribute/{id}', 'UserController@deleteMeaningContribute');
 
 
-});
-/**
- * Check validate
- */
-Route::prefix('check')->middleware('checkLogin')->group(function() {
-    Route::post('unique/keyword', 'ValidationController@checkUniqueKeyword')->name('uniqueKeyword');
 });

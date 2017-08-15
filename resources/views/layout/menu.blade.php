@@ -15,7 +15,7 @@
 
             {{-- Menu User --}}
             <li>
-                <a href="/translate"><i class="fa fa-home fa-fw"></i> Home Page</a>
+                <a href="/"><i class="fa fa-home fa-fw"></i> Home Page</a>
             </li>
             @if (Sentinel::check() && Sentinel::inRole('user'))
             <li>
@@ -26,7 +26,10 @@
             {{-- Menu Admin --}}
             @if (Sentinel::check() && Sentinel::inRole('admin'))
                 <li>
-                    <a href="admin/keywordList"><i class="fa fa-list-ul fa-fw"></i> Word List</a>
+                    <a href="{{ route('keyword-list') }}"><i class="fa fa-list-ul fa-fw"></i> Keywords List</a>
+                </li>
+                <li>
+                    <a href="{{ route('meaning-list') }}"><i class="fa fa-list-ul fa-fw"></i> Meanings List</a>
                 </li>
                 <li>
                     <a href="admin/show"><i class="fa fa-male fa-fw"></i> User Management</a>

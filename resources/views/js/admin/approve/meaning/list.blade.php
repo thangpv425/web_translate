@@ -30,7 +30,7 @@
                                     '{{ csrf_field() }}'+
                                     '<input type="hidden" name="id" value='+row[0]+'>'+
                                     '<input type="hidden" name="opCode" value='+row[1]+'>'+
-                                    '<button type="submit" class="btn btn-success '+canClick+'" id="btn-approve"><i class="fa fa-thumbs-o-up fa-fw"></i>Approve</button>'+
+                                    '<button type="submit" class="btn btn-success" id="btn-approve" '+canClick+'><i class="fa fa-thumbs-o-up fa-fw"></i>Approve</button>'+
                                 '</form>';
                     }
                  },
@@ -41,7 +41,7 @@
                                     '{{ csrf_field() }}'+
                                     '<input type="hidden" name="id" value='+row[0]+'>'+
                                     '<input type="hidden" name="opCode" value='+row[1]+'>'+
-                                    '<button id="btn-decline" class="btn btn-warning '+canClick+'"><i class="fa fa-thumbs-o-down fa-fw"></i>Decline</button>'+
+                                    '<button id="btn-decline" class="btn btn-warning" '+canClick+'><i class="fa fa-thumbs-o-down fa-fw"></i>Decline</button>'+
                                 '</form>';
                     }
                  },
@@ -51,7 +51,7 @@
                         return '<form action="{{ route('deleteRequestMeaning') }}" method="POST" id="delete">'+
                                          '{{ csrf_field() }}'+
                                     '<input type="hidden" name="id" value='+row[0]+'>'+
-                                    '<button type="submit" class="btn btn-danger '+canClick+'" id="btn-delete"><i class="fa fa-trash-o fa-fw"></i>Delete</button>'+
+                                    '<button type="submit" class="btn btn-danger" id="btn-delete" '+canClick+'><i class="fa fa-trash-o fa-fw"></i>Delete</button>'+
                                 '</form>';;
                     }
                  },

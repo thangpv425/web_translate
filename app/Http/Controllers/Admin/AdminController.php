@@ -9,6 +9,7 @@ use App\Keyword;
 use App\KeywordTemp;
 use App\MeaningTemp;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\AddKeywordRequest;
 
 class AdminController extends Controller {
     /*
@@ -16,19 +17,23 @@ class AdminController extends Controller {
      * @return Illuminate\resource\views\admin\keyword_list
      */
 
-    public function wordList() {
+    public function meaningList() {
         $meaning = Meaning::all();
-        return view('admin.keyWordList', ['meaning' => $meaning]);
+        return view('admin.meaning-list', ['meaning' => $meaning]);
+    }
+
+    public function keywordList()
+    {
+        echo "string";
     }
 
     public function addKeyword() {
         return view('admin.keywordAdd');
     }
 
-    public function processAddKeyword(Request $request) {
+    public function processAddKeyword(AddKeywordRequest $request) {
         try {
             $dataMeaning = array();
-
             DB::beginTransaction();
             $keyword = Keyword::create([
                 'keyword' => $request->keyword,
@@ -48,14 +53,19 @@ class AdminController extends Controller {
                 $meaning = Meaning::create($value);
             }
             DB::commit();
-
-            $notification = 'You have successfully add new keyword.';
+            $notification = array(
+                'message' => 'You have been added new keyword successfully.',
+                'alert-type' => 'success',
+            );
         } catch (\Exception $e) {
             DB::rollback();
-            $notification = 'Something went wrong!';
-            return redirect('admin/add/keyword')->withErrors($notification);
+            $notification = array(
+                'message' => 'Something went wrong.',
+                'alert-type' => 'error',
+            );
+            return redirect('admin/add/keyword')->with($notification);
         }
-        return redirect('admin/keywordList')->with('notification', $notification);
+        return redirect('admin/keywordList')->with($notification);
     }
 
     /*
@@ -279,7 +289,7 @@ class AdminController extends Controller {
                 'alert-type' => 'error'
             );
         }
-        return redirect()->route('keywordTempList')->with($notification);
+        return response()->json($notification);
     }
 
     /**
@@ -464,7 +474,7 @@ class AdminController extends Controller {
                 'alert-type' => 'error'
             );
         }
-        return redirect()->route('meaningTempList')->with($notification);
+        return response()->json($notification);
     }
 
     public function deleteRequestOnMeaningTable(Request $request) {

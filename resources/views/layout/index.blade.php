@@ -23,10 +23,10 @@
     <title>Web Translate</title>
     <base href="{{asset('')}}">
     <!-- Bootstrap Core CSS -->
-    <link href="admin_asset/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="admin_asset/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
 
     <!-- MetisMenu CSS -->
-    <link href="admin_asset/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    {{-- <link href="admin_asset/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet"> --}}
 
     <!-- Custom CSS -->
     <link href="admin_asset/dist/css/sb-admin-2.css" rel="stylesheet">
@@ -39,8 +39,11 @@
 
     <!-- DataTables Responsive CSS -->
     <link href="admin_asset/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-    <link rel="stylesheet" href="admin_asset/dist/css/comment.css">
+    {{-- <link rel="stylesheet" href="admin_asset/dist/css/comment.css"> --}}
     <link rel="stylesheet" href="css/app.css">
+    {{-- notification css --}}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -72,7 +75,6 @@
     <!-- DataTables JavaScript -->
     <script src="admin_asset/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="admin_asset/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->

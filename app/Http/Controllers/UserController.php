@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImproveMeaningRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Meaning;
@@ -14,8 +15,8 @@ use Validator;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\User;
 
-class UserController extends Controller {
-
+class UserController extends Controller
+{
     // protected $user;
     // public function __construct(UserRepositoryInterface $user)
     // {
@@ -162,4 +163,37 @@ class UserController extends Controller {
         return redirect('user/history');
     }
 
+    public function improveMeaning(ImproveMeaningRequest $request)
+    {
+        // dd($request->all());
+        try {
+            $oldMeaning = Meaning::find($request->old_meaning_id);
+            $newMeaning = array(
+                'opCode' => EDIT,
+                'keyword_id' => $oldMeaning->keyword_id,
+                'user_id' => Sentinel::getUser()->id,
+                'old_meaning_id' => $oldMeaning->id,
+                'new_meaning' => $request->new_meaning,
+                'language' => $oldMeaning->language,
+                'type' => $oldMeaning->type,
+                'index' => $oldMeaning->index,
+                'comment' => $request->comment,
+                'status' => IN_QUEUE,
+            );
+            DB::beginTransaction();
+            MeaningTemp::create($newMeaning);
+            DB::commit();
+            $notification = array(
+                'message' => 'Request has been sent.', 
+                'alert-type' => 'success'
+            );
+        } catch (\Exception $e) {
+            DB::rollback();
+            $notification = array(
+                'message' => 'Some thing wrong.',
+                'alert-type' => 'error',
+            );
+        }
+        return response()->json($notification);
+    }
 }

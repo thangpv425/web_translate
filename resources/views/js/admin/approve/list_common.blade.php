@@ -1,10 +1,10 @@
+@include('js.toastr')
 <script>
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-
 // draw table
 function drawTable(table, url) {
     $.ajax({
@@ -35,8 +35,9 @@ $('#dataTables-example').on('submit', '#decline', function(e) {
         url : url,
         data : {'id' : id, 'opCode' : opCode, 'cmt' : cmt},
         success:function(data){
+            toa(data);
+            $('#list').trigger('change');
         }
     });
-    location.reload();
 });
 </script>
