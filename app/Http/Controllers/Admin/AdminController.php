@@ -105,9 +105,7 @@ class AdminController extends Controller {
             'numberOfMeanings' => $numberOfMeanings
         ]);
     }
-
-//    public function processEditKeyword(\App\Http\Requests\EditWordRequestRequest $request) {
-
+    
     public function processEditKeyword(AddKeywordRequest $request) {
         $id = $request->keyword_id;
         try {
@@ -137,7 +135,17 @@ class AdminController extends Controller {
         }
         return redirect('admin/meaning/list');
     }
-
+    
+    public function editKeywordAddNewMeaning($id) {
+            $keyword = Keyword::find($id);
+            $meaning = $keyword->meaning;
+            $numberOfMeanings = Meaning::where('keyword_id', $id)->count();
+            return view('admin.keywordEditNewMeaning', [
+                'keyword' => $keyword,
+                'meaning' => $meaning,
+                'numberOfMeanings' => $numberOfMeanings
+            ]);
+    }
     /**
      * return List request of keyword table
      * @return [type] [description]

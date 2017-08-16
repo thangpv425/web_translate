@@ -69,6 +69,11 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     Route::get('editKeyword/{id}', 'Admin\AdminController@editKeyword')->where('id', '[0-9]+');
     
     Route::post('editKeyword', 'Admin\AdminController@processEditKeyword')->name('keywordEditRoute');
+    
+    Route::get('editKeyword/addNewMeaning/{id}','Admin\AdminController@editKeywordAddNewMeaning')->where('id', '[0-9]+');
+
+    Route::post('editKeyword/addNewMeaning','Admin\AdminController@processEditKeywordAddNewMeaning')->name('keywordEditAddNewMeaningRoute');
+
 
     Route::post('ajax/get-detail-meaning', 'TranslationController@postDetailMeaning')->name('detail-meaning');
     // keyword temp table

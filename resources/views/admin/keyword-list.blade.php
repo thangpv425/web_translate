@@ -67,7 +67,7 @@
         {{-- /.row meaning-content --}}
       </div>
       <div class="modal-footer">
-        <a class="btn btn-primary" id="add-meaning" href="" style="border: none;">Add meaning</a>
+          <a class="btn btn-primary" id="add-meaning" href="admin/editKeyword/addNewMeaning/{keyword->id}" style="border: none;">Add meaning</a>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
