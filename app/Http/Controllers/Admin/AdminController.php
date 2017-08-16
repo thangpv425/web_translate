@@ -25,7 +25,7 @@ class AdminController extends Controller {
 
     public function keywordList()
     {
-        $keywords = Keyword::where('status', 1)->get();
+        $keywords = Keyword::where('status', ACTIVE)->get();
         return view('admin.keyword-list', ['keywords' => $keywords]);
     }
 
