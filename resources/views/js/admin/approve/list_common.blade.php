@@ -26,6 +26,7 @@ function drawTable(table, url) {
 $('#dataTables-example').on('submit', '#decline', function(e) {
     e.preventDefault();
     var cmt = prompt("Please enter comment", "This word is ...");
+    if (cmt == null) { return false; }
     var id = $('input[name=id]', this).val();
     var opCode = $('input[name=opCode]', this).val();
     var url = $(this).attr('action');
