@@ -126,7 +126,7 @@ class UserController extends Controller
                 $meaningtmp->delete();
             }
             //if this keyword is added by user
-            if ($keyword->status == -1) {
+            if ($keyword->status == IN_QUEUE) {
                 $keyword->forceDelete();
             }
             DB::commit();
@@ -151,7 +151,7 @@ class UserController extends Controller
             //delete keyword            
             if ($numberOfMeanings == 0) {
                 $keywordtmp->delete();
-                if ($keyword->status == -1) {
+                if ($keyword->status == IN_QUEUE) {
                     $keyword->forceDelete();
                 }
             }
