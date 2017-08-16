@@ -64,6 +64,7 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     
     Route::post('editKeyword', 'Admin\AdminController@processEditKeyword')->name('keywordEditRoute');
 
+    Route::post('ajax/get-detail-meaning', 'TranslationController@postDetailMeaning')->name('detail-meaning');
     // keyword temp table
     Route::prefix('keyword-temp')->group(function() {
         Route::get('list', 'Admin\AdminController@indexKeywordTemp')->name('keywordTempList'); // return view
