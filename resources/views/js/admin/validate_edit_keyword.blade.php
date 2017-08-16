@@ -67,8 +67,7 @@
                 }
                 });
                 // return true if keyword is exist in database
-                console.log(result);
-                return result;
+                return !result;
 
             },
             "This keyword is existed!"

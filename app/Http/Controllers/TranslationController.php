@@ -18,7 +18,11 @@ class TranslationController extends Controller
     {
     	return view('translate.index');
     }
-
+    /**
+     * ajax data for translate request
+     * @param  TranslateRequest $request [description]
+     * @return [json]                    [meanings group by type + best meaning]
+     */
     public function postTranslate(TranslateRequest $request)
     {
     	$meanings = $this->keyword->hasMeaningsGroupByType(strtolower($request->text), $request->lang)->toArray();
@@ -27,5 +31,17 @@ class TranslationController extends Controller
     		return response()->json(null);
     	}
     	return response()->json($meanings);
+    }
+
+    /**
+     * [FunctionName description]
+     * @param string $value [description]
+     */
+    public function postDetailMeaning(Request $request)
+    {
+        $key = strtolower($request->keyword);
+        $meanings[VIETNAMESE] = $this->keyword->hasMeaningsGroupByType($key, VIETNAMESE)->toArray();
+        $meanings[ENGLISH] = $this->keyword->hasMeaningsGroupByType($key, ENGLISH)->toArray();
+        return response()->json($meanings);
     }
 }

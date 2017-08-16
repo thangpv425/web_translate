@@ -24,7 +24,8 @@ class AdminController extends Controller {
 
     public function keywordList()
     {
-        echo "string";
+        $keywords = Keyword::where('status', 1)->get();
+        return view('admin.keyword-list', ['keywords' => $keywords]);
     }
 
     public function addKeyword() {
@@ -65,7 +66,7 @@ class AdminController extends Controller {
             );
             return redirect('admin/add/keyword')->with($notification);
         }
-        return redirect('admin/meaning/list')->with($notification);
+        return redirect()->route('meaning-list')->with($notification);
     }
 
     /*
@@ -104,7 +105,9 @@ class AdminController extends Controller {
         ]);
     }
 
-    public function processEditKeyword(\App\Http\Requests\EditWordRequestRequest $request) {
+//    public function processEditKeyword(\App\Http\Requests\EditWordRequestRequest $request) {
+
+    public function processEditKeyword(AddKeywordRequest $request) {
         $id = $request->keyword_id;
         try {
             foreach ($request->translate as $key => $value) {
@@ -112,6 +115,7 @@ class AdminController extends Controller {
                     'meaning_id' => $value['meaning_id'],
                     'meaning' => $value['meaning'],
                     'language' => $value['language'],
+                    'type' => $value['type']
                 );
             }
 
@@ -121,7 +125,8 @@ class AdminController extends Controller {
                 Meaning::where('id', $value['meaning_id'])
                     ->update([
                         'meaning' => $value['meaning'],
-                        'language' => $value['language']
+                        'language' => $value['language'],
+                        'type' => $value['type']
                     ]);
             }
             DB::commit();
@@ -390,6 +395,7 @@ class AdminController extends Controller {
                 'meaning' => $meaningTemp['new_meaning'],
                 'status' => APPROVED,
                 'language' => $meaningTemp['language'],
+                'type' => $meaningTemp['type'],
                 'index' => $meaningTemp['index'],
                 'keyword_id' => $meaningTemp['keyword_id']
             ]);

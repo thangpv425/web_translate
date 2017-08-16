@@ -70,6 +70,7 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     
     Route::post('editKeyword', 'Admin\AdminController@processEditKeyword')->name('keywordEditRoute');
 
+    Route::post('ajax/get-detail-meaning', 'TranslationController@postDetailMeaning')->name('detail-meaning');
     // keyword temp table
     Route::prefix('keyword-temp')->group(function() {
         Route::get('list', 'Admin\AdminController@indexKeywordTemp')->name('keywordTempList'); // return view
@@ -104,5 +105,7 @@ Route::prefix('user') ->middleware('user')->group(function(){
     
     Route::get('deleteMeaningContribute/{id}', 'UserController@deleteMeaningContribute')->where('id', '[0-9]+');
 
-
+    Route::get('editMeaningContribute/{id}', 'UserController@editMeaningContribute');
+    
+    Route::post('editMeaningContribute', 'UserController@processEditMeaningContribute');
 });

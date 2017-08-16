@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Your contribution
+                <h1 class="page-header">My contribution
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -12,7 +12,7 @@
                 <thead>
                     <tr class="odd gradeX" align="center">
                         <th>Date</th>
-                        <th>Your action</th>
+                        <th>My action</th>
                         <th>Old Item</th>
                         <th>New Item</th>
                         <th>Status</th>
@@ -123,10 +123,11 @@
                         <td>{{ $row->comment }}</td>
                         <td class="center">
 
-                        @if ($row->status == IN_QUEUE)
-                        <a href="user/deleteMeaningContribute/{{$row->id}}"><i class="fa fa-trash-o fa-fw"></i>Cancel this contribution</a>
-                        @elseif ($row->status == DECLINED) <a href="user/editMeaningContribute/{{$row->id}}"><i class="fa fa-trash-o fa-fw"></i>Edit this contribution</a>
-                        @endif
+                            @if ($row->status == IN_QUEUE)
+                            <a href="user/deleteMeaningContribute/{{$row->id}}"><i class="fa fa-trash-o fa-fw"></i>Cancel this contribution</a>
+                            @elseif ($row->status == DECLINED)
+                            <a href="user/editMeaningContribute/{{$row->id}}"><i class="fa fa-pencil fa-fw"></i>Edit this contribution</a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach 

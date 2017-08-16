@@ -1,6 +1,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-
-
 {{-- Validate --}}
 <script>
     $(document).ready(function(){
@@ -63,7 +61,7 @@
             $.ajax({
                 type:"POST",
                 async: false,
-                url: "check/unique/keyword", // script to validate in server side
+                url: "{{ route('uniqueKeyword') }}", // script to validate in server side
                 data: {'keyword': value},
                 success: function(data) {
                     result = data.isExist;
@@ -71,7 +69,6 @@
                 });
                 // return true if keyword is exist in database
                 return !result;
-
             },
             "This keyword is already added!"
         );

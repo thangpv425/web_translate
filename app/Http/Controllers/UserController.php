@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ImproveMeaningRequest;
+use App\Http\Requests\AddKeywordRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Meaning;
@@ -15,8 +16,8 @@ use Validator;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\User;
 
-class UserController extends Controller
-{
+class UserController extends Controller {
+
     // protected $user;
     // public function __construct(UserRepositoryInterface $user)
     // {
@@ -56,7 +57,7 @@ class UserController extends Controller
         return view('user.keywordAdd');
     }
 
-    public function processAddKeyword(\App\Http\Requests\AddKeywordRequest $request) {
+    public function processAddKeyword(AddKeywordRequest $request) {
         try {
             $user = Sentinel::getUser();
             $dataMeaning = array();
@@ -161,9 +162,36 @@ class UserController extends Controller
         }
         return redirect('user/history');
     }
+    
+    public function editMeaningContribute($id) {
 
-    public function improveMeaning(ImproveMeaningRequest $request)
-    {
+        $meaningtmp = MeaningTemp::find($id);
+        return view('user.contributeMeaningEdit', ['meaningtmp' => $meaningtmp]);
+    }
+
+    public function processEditMeaningContribute(Request $request) {
+        //eidt in wt_meaning_temp
+        $id = $request->meaningtmp_id;
+        try {
+            $meaningtmp = MeaningTemp::find($id);
+            $meaningtmp->new_meaning = $request->new_meaning;
+            $meaningtmp->language = $request->new_language;
+            $meaningtmp->type = $request->new_type;
+            $meaningtmp->status = IN_QUEUE;
+            $meaningtmp->comment = $request->new_comment;
+
+            DB::beginTransaction();
+            $meaningtmp->save();
+            DB::commit();
+            
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+        return redirect('user/history');
+    }
+
+    public function improveMeaning(ImproveMeaningRequest $request) {
         // dd($request->all());
         try {
             $oldMeaning = Meaning::find($request->old_meaning_id);
@@ -183,7 +211,7 @@ class UserController extends Controller
             MeaningTemp::create($newMeaning);
             DB::commit();
             $notification = array(
-                'message' => 'Request has been sent.', 
+                'message' => 'Request has been sent.',
                 'alert-type' => 'success'
             );
         } catch (\Exception $e) {
@@ -195,4 +223,5 @@ class UserController extends Controller
         }
         return response()->json($notification);
     }
+
 }
