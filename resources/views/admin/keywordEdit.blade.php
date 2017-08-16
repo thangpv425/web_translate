@@ -45,6 +45,13 @@
                                 <label><input type="radio" name="translate[{{$i}}][language]" value='0' @if($meaning->language==0) checked @endif /> Vietnamese<br></label>
                                 <label><input type="radio" name="translate[{{$i}}][language]" value='1' @if($meaning->language==1) checked @endif /> English<br></label>
                             </div>
+                            <label for="">Type</label>
+                            <div class="form-group">
+                                <label><input type="radio" name="translate[{{$i}}][type]" value='0' @if($meaning->type==0) checked @endif /> Noun <br></label>
+                                <label><input type="radio" name="translate[{{$i}}][type]" value='1' @if($meaning->type==1) checked @endif /> Verb <br></label>
+                                <label><input type="radio" name="translate[{{$i}}][type]" value='2' @if($meaning->type==2) checked @endif /> Adjective <br></label>
+                                <label><input type="radio" name="translate[{{$i}}][type]" value='3' @if($meaning->type==3) checked @endif /> Preposition <br></label>
+                            </div>
                             @php $i++;@endphp
                         </div>
                         @endforeach

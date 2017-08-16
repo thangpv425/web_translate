@@ -37,33 +37,13 @@
         });
 
         jQuery.validator.addMethod("kana", function(value, element) {
-                return this.optional(element) || /^([ァ-ヶーぁ-ん]+)$/.test(value);
+                return this.optional(element) || /^([a-zA-zぁ-ゔゞァ-・ヽヾ゛゜ー一-龯\u3000-\u303F]+)$/.test(value);
             }, "<br/>Please enter full-width hiragana katakana."
         );
 
-        jQuery.validator.addMethod("hiragana", function(value, element) {
-                return this.optional(element) || /^([ぁ-ん]+)$/.test(value);
-            }, "<br/>Please enter full-width Hiragana."
-        );
-
-        jQuery.validator.addMethod("katakana", function(value, element) {
-                return this.optional(element) || /^([ァ-ヶー]+)$/.test(value);
-            }, "<br/>Please enter full-width katakana."
-        );
-
-        jQuery.validator.addMethod("hankana", function(value, element) {
-                return this.optional(element) || /^([ｧ-ﾝﾞﾟ]+)$/.test(value);
-            }, "<br/>Please enter half-width katakana."
-        );
-
-        jQuery.validator.addMethod("alphabet", function(value, element) {
-                return this.optional(element) || /^([a-zA-z\s]+)$/.test(value);
-            }, "Please insert alphabet."
-        );
-
         jQuery.validator.addMethod("vietnamese", function(value, element) {
-                return this.optional(element) || /[^a-zA-Z_\x{00C0}-\x{00FF}\x{1EA0}-\x{1EFF}]/u.test(value);
-            }, "Please insert alphabet."
+                return this.optional(element) || /^[a-z A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựýỳỵỷỹ]+$/.test(value);
+            }, "Please insert Vietnamese or English."
         );
 
 
@@ -76,12 +56,11 @@
                 url: "check/unique/keyword", // script to validate in server side
                 data: {'keyword': value},
                 success: function(data) {
-                    result = (data == false) ? true : false;
+                    result = data.isExist;
                 }
                 });
                 // return true if keyword is exist in database
-                console.log(result);
-                return result;
+                return !result;
 
             },
             "This keyword is existed!"
@@ -90,7 +69,6 @@
         $.validator.addClassRules({
             meaning: {
                 required: true,
-                alphabet: true,
                 vietnamese: true
             }
         });
@@ -98,7 +76,7 @@
             rules: {
                 "keyword": {
                     required: true,
-                    alphabet: true,
+                    kana: true,
                     uniqueKeyword: true
                 },
             },

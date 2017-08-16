@@ -101,5 +101,7 @@ Route::prefix('user') ->middleware('user')->group(function(){
     
     Route::get('deleteMeaningContribute/{id}', 'UserController@deleteMeaningContribute');
 
-
+    Route::get('editMeaningContribute/{id}', 'UserController@editMeaningContribute');
+    
+    Route::post('editMeaningContribute', 'UserController@processEditMeaningContribute');
 });

@@ -104,7 +104,7 @@ class AdminController extends Controller {
         ]);
     }
 
-    public function processEditKeyword(Request $request) {
+    public function processEditKeyword(AddKeywordRequest $request) {
         $id = $request->keyword_id;
         try {
             foreach ($request->translate as $key => $value) {
@@ -112,6 +112,7 @@ class AdminController extends Controller {
                     'meaning_id' => $value['meaning_id'],
                     'meaning' => $value['meaning'],
                     'language' => $value['language'],
+                    'type' => $value['type']
                 );
             }
 
@@ -121,7 +122,8 @@ class AdminController extends Controller {
                 Meaning::where('id', $value['meaning_id'])
                     ->update([
                         'meaning' => $value['meaning'],
-                        'language' => $value['language']
+                        'language' => $value['language'],
+                        'type' => $value['type']
                     ]);
             }
             DB::commit();
@@ -129,7 +131,7 @@ class AdminController extends Controller {
             DB::rollback();
             throw $e;
         }
-        return redirect('admin/keywordList');
+        return redirect('admin/meaning/list');
     }
 
     /**
@@ -390,6 +392,7 @@ class AdminController extends Controller {
                 'meaning' => $meaningTemp['new_meaning'],
                 'status' => APPROVED,
                 'language' => $meaningTemp['language'],
+                'type' => $meaningTemp['type'],
                 'index' => $meaningTemp['index'],
                 'keyword_id' => $meaningTemp['keyword_id']
             ]);
