@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Meaning;
@@ -24,7 +25,7 @@ class AdminController extends Controller {
 
     public function keywordList()
     {
-        $keywords = Keyword::where('status', 1)->get();
+        $keywords = Keyword::where('status', ACTIVE)->get();
         return view('admin.keyword-list', ['keywords' => $keywords]);
     }
 
@@ -144,10 +145,18 @@ class AdminController extends Controller {
 
     public function postDataForKeywordTemp(Request $request)
     {
-        $list = IN_QUEUE;
-        if ($request->has('list')) {
-            $list = $request->list;
+        $validator = Validator::make($request->all(), [
+            'list' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            $notification = array(
+                'message' => 'Request is invalid.',
+                'alert-type' => 'error'
+            );
+            return response()->json($notification);
         }
+        $list = $request->list;
         $result = KeywordTemp::where('status', $list)->get();
         $data = array();
         foreach ($result as $key => $value) {
@@ -181,17 +190,19 @@ class AdminController extends Controller {
      */
     public function approveChangesOnKeywordTable(Request $request) {
         $notification = array(
-            'message' => 'Request is not exist.',
+            'message' => 'Invalid request.',
             'alert-type' => 'error'
         );
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+            'opCode' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('keywordTempList')->with($notification);
+        }
         $keywordTemp = KeywordTemp::find($request->id);
         $opCode = $request->opCode;
-        if (!$request->has('id') || !$request->has('opCode') || ($request->opCode != ADD && $request->opCode != EDIT)) {
-            $notification = array(
-                'message' => 'Invalid request.',
-                'alert-type' => 'error'
-            );
-        }
         if (isset($opCode) && $opCode == ADD && $keywordTemp != null) {
             $notification = AdminController::approveAddKeyword($keywordTemp);
         }
@@ -266,35 +277,40 @@ class AdminController extends Controller {
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function declineChangesOnKeywordTable(Request $request) {
-        if ($request->has('id')) {
-            $keywordTemp = KeywordTemp::find($request->id);
-            try {
-                $keywordTemp->status = DECLINED;
-                $keywordTemp->comment = $request->get('cmt');
-                
-                DB::beginTransaction();
-                $keywordTemp->save();
-                DB::commit();
-                
-                $notification = array(
-                    'message' => 'Request declined successfully.',
-                    'alert-type' => 'success'
-                );
-            } catch (\Exception $e) {
-                DB::rollback();
-                $notification = array(
-                    'message' => 'Something went wrong.',
-                    'alert-type' => 'error'
-                );
-            }
-        } else {
+    public function postDeclineChangesOnKeywordTable(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+            'cmt' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
             $notification = array(
-                'message' => 'Request is not exist.',
+                'message' => 'Invalid request.',
+                'alert-type' => 'error'
+            );
+            return response()->json($notification);
+        }
+        try {
+            $keywordTemp = KeywordTemp::find($request->id);
+            $keywordTemp->status = DECLINED;
+            $keywordTemp->comment = $request->get('cmt');
+            
+            DB::beginTransaction();
+            $keywordTemp->save();
+            DB::commit();
+            
+            $notification = array(
+                'message' => 'Request declined successfully.',
+                'alert-type' => 'success'
+            );
+        } catch (\Exception $e) {
+            DB::rollback();
+            $notification = array(
+                'message' => 'Something went wrong.',
                 'alert-type' => 'error'
             );
         }
-        return response()->json($notification);
+       return response()->json($notification);
     }
 
     /**
@@ -303,6 +319,18 @@ class AdminController extends Controller {
      * @return [type]           [description]
      */
     public function deleteRequest(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            $notification = array(
+                'message' => 'Invalid request.',
+                'alert-type' => 'error'
+            );
+            return redirect()->route('keywordTempList')->with($notification);
+        }
+
         try {
             $keywordTemp = KeywordTemp::find($request->id);
             $keywordTemp->status = DELETED;
@@ -337,10 +365,18 @@ class AdminController extends Controller {
 
     public function postDataForMeaningTemp(Request $request)
     {
-        $list = IN_QUEUE;
-        if ($request->has('list')) {
-            $list = $request->list;
+        $validator = Validator::make($request->all(), [
+            'list' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            $notification = array(
+                'message' => 'Invalid request.',
+                'alert-type' => 'error'
+            );
+            return response()->json($notification);
         }
+        $list = $request->list;
         $result = MeaningTemp::where('status', $list)->get();
         $data = array();
         foreach ($result as $key => $value) {
@@ -366,17 +402,19 @@ class AdminController extends Controller {
      */
     public function approveChangesOnMeaningTable(Request $request) {
         $notification = array(
-            'message' => 'Request is not exist.',
+            'message' => 'Invalid request.',
             'alert-type' => 'error'
         );
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+            'opCode' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('meaningTempList')->with($notification);
+        }
         $opCode = $request->opCode;
         $meaningTemp = MeaningTemp::find($request->id);
-        if (!$request->has('opCode') || !$request->has('id') || ($opCode != ADD && $opCode != EDIT)) {
-            $notification = array(
-                'message' => 'Invalid request.',
-                'alert-type' => 'error'
-            );
-        }
         if (isset($opCode) && $opCode == ADD && $meaningTemp != null) {
             $notification = AdminController::approveAddMeaning($meaningTemp);
         }
@@ -446,12 +484,18 @@ class AdminController extends Controller {
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function declineChangesOnMeaningTable(Request $request) {
-        if (!$request->has('id')) {
-            $notification = array(
-                'message' => 'Invalid request.',
-                'alert-type' => 'error'
-            );
+    public function postDeclineChangesOnMeaningTable(Request $request) {
+        $notification = array(
+            'message' => 'Invalid request.',
+            'alert-type' => 'error'
+        );
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+            'cmt' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($notification);
         }
         $meaningTemp = MeaningTemp::find($request->id);
         if ($meaningTemp != null) {
@@ -484,6 +528,17 @@ class AdminController extends Controller {
     }
 
     public function deleteRequestOnMeaningTable(Request $request) {
+        $notification = array(
+            'message' => 'Invalid request.',
+            'alert-type' => 'error'
+        );
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('meaningTempList')->with($notification);
+        }
         try {
             $meaningTemp = MeaningTemp::find($request->id);
             $meaningTemp->status = DELETED;

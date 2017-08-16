@@ -79,7 +79,7 @@ Route::prefix('admin')->middleware('admin')->group(function() {
 
         Route::post('approve', 'Admin\AdminController@approveChangesOnKeywordTable')->name('approveOnKeyword');
 
-        Route::post('decline', 'Admin\AdminController@declineChangesOnKeywordTable')->name('declineOnKeyword');
+        Route::post('decline', 'Admin\AdminController@postDeclineChangesOnKeywordTable')->name('declineOnKeyword');
 
         Route::post('delete', 'Admin\AdminController@deleteRequest')->name('deleteRequest');
     });
@@ -92,7 +92,7 @@ Route::prefix('admin')->middleware('admin')->group(function() {
 
         Route::post('approve', 'Admin\AdminController@approveChangesOnMeaningTable')->name('approveOnMeaning');
 
-        Route::post('decline', 'Admin\AdminController@declineChangesOnMeaningTable')->name('declineOnMeaning');
+        Route::post('decline', 'Admin\AdminController@postDeclineChangesOnMeaningTable')->name('declineOnMeaning');
 
         Route::post('delete', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
     });

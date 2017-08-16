@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests\TranslateRequest;
 use App\Keyword;
@@ -39,6 +40,17 @@ class TranslationController extends Controller
      */
     public function postDetailMeaning(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'keyword' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $notification = array(
+                'message' => 'Request is invalid.',
+                'alert-type' => 'error'
+            );
+            return response()->json($notification);
+        }
         $key = strtolower($request->keyword);
         $meanings[VIETNAMESE] = $this->keyword->hasMeaningsGroupByType($key, VIETNAMESE)->toArray();
         $meanings[ENGLISH] = $this->keyword->hasMeaningsGroupByType($key, ENGLISH)->toArray();
