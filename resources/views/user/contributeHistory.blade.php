@@ -53,8 +53,6 @@
 
                             @if ($row->status == IN_QUEUE)
                             <a href="user/deleteKeywordContribute/{{$row->id}}"><i class="fa fa-trash-o fa-fw"></i>Cancel this contribution</a>
-                            @elseif ($row->status == DECLINED)
-                            <a href="user/editKeywordContribute/{{$row->id}}"><i class="fa fa-pencil fa-fw"></i>Edit this contribution</a>
                             @endif
                         </td>
                     </tr>
@@ -125,9 +123,10 @@
                         <td>{{ $row->comment }}</td>
                         <td class="center">
 
-                            @if ($row->status == IN_QUEUE)
-                            <a href="user/deleteMeaningContribute/{{$row->id}}"><i class="fa fa-trash-o fa-fw"></i>Cancel this contribution</a>
-                            @endif
+                        @if ($row->status == IN_QUEUE)
+                        <a href="user/deleteMeaningContribute/{{$row->id}}"><i class="fa fa-trash-o fa-fw"></i>Cancel this contribution</a>
+                        @elseif ($row->status == DECLINED) <a href="user/editMeaningContribute/{{$row->id}}"><i class="fa fa-trash-o fa-fw"></i>Edit this contribution</a>
+                        @endif
                         </td>
                     </tr>
                     @endforeach 

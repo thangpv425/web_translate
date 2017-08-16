@@ -56,7 +56,7 @@ class UserController extends Controller
         return view('user.keywordAdd');
     }
 
-    public function processAddKeyword(Request $request) {
+    public function processAddKeyword(\App\Http\Requests\AddKeywordRequest $request) {
         try {
             $user = Sentinel::getUser();
             $dataMeaning = array();
@@ -107,7 +107,6 @@ class UserController extends Controller
 
     public function showContributeHistory() {
         $user = Sentinel::getUser();
-        $id = $user->id;
         $dataKeyword = KeywordTemp::where('user_id', $user->id)->get();
         $dataMeaning = MeaningTemp::where('user_id', $user->id)->get();
         return view('user.contributeHistory', ['dataKeyword' => $dataKeyword, 'dataMeaning' => $dataMeaning]);
@@ -115,25 +114,25 @@ class UserController extends Controller
 
     public function deleteKeywordContribute($id) {
         //delete in wt_keyword_temp, wt_meaning_temp and wt_keyword
-        try {
-            $keywordtmp = KeywordTemp::find($id);
-            $keyword = Keyword::find($keywordtmp->old_keyword_id);
-            $meaningtmps = MeaningTemp::where('keyword_id', $keyword->id);
+            try {
+                $keywordtmp = KeywordTemp::find($id);
+                $keyword = Keyword::find($keywordtmp->old_keyword_id);
+                $meaningtmps = MeaningTemp::where('keyword_id', $keyword->id);
 
-            DB::beginTransaction();
-            $keywordtmp->delete();
-            foreach ($meaningtmps as $meaningtmp) {
-                $meaningtmp->delete();
+                DB::beginTransaction();
+                $keywordtmp->delete();
+                foreach ($meaningtmps as $meaningtmp) {
+                    $meaningtmp->delete();
+                }
+                //if this keyword is added by user
+                if ($keyword->status == IN_QUEUE) {
+                    $keyword->forceDelete();
+                }
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                throw $e;
             }
-            //if this keyword is added by user
-            if ($keyword->status == IN_QUEUE) {
-                $keyword->forceDelete();
-            }
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
-            throw $e;
-        }
         return redirect('user/history');
     }
 

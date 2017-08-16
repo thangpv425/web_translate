@@ -20,7 +20,7 @@ class ValidationController extends Controller
     {
     	$isExist = false;
     	$result = $this->keyword->findByKeyword(strtolower($request->keyword));
-    	if ($result != null) {
+    	if (!empty($result)) {
     		$isExist = true;
     	}
     	return response()->json(['isExist'=>$isExist]);

@@ -41,8 +41,14 @@ Route::group(['middleware'=>'checkLogin'],function(){
     Route::get('user/edit','UserController@edit');
     
     Route::post('user/edit','UserController@update');
+    
+    Route::get('user/view','UserController@view');
 
     Route::post('user/meaning/improve', 'UserController@improveMeaning')->name('improve-meaning');
+        
+    Route::get('user/keyword/add', 'UserController@addKeyword');
+
+    Route::post('user/keyword/add', 'UserController@processAddKeyword')->name('userAddKeyword');
 });
 
 /*
@@ -58,9 +64,9 @@ Route::prefix('admin')->middleware('admin')->group(function() {
 
     Route::post('add/keyword', 'Admin\AdminController@processAddKeyword')->name('adminAddKeyword');
 
-    Route::get('deleteWord/{id}', 'Admin\AdminController@deleteWord');
+    Route::get('deleteWord/{id}', 'Admin\AdminController@deleteWord')->where('id', '[0-9]+');
 
-    Route::get('editKeyword/{id}', 'Admin\AdminController@editKeyword');
+    Route::get('editKeyword/{id}', 'Admin\AdminController@editKeyword')->where('id', '[0-9]+');
     
     Route::post('editKeyword', 'Admin\AdminController@processEditKeyword')->name('keywordEditRoute');
 
@@ -91,15 +97,12 @@ Route::prefix('admin')->middleware('admin')->group(function() {
     });
 });
 Route::prefix('user') ->middleware('user')->group(function(){
-    Route::get('keyword/add', 'UserController@addKeyword');
-
-    Route::post('keyword/add', 'UserController@processAddKeyword')->name('userAddKeyword');
     
     Route::get('history','UserController@showContributeHistory');
     
-    Route::get('deleteKeywordContribute/{id}', 'UserController@deleteKeywordContribute');
+    Route::get('deleteKeywordContribute/{id}', 'UserController@deleteKeywordContribute')->where('id', '[0-9]+');
     
-    Route::get('deleteMeaningContribute/{id}', 'UserController@deleteMeaningContribute');
+    Route::get('deleteMeaningContribute/{id}', 'UserController@deleteMeaningContribute')->where('id', '[0-9]+');
 
 
 });

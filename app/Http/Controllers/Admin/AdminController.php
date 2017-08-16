@@ -65,7 +65,7 @@ class AdminController extends Controller {
             );
             return redirect('admin/add/keyword')->with($notification);
         }
-        return redirect('admin/keywordList')->with($notification);
+        return redirect('admin/meaning/list')->with($notification);
     }
 
     /*
@@ -89,7 +89,7 @@ class AdminController extends Controller {
             DB::rollback();
             throw $e;
         }
-        return redirect('admin/keywordList');
+        return redirect('admin/meaning/list');
     }
 
     public function editKeyword($id) {
@@ -104,7 +104,7 @@ class AdminController extends Controller {
         ]);
     }
 
-    public function processEditKeyword(Request $request) {
+    public function processEditKeyword(\App\Http\Requests\EditWordRequestRequest $request) {
         $id = $request->keyword_id;
         try {
             foreach ($request->translate as $key => $value) {
@@ -129,7 +129,7 @@ class AdminController extends Controller {
             DB::rollback();
             throw $e;
         }
-        return redirect('admin/keywordList');
+        return redirect('admin/meaning/list');
     }
 
     /**
