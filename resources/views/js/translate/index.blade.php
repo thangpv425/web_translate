@@ -2,21 +2,21 @@
 @include('js.toastr')
 {{-- ajax translate --}}
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
     $("#keyword").on("input paste", function() { // key up
         if ($('#keyword').val() == '') {
+            $('#btn-contribute').attr('style', 'display:none;');
             $('#btn-clear').attr('style', 'display:none;');
+            clearContent();
         } else {
             $('#btn-clear').attr('style', 'display');
+            search();
         }
-        search();
     });
     $('#submit').on('click', function(){
-        search();
+        if ($('#keyword').val() != '') { search(); } 
+        else {
+            toastr.info('You must fill data before search!', "Did You Know?");
+        }
     })
     $('#btn-clear').on('click', function(){
         $('#keyword').val('').trigger('input');
@@ -46,11 +46,6 @@
 </script>
 {{-- search function --}}
 <script>
-    function nl2br (str, is_xhtml) {   
-        var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';    
-        return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
-    }
-
     function extendMeaning(data, id) {
         var content = '';
         for (var i = 0, len = data.length; i < len; i++) {
@@ -66,9 +61,11 @@
     function setForm(id) {
         $('#old_meaning_id').attr('value', id);
         $('#input-meanings').attr('style', 'display');
+        toastr.info('Pls insert better meaning in \'New meaning\' field, and comment reason why.<br>Thanks for your help.', "Tips!");
     }
 
     function clearContent() {
+        $('#meaning').val('');
         $('#other-meaning').attr('hidden', true);
         $('#other-meaning-noun').attr('hidden', true);
         $('#other-meaning-verb').attr('hidden', true);

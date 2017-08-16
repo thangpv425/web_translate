@@ -24,7 +24,8 @@ class AdminController extends Controller {
 
     public function keywordList()
     {
-        echo "string";
+        $keywords = Keyword::where('status', 1)->get();
+        return view('admin.keyword-list', ['keywords' => $keywords]);
     }
 
     public function addKeyword() {
@@ -61,7 +62,7 @@ class AdminController extends Controller {
             );
             return redirect('admin/add/keyword')->with($notification);
         }
-        return redirect('admin/keywordList')->with($notification);
+        return redirect()->route('meaning-list')->with($notification);
     }
 
     /*

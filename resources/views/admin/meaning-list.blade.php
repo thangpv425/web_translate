@@ -4,9 +4,9 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Word
+                        <h1 class="page-header">Meanings
                             <small>List</small> 
-                    <a href="admin/add/keyword" class="btn btn-default" role="button">+ Add new key word</a>
+                            <a href="admin/add/keyword" class="btn btn-default" role="button">+ Add new keyword</a>
                         </h1>
                     </div>
                     @if(session('notification'))
