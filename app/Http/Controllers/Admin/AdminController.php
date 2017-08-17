@@ -139,14 +139,38 @@ class AdminController extends Controller {
     
     public function editKeywordAddNewMeaning($id) {
             $keyword = Keyword::find($id);
-            $meaning = $keyword->meaning;
-            $numberOfMeanings = Meaning::where('keyword_id', $id)->count();
             return view('admin.keywordEditNewMeaning', [
                 'keyword' => $keyword,
-                'meaning' => $meaning,
-                'numberOfMeanings' => $numberOfMeanings
             ]);
     }
+    
+    public function processEditKeywordAddNewMeaning(Request $request) {
+        $id = $request->keyword_id;
+        $numberOfMeanings = Meaning::where('keyword_id', $id)->count();
+        try {
+            foreach ($request->translate as $key => $value) {
+                $dataMeaning[] = array(
+                    'keyword_id' => $id,
+                    'meaning' => $value['meaning'],
+                    'index' => $numberOfMeanings + $key,
+                    'status' => APPROVED,
+                    'language' => $value['language'],
+                    'type' => $value['type']
+                );
+            }
+
+            DB::beginTransaction();
+            foreach ($dataMeaning as $key => $value) {
+                $meaning = Meaning::create($value);
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+        return redirect('admin/keyword/list');
+    }
+    
     /**
      * return List request of keyword table
      * @return [type] [description]
