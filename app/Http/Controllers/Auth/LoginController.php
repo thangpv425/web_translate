@@ -69,6 +69,6 @@ class LoginController extends Controller
         $role = Sentinel::findRoleBySlug('user');
         $role->users()->attach($user);
         Sentinel::authenticate($request->all());
-        return redirect('user/view/'.$user->id);
+        return redirect('user/view');
     }
 }
