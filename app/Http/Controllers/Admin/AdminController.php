@@ -61,6 +61,7 @@ class AdminController extends Controller {
             );
         } catch (\Exception $e) {
             DB::rollback();
+            throw $e;
             $notification = array(
                 'message' => 'Something went wrong.',
                 'alert-type' => 'error',

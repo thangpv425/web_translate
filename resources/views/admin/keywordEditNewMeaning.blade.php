@@ -37,15 +37,15 @@
                         </div>
                         <label for="">Language</label>
                         <div class="form-group">
-                            <label><input type="radio" name="translate[1][language]" value='0' checked /> Vietnamese<br></label>
-                            <label><input type="radio" name="translate[1][language]" value='1' /> English<br></label>
+                            <label><input type="radio" name="translate[1][language]" value={{VIETNAMESE}} checked /> Vietnamese<br></label>
+                            <label><input type="radio" name="translate[1][language]" value={{ENGLISH}} /> English<br></label>
                         </div>
                         <label for="">Type</label>
                         <div class="form-group">
-                            <label><input type="radio" name="translate[1][type]" value='0' checked /> Noun <br></label>
-                            <label><input type="radio" name="translate[1][type]" value='1' /> Verb <br></label>
-                            <label><input type="radio" name="translate[1][type]" value='2' /> Adjective <br></label>
-                            <label><input type="radio" name="translate[1][type]" value='3' /> Preposition <br></label>
+                            <label><input type="radio" name="translate[1][type]" value={{NOUN}} checked /> Noun <br></label>
+                            <label><input type="radio" name="translate[1][type]" value={{VERB}} /> Verb <br></label>
+                            <label><input type="radio" name="translate[1][type]" value={{ADJECTIVE}} /> Adjective <br></label>
+                            <label><input type="radio" name="translate[1][type]" value={{PREPOSITION}} /> Preposition <br></label>
                         </div>
                         <hr>
                     </div>
