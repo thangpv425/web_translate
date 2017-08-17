@@ -61,7 +61,6 @@ class AdminController extends Controller {
             );
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
             $notification = array(
                 'message' => 'Something went wrong.',
                 'alert-type' => 'error',
@@ -88,11 +87,19 @@ class AdminController extends Controller {
                 $keyword->delete();
             }
             DB::commit();
+            
+            $notification = array(
+                'message' => 'You have been deleted the meaning \"'.$meaning->meaning.'\" successfully.',
+                'alert-type' => 'success',
+            );
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            $notification = array(
+                'message' => 'Something went wrong.',
+                'alert-type' => 'error'
+            );
         }
-        return redirect('admin/meaning/list');
+        return redirect('admin/meaning/list')->with($notification);
     }
 
     public function editKeyword($id) {
@@ -130,11 +137,18 @@ class AdminController extends Controller {
                     ]);
             }
             DB::commit();
+            $notification = array(
+                'message' => 'You have been edit the keyword successfully.',
+                'alert-type' => 'success',
+            );
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            $notification = array(
+                'message' => 'Something went wrong.',
+                'alert-type' => 'error'
+            );
         }
-        return redirect('admin/meaning/list');
+        return redirect('admin/meaning/list')->with($notification);
     }
     
     public function editKeywordAddNewMeaning($id) {
@@ -146,6 +160,7 @@ class AdminController extends Controller {
     
     public function processEditKeywordAddNewMeaning(Request $request) {
         $id = $request->keyword_id;
+        $keyword = Keyword::find($id);
         $numberOfMeanings = Meaning::where('keyword_id', $id)->count();
         try {
             foreach ($request->translate as $key => $value) {
@@ -164,11 +179,18 @@ class AdminController extends Controller {
                 $meaning = Meaning::create($value);
             }
             DB::commit();
+            $notification = array(
+                'message' => 'You have been add new meaning to \"'.$keyword->keyword.'\" successfully.',
+                'alert-type' => 'success',
+            );
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            $notification = array(
+                'message' => 'Something went wrong.',
+                'alert-type' => 'error'
+            );
         }
-        return redirect('admin/keyword/list');
+        return redirect('admin/keyword/list')->with($notification);
     }
     
     /**
