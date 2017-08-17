@@ -1,4 +1,3 @@
-
 @extends('layout.index')
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -14,28 +13,28 @@
 
             <div class="col-sm-4">
                 @if(count($errors)>0)
-                    <div class="alert alert-danger">
-                        @foreach($errors->all() as $err)
-                            {{$err}}<br>
-                        @endforeach
-                    </div>
+                <div class="alert alert-danger">
+                    @foreach($errors->all() as $err)
+                    {{$err}}<br>
+                    @endforeach
+                </div>
                 @endif
-                <form action="{{ route('adminAddKeyword') }}" method="POST" id="add_keyword_form">
+                <form action="{{ route('userAddKeyword') }}" method="POST" id="add_keyword_form">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                     <div id="add_word">
                         <label for="keyword">Keyword</label><font color="red"><small><span id="errNm0">  </span></small></font>
-                        <input type="text" class="form-control keyword" name="keyword" placeholder="Example: play" data-error="#errNm0">
+                        <input type="text" class="form-control keyword" name="keyword" placeholder="play" data-error="#errNm0">
                         <br>
                         <label>Meaning</label><font color="red"><small><span id="errNm1"> </span></small></font>
                         <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" class="form-control meaning" name="translate[1][meaning]" placeholder="VD: chơi" data-error="#errNm1">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" id="more_meaning" type="button">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </span>
-                        </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control meaning" name="translate[1][meaning]" placeholder="chơi" data-error="#errNm1">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" id="more_meaning" type="button">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                         <label for="">Language</label>
                         <div class="form-group">
@@ -51,6 +50,8 @@
                         </div>
                         <hr>
                     </div>
+                    <label>Comment</label>
+                        <input class="form-control" name="comment" placeholder="Leave your comment here..." /><br>
                     <button id="submit" type="submit" class="btn btn-success">
                         <i class="fa fa-floppy-o fa-fw" aria-hidden="true"></i>Save
                     </button>

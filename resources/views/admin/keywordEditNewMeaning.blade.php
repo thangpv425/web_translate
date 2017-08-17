@@ -1,4 +1,3 @@
-
 @extends('layout.index')
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -7,8 +6,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Keyword
-                    <small>Add</small>
+                <h1 class="page-header">
+                    <small>Add new meaning for '{{$keyword->keyword}}'</small>
                 </h1>
             </div>
 
@@ -20,16 +19,15 @@
                         @endforeach
                     </div>
                 @endif
-                <form action="{{ route('adminAddKeyword') }}" method="POST" id="add_keyword_form">
+                <form action="{{ route('keywordEditAddNewMeaningRoute') }}" method="POST" id="add_keyword_form">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                    <input type="hidden" name="keyword_id" value="{{ $keyword->id }}" />
+                    
                     <div id="add_word">
-                        <label for="keyword">Keyword</label><font color="red"><small><span id="errNm0">  </span></small></font>
-                        <input type="text" class="form-control keyword" name="keyword" placeholder="Example: play" data-error="#errNm0">
-                        <br>
                         <label>Meaning</label><font color="red"><small><span id="errNm1"> </span></small></font>
                         <div class="form-group">
                         <div class="input-group">
-                            <input type="text" class="form-control meaning" name="translate[1][meaning]" placeholder="VD: chơi" data-error="#errNm1">
+                            <input type="text" class="form-control meaning" name="translate[1][meaning]" placeholder="VD: choi" data-error="#errNm1">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" id="more_meaning" type="button">
                                     <i class="fa fa-plus"></i>

@@ -39,7 +39,9 @@ function resetForm() {
 
 function getDataForModal(btn) {
   var keyword = btn.getAttribute('data-keyword');
+  var keyword_id = btn.getAttribute('data-id');
   $('#modal-keyword').html('<label><i>' + keyword + '</i></label>');
+  $('#add-meaning').attr('href', 'admin/editKeyword/addNewMeaning/' + keyword_id);
   resetForm();
   $.ajax({
     type:"POST",

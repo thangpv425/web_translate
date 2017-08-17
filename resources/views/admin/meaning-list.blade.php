@@ -8,12 +8,12 @@
                             <small>List</small> 
                             <a href="admin/add/keyword" class="btn btn-default" role="button">+ Add new keyword</a>
                         </h1>
+                        @if(session('notification'))
+                            <div class="alert alert-success">
+                                {{session('notification')}}
+                            </div>
+                        @endif
                     </div>
-                    @if(session('notification'))
-                        <div class="alert alert-success">
-                            {{session('notification')}}
-                        </div>
-                    @endif
                     <!-- /.col-lg-12 -->
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>

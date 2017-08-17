@@ -4,15 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddKeywordRequest extends FormRequest
-{
+class CheckUpdateInfoRequest extends FormRequest {
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
-    {
+    public function authorize() {
         return true;
     }
 
@@ -21,11 +20,11 @@ class AddKeywordRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            'keyword'=> 'unique:wt_keyword|required|regex:/^([a-zA-zぁ-ゔゞァ-・ヽヾ゛゜ー一-龯]+)$/',
-            'translate'=> 'required',
+            'first_name' => 'required|max:32|regex:/^[a-zA-Z \d]+$/',
+            'last_name' => 'required|max:32|regex:/^[a-zA-Z \d]+$/'
         ];
     }
+
 }

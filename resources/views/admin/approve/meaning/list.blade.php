@@ -19,6 +19,7 @@
                         <td><b>Keyword</b></td>
                         <td><b>Old Meaning</b></td>
                         <td><b>New Meaning</b></td>
+                        <td><b>Type</b></td>
                         <td><b>Approve</b></td>
                         <td><b>Decline</b></td>
                         <td><b>Delete</b></td>

@@ -32,13 +32,23 @@ Route::post('register', 'Auth\LoginController@processRegister')->name('register'
  * Route for logged-in user
  */
 Route::group(['middleware'=>'checkLogin'],function(){
-	Route::get('home','TranslationController@index')->name('translate');
-	
-	Route::post('home','TranslationController@postTranslate')->name('processTranslate');
+    Route::get('home','TranslationController@index')->name('translate');
 
-	Route::post('check/unique/keyword', 'ValidationController@checkUniqueKeyword')->name('uniqueKeyword');
+    Route::post('home','TranslationController@postTranslate')->name('processTranslate');
 
-	Route::post('user/meaning/improve', 'UserController@improveMeaning')->name('improve-meaning');
+    Route::post('check/unique/keyword', 'ValidationController@checkUniqueKeyword')->name('uniqueKeyword');
+    
+    Route::get('user/edit','UserController@edit');
+    
+    Route::post('user/edit','UserController@update');
+    
+    Route::get('user/view','UserController@view');
+
+    Route::post('user/meaning/improve', 'UserController@improveMeaning')->name('improve-meaning');
+        
+    Route::get('user/keyword/add', 'UserController@addKeyword');
+
+    Route::post('user/keyword/add', 'UserController@processAddKeyword')->name('userAddKeyword');
 });
 
 /*
@@ -54,11 +64,16 @@ Route::prefix('admin')->middleware('admin')->group(function() {
 
     Route::post('add/keyword', 'Admin\AdminController@processAddKeyword')->name('adminAddKeyword');
 
-    Route::get('deleteWord/{id}', 'Admin\AdminController@deleteWord');
+    Route::get('deleteWord/{id}', 'Admin\AdminController@deleteWord')->where('id', '[0-9]+');
 
-    Route::get('editKeyword/{id}', 'Admin\AdminController@editKeyword');
+    Route::get('editKeyword/{id}', 'Admin\AdminController@editKeyword')->where('id', '[0-9]+');
     
     Route::post('editKeyword', 'Admin\AdminController@processEditKeyword')->name('keywordEditRoute');
+    
+    Route::get('editKeyword/addNewMeaning/{id}','Admin\AdminController@editKeywordAddNewMeaning')->where('id', '[0-9]+');
+
+    Route::post('editKeyword/addNewMeaning','Admin\AdminController@processEditKeywordAddNewMeaning')->name('keywordEditAddNewMeaningRoute');
+
 
     Route::post('ajax/get-detail-meaning', 'TranslationController@postDetailMeaning')->name('detail-meaning');
     // keyword temp table
@@ -86,4 +101,17 @@ Route::prefix('admin')->middleware('admin')->group(function() {
 
         Route::post('delete', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
     });
+});
+
+Route::prefix('user') ->middleware('user')->group(function(){
+    
+    Route::get('history','UserController@showContributeHistory');
+    
+    Route::get('deleteKeywordContribute/{id}', 'UserController@deleteKeywordContribute')->where('id', '[0-9]+');
+    
+    Route::get('deleteMeaningContribute/{id}', 'UserController@deleteMeaningContribute')->where('id', '[0-9]+');
+
+    Route::get('editMeaningContribute/{id}', 'UserController@editMeaningContribute');
+    
+    Route::post('editMeaningContribute', 'UserController@processEditMeaningContribute');
 });

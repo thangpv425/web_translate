@@ -23,7 +23,7 @@
                             {{session('notification')}}
                         </div>
                     @endif
-                    <form action="user/edit/{{$user->id}}" method="POST">
+                    <form action="user/edit" method="POST">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <div class="form-group">
                             <label>First Name</label>
@@ -33,8 +33,8 @@
                             <label>Last Name</label>
                             <input class="form-control" name="last_name"  value="{{$user->last_name}}" readonly="" />
                         </div>
-                        <a class="btn btn-default" href="user/edit/{{$user->id}}">Edit</a>
-                    <form>
+                        <a class="btn btn-default" href="user/edit">Edit</a>
+                    </form>
                 </div>
 
             </div>

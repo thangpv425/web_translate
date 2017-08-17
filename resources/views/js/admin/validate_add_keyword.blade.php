@@ -27,6 +27,13 @@
                 '<label><input type="radio" name="translate['+i+'][language]" value="0" checked /> Vietnamese<br></label>\n' +
                 '<label><input type="radio" name="translate['+i+'][language]" value="1" /> English<br></label>\n' +
                 '</div>\n' +
+                '<label for="">Type</label>\n' +
+                '<div class="form-group">\n' +
+                '<label><input type="radio" name="translate['+i+'][type]" value="0" checked /> Noun<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][type]" value="1" /> Verb<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][type]" value="2" /> Adjective<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][type]" value="3" /> Preposition<br></label>\n' +
+                '</div>\n' +
                 '</div>\n' +
                 '<hr />'
             );

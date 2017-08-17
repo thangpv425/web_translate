@@ -33,6 +33,13 @@
 								<input type="text" name="first_name" class="form-control" placeholder="First Name">
 							</div>
 						</div>
+                                                @if ($errors->first('first_name'))
+							<div class="alert alert-danger">
+								<ul>
+									<li>{{ $errors->first('first_name') }}</li>
+								</ul>
+							</div>
+						@endif
 
 						<div class="form-group">
 							<div class="input-group">
@@ -40,6 +47,13 @@
 								<input type="text" name="last_name" class="form-control" placeholder="Last Name">
 							</div>
 						</div>
+                                                        @if ($errors->first('last_name'))
+							<div class="alert alert-danger">
+								<ul>
+									<li>{{ $errors->first('last_name') }}</li>
+								</ul>
+							</div>
+						@endif
 
 						<div class="form-group">
 							<div class="input-group">

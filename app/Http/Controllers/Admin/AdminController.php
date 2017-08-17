@@ -37,7 +37,10 @@ class AdminController extends Controller {
         try {
             $dataMeaning = array();
             DB::beginTransaction();
-            $keyword = Keyword::create(['keyword' => $request->keyword, 'status' => APPROVED]);
+            $keyword = Keyword::create([
+                'keyword' => $request->keyword,
+                'status' => APPROVED
+            ]);
             foreach ($request->translate as $key => $value) {
                 $dataMeaning[] = array(
                     'keyword_id' => $keyword->id,
@@ -45,6 +48,7 @@ class AdminController extends Controller {
                     'index' => $key,
                     'status' => APPROVED,
                     'language' => $value['language'],
+                    'type' => $value['type'],
                 );
             }
             foreach ($dataMeaning as $key => $value) {
@@ -87,7 +91,7 @@ class AdminController extends Controller {
             DB::rollback();
             throw $e;
         }
-        return redirect('admin/keywordList');
+        return redirect('admin/meaning/list');
     }
 
     public function editKeyword($id) {
@@ -95,11 +99,13 @@ class AdminController extends Controller {
         $keyword = Keyword::find($id);
         $meaning = $keyword->meaning;
         $numberOfMeanings = Meaning::where('keyword_id', $id)->count();
-        return view('admin.keywordEdit', ['keyword' => $keyword,
+        return view('admin.keywordEdit', [
+            'keyword' => $keyword,
             'meaning' => $meaning,
-            'numberOfMeanings' => $numberOfMeanings]);
+            'numberOfMeanings' => $numberOfMeanings
+        ]);
     }
-
+    
     public function processEditKeyword(Request $request) {
         $id = $request->keyword_id;
         try {
@@ -108,6 +114,7 @@ class AdminController extends Controller {
                     'meaning_id' => $value['meaning_id'],
                     'meaning' => $value['meaning'],
                     'language' => $value['language'],
+                    'type' => $value['type']
                 );
             }
 
@@ -117,7 +124,8 @@ class AdminController extends Controller {
                 Meaning::where('id', $value['meaning_id'])
                     ->update([
                         'meaning' => $value['meaning'],
-                        'language' => $value['language']
+                        'language' => $value['language'],
+                        'type' => $value['type']
                     ]);
             }
             DB::commit();
@@ -125,9 +133,19 @@ class AdminController extends Controller {
             DB::rollback();
             throw $e;
         }
-        return redirect('admin/keywordList');
+        return redirect('admin/meaning/list');
     }
-
+    
+    public function editKeywordAddNewMeaning($id) {
+            $keyword = Keyword::find($id);
+            $meaning = $keyword->meaning;
+            $numberOfMeanings = Meaning::where('keyword_id', $id)->count();
+            return view('admin.keywordEditNewMeaning', [
+                'keyword' => $keyword,
+                'meaning' => $meaning,
+                'numberOfMeanings' => $numberOfMeanings
+            ]);
+    }
     /**
      * return List request of keyword table
      * @return [type] [description]
@@ -150,10 +168,20 @@ class AdminController extends Controller {
         $result = KeywordTemp::where('status', $list)->get();
         $data = array();
         foreach ($result as $key => $value) {
-            $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'], $value->new_keyword, $value['comment']);
+            $sub = array(
+                $value['id'], 
+                $value['opCode'], 
+                $value->user->email, 
+                $value->keyword['keyword'], 
+                $value->new_keyword, 
+                $value['comment']
+            );
             $data[] = $sub;
         }
-        $output = array('data' => $data, 'info' => 'my info');
+        $output = array(
+            'data' => $data,
+            'info' => 'my info'
+        );
         return response()->json($output);
     }
 
@@ -343,6 +371,22 @@ class AdminController extends Controller {
         return view('admin.approve.meaning.list');
     }
 
+    public function getTypeOfMeaning($value = 0)
+    {
+        switch ($value) {
+            case NOUN:
+                return 'N';
+            case VERB:
+                return 'V';
+            case ADJECTIVE:
+                return 'Adj';
+            case PREPOSITION:
+                return 'Pre';
+            default:
+                return 'Undefined';
+        }
+    }
+
     public function postDataForMeaningTemp(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -360,7 +404,16 @@ class AdminController extends Controller {
         $result = MeaningTemp::where('status', $list)->get();
         $data = array();
         foreach ($result as $key => $value) {
-            $sub = array($value['id'], $value['opCode'], $value->user->email, $value->keyword['keyword'],$value->oldMeaning['meaning'], $value->new_meaning, $value['comment']);
+            $sub = array(
+                $value['id'], 
+                $value['opCode'], 
+                $value->user->email, 
+                $value->keyword['keyword'],
+                $value->oldMeaning['meaning'],
+                $value->new_meaning,
+                $this->getTypeOfMeaning($value->type),
+                $value['comment']
+            );
             $data[] = $sub;
         }
         $output = array('data' => $data);
@@ -405,6 +458,7 @@ class AdminController extends Controller {
                 'meaning' => $meaningTemp['new_meaning'],
                 'status' => APPROVED,
                 'language' => $meaningTemp['language'],
+                'type' => $meaningTemp['type'],
                 'index' => $meaningTemp['index'],
                 'keyword_id' => $meaningTemp['keyword_id']
             ]);
