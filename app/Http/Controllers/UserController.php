@@ -195,7 +195,7 @@ class UserController extends Controller {
         return view('user.contributeMeaningEdit', ['meaningtmp' => $meaningtmp]);
     }
 
-    public function processEditMeaningContribute(Request $request) {
+    public function processEditMeaningContribute(\App\Http\Requests\EditWordRequest $request) {
         //eidt in wt_meaning_temp
         $id = $request->meaningtmp_id;
         try {

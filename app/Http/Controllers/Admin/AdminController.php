@@ -11,6 +11,8 @@ use App\KeywordTemp;
 use App\MeaningTemp;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AddKeywordRequest;
+use App\Http\Requests\EditWordRequest;
+use App\Http\Requests\EditMeaningRequest;
 
 class AdminController extends Controller {
     /*
@@ -114,8 +116,10 @@ class AdminController extends Controller {
         ]);
     }
     
-    public function processEditKeyword(AddKeywordRequest $request) {
+    public function processEditKeyword(EditWordRequest $request) {
         $id = $request->keyword_id;
+        $keyword = Keyword::find($id);
+        
         try {
             foreach ($request->translate as $key => $value) {
                 $dataMeaning[] = array(
@@ -126,21 +130,32 @@ class AdminController extends Controller {
                 );
             }
 
-            DB::beginTransaction();            
-            Keyword::find($id)->update(['keyword'=>$request->keyword]);
-            foreach ($dataMeaning as $key => $value) {
-                Meaning::where('id', $value['meaning_id'])
-                    ->update([
-                        'meaning' => $value['meaning'],
-                        'language' => $value['language'],
-                        'type' => $value['type']
-                    ]);
+            DB::beginTransaction();  
+            if (($request->keyword == $keyword->keyword)||(Keyword::where('keyword',$request->keyword)->count()==0)) { //neu kw k bi edit hoac duoc edit thanh 1 kw chua xuat hien
+                if (Keyword::where('keyword',$request->keyword)->count()==0) {
+                    $keyword->update(['keyword'=>$request->keyword]);
+                }
+                foreach ($dataMeaning as $key => $value) {
+                    Meaning::where('id', $value['meaning_id'])
+                        ->update([
+                            'meaning' => $value['meaning'],
+                            'language' => $value['language'],
+                            'type' => $value['type']
+                        ]);
+                }
+                $notification = array(
+                    'message' => 'You have been edit the keyword successfully.',
+                    'alert-type' => 'success',
+                );
+            } else {
+                $notification = array(
+                    'message' => 'Invalid new keyword because this keyword is exist. Edit failed!',
+                    'alert-type' => 'error',
+                );
             }
+            
             DB::commit();
-            $notification = array(
-                'message' => 'You have been edit the keyword successfully.',
-                'alert-type' => 'success',
-            );
+            
         } catch (\Exception $e) {
             DB::rollback();
             $notification = array(
@@ -158,7 +173,7 @@ class AdminController extends Controller {
             ]);
     }
     
-    public function processEditKeywordAddNewMeaning(Request $request) {
+    public function processEditKeywordAddNewMeaning(EditMeaningRequest $request) {
         $id = $request->keyword_id;
         $keyword = Keyword::find($id);
         $numberOfMeanings = Meaning::where('keyword_id', $id)->count();

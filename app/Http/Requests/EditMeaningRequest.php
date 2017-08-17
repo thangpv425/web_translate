@@ -24,7 +24,6 @@ class EditWordRequest extends FormRequest
     public function rules()
     {
         return [
-            'keyword'=> 'required|regex:/^([a-zA-zぁ-ゔゞァ-・ヽヾ゛゜ー一-龯]+)$/',
             'translate'=> 'required',
         ];
     }

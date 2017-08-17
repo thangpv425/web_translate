@@ -84,7 +84,6 @@
                 "keyword": {
                     required: true,
                     kana: true,
-                    uniqueKeyword: true
                 },
             },
             messages: {},
