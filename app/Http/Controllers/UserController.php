@@ -75,7 +75,7 @@ class UserController extends Controller {
                         'status' => IN_QUEUE
             ]);
             //save keyword in keywordTemp table 
-            $keyword_temp = KeywordTemp::create([
+            KeywordTemp::create([
                         'opCode' => ADD,
                         'user_id' => $user->id,
                         'old_keyword_id' => $keyword->id,
@@ -98,7 +98,7 @@ class UserController extends Controller {
                 );
             }
             foreach ($dataMeaning as $key => $value) {
-                $meaning = MeaningTemp::create($value);
+                MeaningTemp::create($value);
             }
             DB::commit();
 
@@ -159,18 +159,21 @@ class UserController extends Controller {
         //delete in wt_meaning_temp and delete keyword if there are not any meaning
         try {
             $meaningtmp = MeaningTemp::find($id);
+            $opCode = $meaningtmp->opCode;
             $keywordtmp = KeywordTemp::where('old_keyword_id', $meaningtmp->keyword_id);
             $keyword = Keyword::find($meaningtmp->keyword_id);
 
             DB::beginTransaction();
             $meaningtmp->delete();
-
-            $numberOfMeanings = MeaningTemp::where('keyword_id', $meaningtmp->keyword_id)->count();
-            //delete keyword            
-            if ($numberOfMeanings == 0) {
-                $keywordtmp->delete();
-                if ($keyword->status == IN_QUEUE) {
-                    $keyword->forceDelete();
+            
+            if($opCode == ADD) {
+                $numberOfMeanings = MeaningTemp::where('keyword_id', $meaningtmp->keyword_id)->count();
+                //delete keyword            
+                if ($numberOfMeanings == 0) {
+                    $keywordtmp->delete();
+                    if ($keyword->status == IN_QUEUE) {
+                        $keyword->forceDelete();
+                    }
                 }
             }
             DB::commit();
@@ -195,12 +198,12 @@ class UserController extends Controller {
         return view('user.contributeMeaningEdit', ['meaningtmp' => $meaningtmp]);
     }
 
-    public function processEditMeaningContribute(\App\Http\Requests\EditWordRequest $request) {
+    public function processEditMeaningContribute(\App\Http\Requests\EditMeaningRequest $request) {
         //eidt in wt_meaning_temp
         $id = $request->meaningtmp_id;
         try {
             $meaningtmp = MeaningTemp::find($id);
-            $meaningtmp->new_meaning = $request->new_meaning;
+            $meaningtmp->new_meaning = $request->meaning;
             $meaningtmp->language = $request->new_language;
             $meaningtmp->type = $request->new_type;
             $meaningtmp->status = IN_QUEUE;

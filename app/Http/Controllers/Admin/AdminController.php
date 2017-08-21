@@ -54,7 +54,7 @@ class AdminController extends Controller {
                 );
             }
             foreach ($dataMeaning as $key => $value) {
-                $meaning = Meaning::create($value);
+                Meaning::create($value);
             }
             DB::commit();
             $notification = array(
@@ -191,7 +191,7 @@ class AdminController extends Controller {
 
             DB::beginTransaction();
             foreach ($dataMeaning as $key => $value) {
-                $meaning = Meaning::create($value);
+                Meaning::create($value);
             }
             DB::commit();
             $notification = array(

@@ -28,7 +28,7 @@
                         </thead>
                         <tbody>
                         @foreach($meaning as $tl)
-                            @if($tl->status == 1)
+                            @if($tl->status == ACTIVE)
                             <tr class="odd gradeX" align="center">
                                 <td>{{$tl->id}}</td>
                                 <td>{{$tl->keyword->keyword}}</td>
