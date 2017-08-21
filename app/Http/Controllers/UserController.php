@@ -44,13 +44,19 @@ class UserController extends Controller {
             $user->update();
             DB::commit();
 
-            $notification = 'You have successfully update your information.';
+            $notification = array(
+                'message' => 'You have successfully update your information.',
+                'alert-type' => 'success'
+            );
         } catch (\Exception $e) {
             DB::rollback();
-            $notification = 'Something went wrong!';
-            return redirect('user/edit')->withErrors($notification);
+            $notification = array(
+                'message' => 'Something went wrong.',
+                'alert-type' => 'error'
+            );
+            return redirect('user/edit')->with($notification);
         }
-        return redirect('user/edit')->with('notification', $notification);
+        return redirect('user/edit')->with($notification);
     }
 
     public function addKeyword() {
@@ -96,14 +102,19 @@ class UserController extends Controller {
             }
             DB::commit();
 
-            $notification = 'You have successfully add new keyword.';
+            $notification = array(
+                'message' => 'You have successfully contribute new keyword.',
+                'alert-type' => 'success'
+            );
         } catch (\Exception $e) {
             DB::rollback();
-            $notification = 'Something went wrong!';
-            throw $e;
-            return redirect('user/add/keyword')->withErrors($notification);
+            $notification = array(
+                'message' => 'Something went wrong.',
+                'alert-type' => 'error'
+            );
+            return redirect('user/add/keyword')->with($notification);
         }
-        return redirect('user/history')->with('notification', $notification);
+        return redirect('user/history')->with($notification);
     }
 
     public function showContributeHistory() {
@@ -130,11 +141,18 @@ class UserController extends Controller {
                     $keyword->forceDelete();
                 }
                 DB::commit();
+                $notification = array(
+                    'message' => 'You have been canceled a pending contribtute successfully',
+                    'alert-type' => 'success'
+                );
             } catch (\Exception $e) {
                 DB::rollback();
-                throw $e;
+                $notification = array(
+                    'message' => 'Something went wrong.',
+                    'alert-type' => 'error'
+                );
             }
-        return redirect('user/history');
+        return redirect('user/history')->with($notification);
     }
 
     public function deleteMeaningContribute($id) {
@@ -156,11 +174,19 @@ class UserController extends Controller {
                 }
             }
             DB::commit();
+            
+            $notification = array(
+                'message' => 'You have been canceled a pending contribtute successfully',
+                'alert-type' => 'success'
+            );
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            $notification = array(
+                'message' => 'Something went wrong.',
+                'alert-type' => 'error'
+            );
         }
-        return redirect('user/history');
+        return redirect('user/history')->with($notification);
     }
     
     public function editMeaningContribute($id) {
@@ -169,7 +195,7 @@ class UserController extends Controller {
         return view('user.contributeMeaningEdit', ['meaningtmp' => $meaningtmp]);
     }
 
-    public function processEditMeaningContribute(Request $request) {
+    public function processEditMeaningContribute(\App\Http\Requests\EditWordRequest $request) {
         //eidt in wt_meaning_temp
         $id = $request->meaningtmp_id;
         try {
@@ -183,12 +209,18 @@ class UserController extends Controller {
             DB::beginTransaction();
             $meaningtmp->save();
             DB::commit();
-            
+            $notification = array(
+                'message' => 'You have been edited a declined contribtute successfully',
+                'alert-type' => 'success'
+            );
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            $notification = array(
+                'message' => 'Something went wrong',
+                'alert-type' => 'error'
+            );
         }
-        return redirect('user/history');
+        return redirect('user/history')->with($notification);
     }
 
     public function improveMeaning(ImproveMeaningRequest $request) {

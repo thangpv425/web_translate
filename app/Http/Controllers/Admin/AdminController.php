@@ -11,6 +11,8 @@ use App\KeywordTemp;
 use App\MeaningTemp;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AddKeywordRequest;
+use App\Http\Requests\EditWordRequest;
+use App\Http\Requests\EditMeaningRequest;
 
 class AdminController extends Controller {
     /*
@@ -87,11 +89,19 @@ class AdminController extends Controller {
                 $keyword->delete();
             }
             DB::commit();
+            
+            $notification = array(
+                'message' => 'You have been deleted the meaning \"'.$meaning->meaning.'\" successfully.',
+                'alert-type' => 'success',
+            );
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            $notification = array(
+                'message' => 'Something went wrong.',
+                'alert-type' => 'error'
+            );
         }
-        return redirect('admin/meaning/list');
+        return redirect('admin/meaning/list')->with($notification);
     }
 
     public function editKeyword($id) {
@@ -106,8 +116,10 @@ class AdminController extends Controller {
         ]);
     }
     
-    public function processEditKeyword(Request $request) {
+    public function processEditKeyword(EditWordRequest $request) {
         $id = $request->keyword_id;
+        $keyword = Keyword::find($id);
+        
         try {
             foreach ($request->translate as $key => $value) {
                 $dataMeaning[] = array(
@@ -118,34 +130,84 @@ class AdminController extends Controller {
                 );
             }
 
-            DB::beginTransaction();            
-            Keyword::find($id)->update(['keyword'=>$request->keyword]);
-            foreach ($dataMeaning as $key => $value) {
-                Meaning::where('id', $value['meaning_id'])
-                    ->update([
-                        'meaning' => $value['meaning'],
-                        'language' => $value['language'],
-                        'type' => $value['type']
-                    ]);
+            DB::beginTransaction();  
+            if (($request->keyword == $keyword->keyword)||(Keyword::where('keyword',$request->keyword)->count()==0)) { //neu kw k bi edit hoac duoc edit thanh 1 kw chua xuat hien
+                if (Keyword::where('keyword',$request->keyword)->count()==0) {
+                    $keyword->update(['keyword'=>$request->keyword]);
+                }
+                foreach ($dataMeaning as $key => $value) {
+                    Meaning::where('id', $value['meaning_id'])
+                        ->update([
+                            'meaning' => $value['meaning'],
+                            'language' => $value['language'],
+                            'type' => $value['type']
+                        ]);
+                }
+                $notification = array(
+                    'message' => 'You have been edit the keyword successfully.',
+                    'alert-type' => 'success',
+                );
+            } else {
+                $notification = array(
+                    'message' => 'Invalid new keyword because this keyword is exist. Edit failed!',
+                    'alert-type' => 'error',
+                );
             }
+            
             DB::commit();
+            
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            $notification = array(
+                'message' => 'Something went wrong.',
+                'alert-type' => 'error'
+            );
         }
-        return redirect('admin/meaning/list');
+        return redirect('admin/meaning/list')->with($notification);
     }
     
     public function editKeywordAddNewMeaning($id) {
             $keyword = Keyword::find($id);
-            $meaning = $keyword->meaning;
-            $numberOfMeanings = Meaning::where('keyword_id', $id)->count();
             return view('admin.keywordEditNewMeaning', [
                 'keyword' => $keyword,
-                'meaning' => $meaning,
-                'numberOfMeanings' => $numberOfMeanings
             ]);
     }
+    
+    public function processEditKeywordAddNewMeaning(EditMeaningRequest $request) {
+        $id = $request->keyword_id;
+        $keyword = Keyword::find($id);
+        $numberOfMeanings = Meaning::where('keyword_id', $id)->count();
+        try {
+            foreach ($request->translate as $key => $value) {
+                $dataMeaning[] = array(
+                    'keyword_id' => $id,
+                    'meaning' => $value['meaning'],
+                    'index' => $numberOfMeanings + $key,
+                    'status' => APPROVED,
+                    'language' => $value['language'],
+                    'type' => $value['type']
+                );
+            }
+
+            DB::beginTransaction();
+            foreach ($dataMeaning as $key => $value) {
+                $meaning = Meaning::create($value);
+            }
+            DB::commit();
+            $notification = array(
+                'message' => 'You have been add new meaning to \"'.$keyword->keyword.'\" successfully.',
+                'alert-type' => 'success',
+            );
+        } catch (\Exception $e) {
+            DB::rollback();
+            $notification = array(
+                'message' => 'Something went wrong.',
+                'alert-type' => 'error'
+            );
+        }
+        return redirect('admin/keyword/list')->with($notification);
+    }
+    
     /**
      * return List request of keyword table
      * @return [type] [description]
@@ -586,4 +648,3 @@ class AdminController extends Controller {
         return redirect()->route('meaningTempList')->with($notification);
     }
 }
-

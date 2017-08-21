@@ -24,15 +24,15 @@
                 '</div>\n' +
                 '<label for="">Language</label>\n' +
                 '<div class="form-group">\n' +
-                '<label><input type="radio" name="translate['+i+'][language]" value="0" checked /> Vietnamese<br></label>\n' +
-                '<label><input type="radio" name="translate['+i+'][language]" value="1" /> English<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][language]" value="{{ VIETNAMESE }}" checked /> Vietnamese<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][language]" value="{{ ENGLISH }}" /> English<br></label>\n' +
                 '</div>\n' +
                 '<label for="">Type</label>\n' +
                 '<div class="form-group">\n' +
-                '<label><input type="radio" name="translate['+i+'][type]" value="0" checked /> Noun<br></label>\n' +
-                '<label><input type="radio" name="translate['+i+'][type]" value="1" /> Verb<br></label>\n' +
-                '<label><input type="radio" name="translate['+i+'][type]" value="2" /> Adjective<br></label>\n' +
-                '<label><input type="radio" name="translate['+i+'][type]" value="3" /> Preposition<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][type]" value="{{ NOUN }}" checked /> Noun<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][type]" value="{{ VERB }}" /> Verb<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][type]" value="{{ ADJECTIVE }}" /> Adjective<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][type]" value="{{ PREPOSITION }}" /> Preposition<br></label>\n' +
                 '</div>\n' +
                 '</div>\n' +
                 '<hr />'
@@ -50,7 +50,7 @@
         );
 
         jQuery.validator.addMethod("vietnamese", function(value, element) {
-                return this.optional(element) || /^[0-9a-z A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựýỳỵỷỹ.,:]+$/.test(value);
+                return this.optional(element) || /^[0-9a-z A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽếềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựýỳỵỷỹ.,:!?;"']+$/.test(value);
             }, "Please insert Vietnamese or English."
         );
 

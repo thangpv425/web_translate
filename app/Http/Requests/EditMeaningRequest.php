@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditWordRequest extends FormRequest
+class EditMeaningRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,6 @@ class EditWordRequest extends FormRequest
     public function rules()
     {
         return [
-            'keyword'=> 'required|regex:/^([a-zA-zぁ-ゔゞァ-・ヽヾ゛゜ー一-龯]+)$/',
             'translate'=> 'required',
         ];
     }

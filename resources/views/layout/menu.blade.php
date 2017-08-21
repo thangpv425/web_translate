@@ -32,9 +32,6 @@
                     <a href="{{ route('meaning-list') }}"><i class="fa fa-list-ul fa-fw"></i> Meanings List</a>
                 </li>
                 <li>
-                    <a href="admin/show"><i class="fa fa-male fa-fw"></i> User Management</a>
-                </li>
-                <li>
                     <a href="{{ route('keywordTempList') }}"><i class="fa fa-stack-exchange fa-fw"></i> Approval Keyword</a>
                 </li>
                 
