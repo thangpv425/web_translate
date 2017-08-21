@@ -85,7 +85,7 @@
                     required: true,
                     kana: true,
                     uniqueKeyword: true
-                },
+            },
             },
             messages: {},
             errorPlacement: function(error, element) {

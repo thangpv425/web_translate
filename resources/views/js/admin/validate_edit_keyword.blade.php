@@ -24,7 +24,7 @@
                 '<label for="">Language</label>\n' +
                 '<div class="form-group">\n' +
                 '<label><input type="radio" name="translate['+i+'][language]" value="{{ VIETNAMESE }}" checked /> Vietnamese<br></label>\n' +
-                '<label><input type="radio" name="translate['+i+'][language]" value="1" /> English<br></label>\n' +
+                '<label><input type="radio" name="translate['+i+'][language]" value="{{ ENGLISH }}" /> English<br></label>\n' +
                 '</div>\n' +
                 '<label for="">Type</label>\n' +
                 '<div class="form-group">\n' +
@@ -49,34 +49,16 @@
         );
 
         jQuery.validator.addMethod("vietnamese", function(value, element) {
-                return this.optional(element) || /^[0-9a-z A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềếềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựýỳỵỷỹ.,:!?;"']+$/.test(value);
+                return this.optional(element) || /^[0-9a-z A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽếềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựýỳỵỷỹ.,:!?;"']+$/.test(value);
             }, "Please insert Vietnamese or English."
         );
 
 
-        $.validator.addMethod("uniqueKeyword", 
-        function(value, element) {
-            var result = false;
-            $.ajax({
-                type:"POST",
-                async: false,
-                url: "check/unique/keyword", // script to validate in server side
-                data: {'keyword': value},
-                success: function(data) {
-                    result = data.isExist;
-                }
-                });
-                // return true if keyword is exist in database
-                return !result;
-
-            },
-            "This keyword is existed!"
-        );
-
+        
         $.validator.addClassRules({
             meaning: {
                 required: true,
-                vietnamese: true
+                vietnamese: true,
             }
         });
         $('#edit_keyword_form').validate({

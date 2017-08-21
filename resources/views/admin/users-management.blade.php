@@ -48,7 +48,13 @@
                                         @endif" method="POST">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="id" value="{{ $user->id }}">
-                                        <button class="btn btn-primary" style="border: none; width: 133.62px;" type="submit">
+                                        <button class="btn 
+                                            @if (Sentinel::findById($user->id)->inRole('admin')) 
+                                                btn-danger
+                                            @else
+                                                btn-primary
+                                            @endif
+                                        " style="border: none; width: 133.62px;" type="submit">
                                             <i class="fa fa-bolt fa-fw" aria-hidden="true"></i>
                                             @if (Sentinel::findById($user->id)->inRole('admin'))
                                                 Cancel Admin

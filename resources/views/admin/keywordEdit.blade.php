@@ -34,7 +34,7 @@
                         @endphp
 
                         @foreach($meaning as $meaning)
-                        <label>Meaning</label><font color="red"><small><span id="errNm1"> </span></small></font>
+                        <label>Meaning</label><font color="red"><small><span id="errNm{{$i}}"> </span></small></font>
                         <div class="form-group" id="number{{$i}}">
                             <div class="input-group">
                                 <input type="text" class="form-control meaning" name="translate[{{$i}}][meaning]" value="{{$meaning->meaning}}" data-error="#errNm{{$i}}">
