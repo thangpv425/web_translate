@@ -21,7 +21,7 @@
     <meta name="description" content="Web Translate">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Web Translate</title>
+    <title>D3 Dictionary</title>
     <base href="{{asset('')}}">
     <!-- Bootstrap Core CSS -->
     {{-- <link href="admin_asset/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> --}}

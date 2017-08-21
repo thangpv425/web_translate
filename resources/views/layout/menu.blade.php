@@ -35,7 +35,10 @@
                     <a href="{{ route('keywordTempList') }}"><i class="fa fa-stack-exchange fa-fw"></i> Approval Keyword</a>
                 </li>
                 
-                <li><a href="{{ route('meaningTempList') }}"><i class="fa fa-stack-exchange fa-fw"></i>  Approval Meaning</a></li>
+                <li><a href="{{ route('meaningTempList') }}"><i class="fa fa-stack-exchange fa-fw"></i> Approval Meaning</a></li>
+                <li>
+                    <a href="{{ route('users-management') }}"><i class="fa fa-users fa-fw"></i> Users management</a>
+                </li>
             @endif
         </ul>
     </div>

@@ -101,6 +101,14 @@ Route::prefix('admin')->middleware('admin')->group(function() {
 
         Route::post('delete', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
     });
+
+    Route::prefix('users-management')->group(function(){
+    	Route::get('list', 'UsersManagementController@index')->name('users-management');
+
+    	Route::post('make-admin', 'UsersManagementController@makeAdmin')->name('users-management.make-admin');
+
+    	Route::post('cancel-admin', 'UsersManagementController@cancelAdmin')->name('users-management.cancel-admin');
+    });
 });
 
 Route::prefix('user') ->middleware('user')->group(function(){
