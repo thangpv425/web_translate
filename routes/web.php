@@ -102,6 +102,7 @@ Route::prefix('admin')->middleware('admin')->group(function() {
         Route::post('delete', 'Admin\AdminController@deleteRequestOnMeaningTable')->name('deleteRequestMeaning');
     });
 });
+
 Route::prefix('user') ->middleware('user')->group(function(){
     
     Route::get('history','UserController@showContributeHistory');

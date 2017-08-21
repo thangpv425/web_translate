@@ -433,6 +433,22 @@ class AdminController extends Controller {
         return view('admin.approve.meaning.list');
     }
 
+    public function getTypeOfMeaning($value = 0)
+    {
+        switch ($value) {
+            case NOUN:
+                return 'N';
+            case VERB:
+                return 'V';
+            case ADJECTIVE:
+                return 'Adj';
+            case PREPOSITION:
+                return 'Pre';
+            default:
+                return 'Undefined';
+        }
+    }
+
     public function postDataForMeaningTemp(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -457,6 +473,7 @@ class AdminController extends Controller {
                 $value->keyword['keyword'],
                 $value->oldMeaning['meaning'],
                 $value->new_meaning,
+                $this->getTypeOfMeaning($value->type),
                 $value['comment']
             );
             $data[] = $sub;
@@ -631,4 +648,3 @@ class AdminController extends Controller {
         return redirect()->route('meaningTempList')->with($notification);
     }
 }
-

@@ -11,13 +11,14 @@
                         if (row[1] == 0) {opCode = 'ADD';}
                         else if (row[1] == 1) {opCode = 'EDIT';}
                         else opCode = "";
-                        return'<span class="drop-comment" title="'+row[6]+'">'+opCode+'</span>';
+                        return'<span class="drop-comment" title="'+row[7]+'">'+opCode+'</span>';
                     }
                  },
                  {'data':'2'},
                  {'data':'3'},
                  {'data':'4'},
                  {'data':'5'},
+                 {'data':'6'},
                  {
                     sortable: false,
                     "render": function ( data, type, row, meta ) {

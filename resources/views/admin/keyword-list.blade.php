@@ -67,7 +67,7 @@
         {{-- /.row meaning-content --}}
       </div>
       <div class="modal-footer">
-          <a class="btn btn-primary" id="add-meaning" href="admin/editKeyword/addNewMeaning/{keyword->id}" style="border: none;">Add meaning</a>
+          <a class="btn btn-primary" id="add-meaning" href="" style="border: none;">Add meaning</a>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -105,7 +105,7 @@
               <tr class="odd gradeX" align="center">
                   <td>{{ $key }}</td>
                   <td>{{ $keyword->keyword}}</td>
-                  <td class="center"><a onclick="getDataForModal(this)" data-toggle="modal" data-target="#myModal" data-keyword="{{ $keyword->keyword }}"><i class="fa fa-eye fa-fw"></i>Details</a></td>
+                  <td class="center"><a onclick="getDataForModal(this)" data-toggle="modal" data-target="#myModal" data-keyword="{{ $keyword->keyword }}" data-id="{{ $keyword->id }}"><i class="fa fa-eye fa-fw"></i>Details</a></td>
               </tr>
           @endforeach
           </tbody>
