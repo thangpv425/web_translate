@@ -15,15 +15,13 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i>{{ Sentinel::getUser()->email }}<i class="fa fa-caret-down fa-fw"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        @if($user=Sentinel::getUser())
+                        @if($user = Sentinel::getUser())
                             <li><a href="user/view"><i class="fa fa-user fa-fw"></i>{{$user->first_name.' '.$user->last_name}}</a>
                             </li>
-                        
                         @endif
-                        
                         <li><a href="user/edit"><i class="fa fa-gear fa-fw"></i> Edit profile</a>
                         </li>
                         <li class="divider"></li>

@@ -36,7 +36,9 @@ class TranslationController extends Controller
 
     /**
      * [FunctionName description]
-     * @param string $value [description]
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @internal param string $value [description]
      */
     public function postDetailMeaning(Request $request)
     {

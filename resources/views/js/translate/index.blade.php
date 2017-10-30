@@ -53,6 +53,7 @@
             nl2br(data[i].meaning) +
             '<button class="btn btn-default btn-sm" id="btn-edit" onclick="setForm('+data[i].id+')" title="Improve this translation"><i class="fa fa-pencil"></i></button></li>'; 
         }
+        // language=JQuery-CSS
         $('#other-meaning').removeAttr('hidden');
         $('#other-meaning-'+id).removeAttr('hidden');
         $('#other-meaning-'+id+'-content').html('<ul>'+content+'</ul>');
